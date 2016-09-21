@@ -1,8 +1,9 @@
-package Main;
+package Users;
+
+import Model.Boat;
 
 import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by henry on 2016-09-20.
@@ -10,23 +11,26 @@ import java.util.List;
 public class Member {
     //private variables
     private ArrayList<Boat> boats = new ArrayList<Boat>();
-    private String firstname;
-    private String lastname;
-    private String personnumber;
-    private String id;
-    private String email;
+    private String firstname,
+            lastname,
+            personnumber,
+            id,
+            email;
 
 
 
     //constructor, getters and setters
-    public Member(XmlElement memberData){
+    public Member(XmlElement data){
 
     }
+    public String getId(){ return id; }
 
-    public String toString(){
+
+    // printing out info
+    public String verboseInfo(){
         return "";
     }
     public String compactInfo(){
-
+        return "";
     }
 }
