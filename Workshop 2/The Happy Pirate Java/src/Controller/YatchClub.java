@@ -12,7 +12,7 @@ public class YatchClub {
     private FileHandler memberDB, brsDB, calendarDB;
 
     public YatchClub(){
-
+        //menu
         Menu menu = new Menu(new Scanner(System.in));
     }
 }
