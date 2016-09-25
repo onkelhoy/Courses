@@ -51,7 +51,16 @@ public class Menu {
             MSTmenu();
         }
 
+        else{
+            System.out.println();
+        }
+
     }
+    private int login(String uName, String pass){
+
+        return 0; //Member; 1 Secretary, 2 treasurer, -1 fail'd to login.
+    }
+
     private void RegistrationMenu(){
 
     }
