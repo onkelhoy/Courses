@@ -2,6 +2,7 @@ package Controller;
 
 import Helper.FileHandler;
 
+import java.lang.reflect.Member;
 import java.util.Scanner;
 
 /**
@@ -22,6 +23,20 @@ public class Menu {
 
     }
     private void RegistrationMenu(){
+
+    }
+
+
+    private void MSTmenu(String type){
+        
+    }
+    private void MemberMenu(){
+
+    }
+    private void SecretaryMenu(){
+
+    }
+    private void TreasurerMenu(){
 
     }
 }
