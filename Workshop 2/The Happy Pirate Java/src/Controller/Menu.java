@@ -10,14 +10,13 @@ import java.util.Scanner;
  */
 public class Menu {
     private Scanner scan = null;
-    private Member member = null; //can be an member, secretary or treasurer instance
+    private YatchClub yatchclub;
 
-    public Menu(Scanner scan){
+    public Menu(YatchClub yatchclub, Scanner scan){
         this.scan = scan;
+        this.yatchclub = yatchclub;
         SplashScreen();
         AuthenticateMenu();
-
-
     }
 
 
@@ -88,7 +87,7 @@ public class Menu {
     private void MSTmenu(){
         PreMenu();
         System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\4. Payments\n 5. Show Members");
-        switch (member.getType()){
+        switch (yatchclub.getMember().getType()){
             case "secretary":
                 System.out.print("\n6. Club Calendar\n7. Berth Registrations");
                 break;
@@ -108,14 +107,14 @@ public class Menu {
             System.out.println("Wrong input (only numbers)");
             System.out.print("press any key to proceed.. ");
             scan.next();
-            MSTmenu(type);
+            MSTmenu();
         }
 
 
 
         switch (input){
             case 0:
-                member = null; //logout
+                yatchclub.setMember(); //logout
                 AuthenticateMenu();
                 break;
             case 1:
@@ -132,7 +131,7 @@ public class Menu {
                 break;
         }
 
-        if(member.getType().equals("secretary")){
+        if(yatchclub.getMember().getType().equals("secretary")){
             if(input == 5) {} // show members meny (more info)
             else if(input == 6) {} // show club calendar meny
             else if(input == 7) {} // show berth registrations meny
@@ -141,7 +140,7 @@ public class Menu {
                 MSTmenu();
             }
         }
-        else if(member.getType().equals("treasurer")) {
+        else if(yatchclub.getMember().getType().equals("treasurer")) {
             if(input == 5) {} // show members meny (more info)
             else if(input == 6) {} // show club payments meny
             else {
