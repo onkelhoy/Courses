@@ -38,12 +38,17 @@ public class Menu {
         }
 
     }
-    private int LoginMenu(){
-        System.out.print("Password : ");
-        String pass = scan.nextLine();
+    private void LoginMenu(){
+
         System.out.print("Username : ");
         String uName = scan.nextLine();
-        return 1;
+        System.out.print("Password : ");
+        String pass = scan.nextLine();
+
+        if(login(uName, pass)){
+            MSTmenu();
+        }
+
     }
     private void RegistrationMenu(){
 
