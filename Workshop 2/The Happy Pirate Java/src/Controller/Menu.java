@@ -24,4 +24,8 @@ public class Menu {
     private void RegistrationMenu(){
 
     }
+
+    private void SeldinTrashMethod(){
+
+    }
 }
