@@ -97,7 +97,8 @@ public class Menu {
     private void MSTprompt(String type){
 
         System.out.print("\n?: ");
-        try { int input = scan.nextInt(); }
+        int input = -1;
+        try { input = scan.nextInt(); }
         catch (Exception e) {
             System.out.println("Wrong input (only numbers), press any key to proceed");
             scan.next();
