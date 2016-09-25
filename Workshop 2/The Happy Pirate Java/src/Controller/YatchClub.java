@@ -19,4 +19,10 @@ public class YatchClub {
         //menu
         Menu menu = new Menu(this, new Scanner(System.in));
     }
+
+
+    public boolean login(String uName, String pass){
+        Member m = new Member(null);
+        return true; //true login success false fail'd to login.
+    }
 }
