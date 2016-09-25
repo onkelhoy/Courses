@@ -10,6 +10,8 @@ import java.util.Scanner;
  */
 public class Menu {
     private Scanner scan = null;
+    private Member member = null; //can be an member, secretary or treasurer instance
+
     public Menu(Scanner scan){
         this.scan = scan;
         SplashScreen();
@@ -99,7 +101,8 @@ public class Menu {
         int input = -1;
         try { input = scan.nextInt(); }
         catch (Exception e) {
-            System.out.println("Wrong input (only numbers), press any key to proceed");
+            System.out.println("Wrong input (only numbers)");
+            System.out.print("press any key to proceed.. ");
             scan.next();
             MSTmenu(type);
         }
@@ -108,22 +111,51 @@ public class Menu {
 
         switch (input){
             case 0:
+                member = null; //logout
+                AuthenticateMenu();
                 break;
             case 1:
+                // show user info menu
                 break;
             case 2:
+                // show boats menu
                 break;
             case 3:
+                // show calendar menu
                 break;
             case 4:
-                break;
-            case 5:
+                // show payments menu
                 break;
         }
 
+        if(type.equals("secretary")){
+            if(input == 5) {} // show members meny (more info)
+            else if(input == 6) {} // show club calendar meny
+            else if(input == 7) {} // show berth registrations meny
+            else {
+                showError("only values 0 - 7 are accepted");
+                MSTmenu(type);
+            }
+        }
+        else if(type.equals("treasurer")) {
+            if(input == 5) {} // show members meny (more info)
+            else if(input == 6) {} // show club payments meny
+            else {
+                showError("only values 0 - 6 are accepted");
+                MSTmenu(type);
+            }
+        }
+        else {
+            if(input == 5) {} // show members meny!
+            else {
+                showError("only values 0 - 5 are accepted");
+                MSTmenu(type);
+            }
+        }
     }
-
-    private void SeldinTrashMethod(){
-
+    private void showError(String error){
+        System.out.println(error);
+        System.out.print("Press any key to continue.. ");
+        scan.next();
     }
 }
