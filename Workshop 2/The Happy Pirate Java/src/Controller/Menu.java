@@ -30,18 +30,20 @@ public class Menu {
                 break;
             case "0":
                 System.out.println("Have a nice day sir, bye bye!!!");
+                scan.close();
                 break;
             default:
                 System.out.println("Wrong input...\nTry again!!!");
                 AuthenticateMenu();
-
         }
 
     }
-    private void LoginMenu(){
-        Syste
-
-
+    private int LoginMenu(){
+        System.out.print("Password : ");
+        String pass = scan.nextLine();
+        System.out.print("Username : ");
+        String uName = scan.nextLine();
+        return 1;
     }
     private void RegistrationMenu(){
 
