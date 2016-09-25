@@ -39,8 +39,4 @@ public class Menu {
     private void TreasurerMenu(){
 
     }
-
-    private void SeldinTrashMethod(){
-
-    }
 }
