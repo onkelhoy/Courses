@@ -17,7 +17,7 @@ public class Menu {
 
     }
     private void LoginMenu(){
-        
+
     }
     private void RegistrationMenu(){
 

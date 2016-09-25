@@ -1,3 +1,5 @@
+package View;
+
 import View.Menu;
 
 import java.io.IOException;
@@ -5,9 +7,9 @@ import java.io.IOException;
 /**
  * Created by henry on 2016-09-20.
  */
-public class THP {
+public class Main {
     public static void main(String[] args) throws IOException {
-        Menu m = new Menu(new EngMenu());
+        YatchClub TPH = new YatchClub();
 
 
     }
