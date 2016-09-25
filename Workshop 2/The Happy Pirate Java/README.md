@@ -1,6 +1,11 @@
 ##The Happy Pirate java edition
 
 Things we should complete:
-- [x] make a list about things to complete
-- [ ] code the first menys (login, register, member-secretary-treasurer)
-- [ ] make the databases and a working login/register function
+####*iteration 1*
+- [x] create authenticate meny
+- [x] create login meny
+- [ ] create register meny
+- [x] create MST meny
+- [ ] create authenticate meny
+
+####*iteration 2*
