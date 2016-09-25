@@ -22,7 +22,7 @@ public class Member {
     public String getType(){ return type.toLowerCase(); }
     //constructor, getters and setters
     public Member(XmlElement data){
-
+        type = "member";
     }
     public String getId(){ return id; }
 

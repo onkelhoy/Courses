@@ -42,10 +42,10 @@ public class Menu {
 
     }
     private void LoginMenu(){
-
-        System.out.print("Username : ");
+        PreMenu();
+        System.out.print("--- Login Menu ---\nUsername: ");
         String uName = scan.nextLine();
-        System.out.print("Password : ");
+        System.out.print("Password: ");
         String pass = scan.nextLine();
 
         if(yatchclub.login(uName, pass)){
@@ -53,13 +53,15 @@ public class Menu {
         }
 
         else{
-            System.out.println();
+            PreMenu();
+            System.out.println("failed logged in");
+            AuthenticateMenu();
         }
 
     }
 
     private void RegistrationMenu(){
-
+        PreMenu(); // makes a nice line separation
     }
     private void SplashScreen() {
         System.out.print("                                                  Welcome To:                                                  \n" +
@@ -92,11 +94,11 @@ public class Menu {
 
 
     private void PreMenu(){
-        System.out.println("\n\n----------------------------------------------------------------------------------------------------------------");
+        System.out.println("\n\n\n\n\n----------------------------------------------------------------------------------------------------------------\n\n");
     }
     private void MSTmenu(){
         PreMenu();
-        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\4. Payments\n 5. Show Members");
+        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
         switch (yatchclub.getMember().getType()){
             case "secretary":
                 System.out.print("\n6. Club Calendar\n7. Berth Registrations");
