@@ -1,6 +1,6 @@
 package View;
 
-import View.Menu;
+import Controller.YatchClub;
 
 import java.io.IOException;
 

@@ -1,4 +1,4 @@
-package View;
+package Controller;
 
 import Helper.FileHandler;
 
@@ -6,7 +6,6 @@ import Helper.FileHandler;
  * Created by henry on 2016-09-20.
  */
 public class Menu {
-    private FileHandler memberDB;
 
     public Menu(){
         AuthenticateMenu();
