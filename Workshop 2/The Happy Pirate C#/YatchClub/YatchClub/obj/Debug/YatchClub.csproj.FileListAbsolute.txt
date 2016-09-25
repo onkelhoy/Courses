@@ -1,0 +1,6 @@
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\bin\Debug\YatchClub.exe.config
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\bin\Debug\YatchClub.exe
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\bin\Debug\YatchClub.pdb
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\obj\Debug\YatchClub.csprojResolveAssemblyReference.cache
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\obj\Debug\YatchClub.exe
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\YatchClub\YatchClub\obj\Debug\YatchClub.pdb

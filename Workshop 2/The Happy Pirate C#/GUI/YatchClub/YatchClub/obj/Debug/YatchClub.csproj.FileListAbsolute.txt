@@ -1,0 +1,11 @@
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\bin\Debug\YatchClub.exe.config
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\bin\Debug\YatchClub.exe
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\bin\Debug\YatchClub.pdb
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.csprojResolveAssemblyReference.cache
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.Authenticate.resources
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.Properties.Resources.resources
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.csproj.GenerateResource.Cache
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.exe
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.pdb
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.View.Login_Form.resources
+D:\Document\Skola\1DV607\Workshop 2\The Happy Pirate C#\GUI\YatchClub\YatchClub\obj\Debug\YatchClub.View.Regi_Form.resources
