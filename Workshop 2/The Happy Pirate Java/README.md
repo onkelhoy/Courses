@@ -9,3 +9,8 @@ Things we should complete:
 - [ ] create authenticate meny
 
 ####*iteration 2*
+- [ ] login function
+- [ ] register function
+- [ ] boats menu
+- [ ] user info menu
+- [ ] structure how edit member will work
