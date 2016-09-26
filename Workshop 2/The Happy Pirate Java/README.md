@@ -9,7 +9,7 @@ Things we should complete:
 - [ ] create authenticate meny
 
 ####*iteration 2*
-- [ ] login function
+- [x] login function
 - [ ] register function
 - [ ] boats menu
 - [ ] user info menu
