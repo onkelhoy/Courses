@@ -1,6 +1,6 @@
 package Model;
 
-import javax.xml.bind.annotation.XmlElement;
+import org.w3c.dom.Element;
 import java.util.ArrayList;
 
 /**
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Secretary extends Member {
     private ArrayList<Berth> berthAssignments = new ArrayList<Berth>();
 
-    public Secretary(XmlElement data) {
+    public Secretary(Element data) {
         super(data);
     }
 }

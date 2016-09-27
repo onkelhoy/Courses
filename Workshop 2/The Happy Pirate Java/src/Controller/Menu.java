@@ -63,18 +63,26 @@ public class Menu {
     private void RegistrationMenu(){
         PreMenu();
 
-        System.out.println("Register as a new member in The Happy Pirate.");
+        System.out.println("---Register---");
         System.out.print("Username: ");
         String userName = scan.nextLine();
+
+        System.out.print("eMail: ");
+        String eMail = scan.nextLine();
+
+        System.out.print("Identity nr: ");
+        String id = scan.nextLine();
+
         System.out.print("Password: ");
         String password = scan.nextLine();
+        System.out.print("Password again: ");
+        String password1 = scan.nextLine();
 
-        //Need a validation method. If the user already exists in xmlDB.
-        if(userName.equals("admin") && password.equals("admin")){
-            MSTmenu();
-        } else{
-            System.out.println("Access denied");
+        if(password.equals(password1)){
             AuthenticateMenu();
+        } else{
+            System.out.println("Passwords don't match!!!\n try again!!!");
+            RegistrationMenu();
         }
 
     }
