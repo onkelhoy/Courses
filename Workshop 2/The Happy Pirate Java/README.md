@@ -1,16 +1,16 @@
 ##The Happy Pirate java edition
 
-Things we should complete:
-####*iteration 1*
+
+###Iterations:
+####*iteration 1 - done :balloon:*
 - [x] create authenticate meny
 - [x] create login meny
-- [ ] create register meny
+- [x] create register meny
 - [x] create MST meny
-- [ ] create authenticate meny
 
 ####*iteration 2*
 - [x] login function
-- [ ] register function
+- [x] register function
 - [ ] boats menu
 - [ ] user info menu
 - [ ] structure how edit member will work
