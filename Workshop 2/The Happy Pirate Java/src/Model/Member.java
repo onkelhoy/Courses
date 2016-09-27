@@ -15,13 +15,14 @@ public class Member {
             lastname,
             personnumber,
             id,
-            email;
+            email,
+            type;
 
 
-
+    public String getType(){ return type.toLowerCase(); }
     //constructor, getters and setters
     public Member(XmlElement data){
-
+        type = "member";
     }
     public String getId(){ return id; }
 
