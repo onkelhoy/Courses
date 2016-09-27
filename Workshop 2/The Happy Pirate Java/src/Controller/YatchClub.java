@@ -5,6 +5,7 @@ import Model.Member;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -38,6 +39,58 @@ public class YatchClub {
     }
 
     public boolean register(String usn, String password, String email, String identity){
+        String id = genereteId(10);
+        // do a valitation for identity for the 'sake of fun'
+
+        Element m, p, u, e, i, s, n, a, b, t;
+        m = memberDB.getDoc().createElement("member");
+        u = memberDB.getDoc().createElement("username");
+        p = memberDB.getDoc().createElement("password");
+        e = memberDB.getDoc().createElement("email");
+        b = memberDB.getDoc().createElement("boats");
+        t = memberDB.getDoc().createElement("type");
+        n = memberDB.getDoc().createElement("name");
+        i = memberDB.getDoc().createElement("id");
+        s = memberDB.getDoc().createElement("identity");
+        a = memberDB.getDoc().createElement("address");
+
+        u.setTextContent(usn);
+        s.setTextContent(identity);
+        e.setTextContent(email);
+        p.setTextContent(password);
+        i.setTextContent(id);
+        t.setTextContent("member");
+
+
+        m.appendChild(u);
+        m.appendChild(p);
+        m.appendChild(e);
+        m.appendChild(b);
+        m.appendChild(t);
+        m.appendChild(n);
+        m.appendChild(i);
+        m.appendChild(s);
+        m.appendChild(a);
+
+        if(memberDB.Search(String.format("//member[username[text() = '{0}'] or email[text() = '{1}'] or identity[text() = '{2}']]", usn, email, identity)).getLength() != 0){
+            return false;
+        }
+
+        memberDB.getDoc().getDocumentElement().appendChild(m);
         return true;
+    }
+
+    private String genereteId(int length){
+        char[] values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#%&".toCharArray();
+        StringBuilder strb = new StringBuilder();
+        Random rand = new Random();
+        for(int i = 0; i < length; i++){
+            strb.append(values[rand.nextInt(values.length)]);
+        }
+
+        if(memberDB.Search("//member/id[text() = '"+strb.toString()+"']").getLength() == 0){
+            return genereteId(length);
+        }
+        return strb.toString();
     }
 }
