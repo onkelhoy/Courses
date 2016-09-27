@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <members>
 	<member>
-		<username>hej</username>
+		<username>Bosseman</username>
 		<password>b</password>
-	</member>
-	<member>
-		<username>alex</username>
-		<password>a</password>
-	</member>
-	<member>
-		<username>colin</username>
-		<password>b</password>
-	</member>
-	<member>
-		<username>gustav</username>
-		<password>a</password>
+		<name>Bo Levin</name>
+		<type>member</type>
+		<boats></boats>
+		<identity></identity>
+		<id></id>
 	</member>
 </members>

@@ -2,13 +2,9 @@ package Controller;
 
 import Helper.FileHandler;
 import Model.Member;
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import javax.xml.bind.annotation.XmlElement;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.Scanner;
 
 /**
@@ -35,7 +31,7 @@ public class YatchClub {
         NodeList l = memberDB.Search("//member[username[text() = '"+usn+"'] and password[text() = '"+pass+"']]");
         if(l == null || l.getLength() == 0) return false;
         else {
-            member = new Member((XmlElement) l.item(0));
+            member = new Member((Element) l.item(0));
             return true; //true login success false fail'd to login.
         }
 

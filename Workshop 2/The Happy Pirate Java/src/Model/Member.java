@@ -1,8 +1,9 @@
 package Model;
 
 import Model.Boat;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
-import javax.xml.bind.annotation.XmlElement;
 import java.util.ArrayList;
 
 /**
@@ -11,9 +12,10 @@ import java.util.ArrayList;
 public class Member {
     //private variables
     private ArrayList<Boat> boats = new ArrayList<Boat>();
-    private String firstname,
-            lastname,
-            personnumber,
+    private String name,
+            username,
+            password,
+            identity,
             id,
             email,
             type;
@@ -21,8 +23,19 @@ public class Member {
 
     public String getType(){ return type.toLowerCase(); }
     //constructor, getters and setters
-    public Member(XmlElement data){
-        type = "member";
+    public Member(Element data){
+        username    = data.getElementsByTagName("username").item(0).getTextContent();
+        name        = data.getElementsByTagName("name").item(0).getTextContent();
+        identity    = data.getElementsByTagName("identity").item(0).getTextContent();
+        id          = data.getElementsByTagName("id").item(0).getTextContent();
+        password    = data.getElementsByTagName("password").item(0).getTextContent();
+        email       = data.getElementsByTagName("email").item(0).getTextContent();
+        type        = data.getElementsByTagName("type").item(0).getTextContent();
+
+        NodeList boatsxml = data.getElementsByTagName("boats");
+        for(int i = 0; i < boatsxml.getLength(); i++){
+            boats.add(new Boat((Element)boatsxml.item(0)));
+        }
     }
     public String getId(){ return id; }
 
