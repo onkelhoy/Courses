@@ -21,7 +21,7 @@ public class Menu {
 
 
     private void AuthenticateMenu(){
-
+        PreMenu();
         System.out.print("1). login.\n2). register\n0). Exit\n # ");
         String choise = scan.nextLine();
         switch (choise){
@@ -61,8 +61,24 @@ public class Menu {
     }
 
     private void RegistrationMenu(){
-        PreMenu(); // makes a nice line separation
+        PreMenu();
+
+        System.out.println("Register as a new member in The Happy Pirate.");
+        System.out.print("Username: ");
+        String userName = scan.nextLine();
+        System.out.print("Password: ");
+        String password = scan.nextLine();
+
+        //Need a validation method. If the user already exists in xmlDB.
+        if(userName.equals("admin") && password.equals("admin")){
+            MSTmenu();
+        } else{
+            System.out.println("Access denied");
+            AuthenticateMenu();
+        }
+
     }
+
     private void SplashScreen() {
         System.out.print("                                                  Welcome To:                                                  \n" +
                 "     __________________________________________________________________________________________________________\n" +
@@ -94,7 +110,7 @@ public class Menu {
 
 
     private void PreMenu(){
-        System.out.println("\n\n\n\n\n----------------------------------------------------------------------------------------------------------------\n\n");
+        System.out.println("\n\n\n----------------------------------------------------------------------------------------------------------------\n\n");
     }
     private void MSTmenu(){
         PreMenu();
@@ -168,6 +184,7 @@ public class Menu {
             }
         }
     }
+
     private void showError(String error){
         System.out.println(error);
         System.out.print("Press any key to continue.. ");
