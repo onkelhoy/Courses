@@ -14,3 +14,9 @@ Things we should complete:
 - [ ] boats menu
 - [ ] user info menu
 - [ ] structure how edit member will work
+
+####*iteration 2*
+- [x] member *class* work with xml
+- [x] boat *class* work with xml
+- [ ] secretary *class* work with xml
+- [ ] treasurer *class* work with xml

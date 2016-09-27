@@ -1,3 +1,6 @@
 *.psd
 *.docx
 *.tmp
+out/
+content/
+.idea/
