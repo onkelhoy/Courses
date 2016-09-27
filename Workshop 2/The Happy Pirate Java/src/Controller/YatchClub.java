@@ -72,11 +72,13 @@ public class YatchClub {
         m.appendChild(s);
         m.appendChild(a);
 
-        if(memberDB.Search(String.format("//member[username[text() = '{0}'] or email[text() = '{1}'] or identity[text() = '{2}']]", usn, email, identity)).getLength() != 0){
+        String format = String.format("//member[username[text() = '%1s'] or email[text() = '%2s'] or identity[text() = '%3s']]", usn, email, identity);
+        if(memberDB.Search(format).getLength() != 0){
             return false;
         }
 
         memberDB.getDoc().getDocumentElement().appendChild(m);
+        memberDB.Save();
         return true;
     }
 
@@ -88,9 +90,9 @@ public class YatchClub {
             strb.append(values[rand.nextInt(values.length)]);
         }
 
-        if(memberDB.Search("//member/id[text() = '"+strb.toString()+"']").getLength() == 0){
+        /*if(memberDB.Search("//member/id[text() = '"+strb.toString()+"']").getLength() == 0){
             return genereteId(length);
-        }
+        }*/
         return strb.toString();
     }
 }

@@ -3,6 +3,7 @@ package Controller;
 import Helper.FileHandler;
 import Model.Member;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -63,7 +64,7 @@ public class Menu {
     private void RegistrationMenu(){
         PreMenu();
 
-        System.out.println("---Register---");
+        System.out.println("--- Register Menu ---");
         System.out.print("Username: ");
         String userName = scan.nextLine();
 
@@ -79,7 +80,14 @@ public class Menu {
         String password1 = scan.nextLine();
 
         if(password.equals(password1)){
-            AuthenticateMenu();
+            if(yatchclub.register(userName, password, eMail, id)){
+                System.out.println("Successful registration");
+                LoginMenu();
+            }
+            else {
+                showError("\n\nThis user information is already in use");
+                RegistrationMenu();
+            }
         } else{
             System.out.println("Passwords don't match!!!\n try again!!!");
             RegistrationMenu();
@@ -195,7 +203,11 @@ public class Menu {
 
     private void showError(String error){
         System.out.println(error);
-        System.out.print("Press any key to continue.. ");
-        scan.next();
+        System.out.print("Press enter to continue.. ");
+        try {
+            System.in.read();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

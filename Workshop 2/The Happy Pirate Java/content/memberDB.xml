@@ -1,12 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<members>
-	<member>
-		<username>Bosseman</username>
-		<password>b</password>
-		<name>Bo Levin</name>
-		<type>member</type>
-		<boats></boats>
-		<identity></identity>
-		<id></id>
-	</member>
-</members>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><members><member><username>henry</username><password>a</password><email>test@test.se</email><boats/><type>member</type><name/><id>xOFrTWcp71</id><identity>12345678972</identity><address/></member></members>
