@@ -36,4 +36,8 @@ public class YatchClub {
         }
 
     }
+
+    public boolean register(String usn, String password, String email, String identity){
+        return true;
+    }
 }
