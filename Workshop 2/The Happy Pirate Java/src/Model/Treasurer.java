@@ -9,4 +9,8 @@ public class Treasurer extends Member {
     public Treasurer(Element data){
         super(data);
     }
+
+    public
+
+
 }
