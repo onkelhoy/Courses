@@ -143,19 +143,26 @@ public class Menu {
 
         MSTprompt();
     }
-    private void MSTprompt(){
 
-        System.out.print("\n?: ");
+    private int getInput(){
         int input = -1;
         try { input = scan.nextInt(); }
         catch (Exception e) {
             showError("Wrong input (only numbers)");
-            MSTmenu();
         }
+        return input;
+    }
 
+    private void MSTprompt(){
 
+        System.out.print("\n?: ");
+
+        int input = getInput();
 
         switch (input){
+            case -1:
+                MSTmenu();
+                break;
             case 0:
                 yatchclub.setMember(); //logout
                 AuthenticateMenu();
@@ -165,6 +172,7 @@ public class Menu {
                 break;
             case 2:
                 // show boats menu
+                BoatMenu(false);
                 break;
             case 3:
                 // show calendar menu
@@ -206,5 +214,39 @@ public class Menu {
         try {
             System.in.read();
         } catch (IOException e) { }
+    }
+
+    private void BoatMenu(boolean listValue){
+        PreMenu();
+        if (listValue){
+            // show boats
+        }
+        // \n4). register might be edited in the future.
+        System.out.print("--- Boat Menu ---\n1). list boats.\n2). remove boats\n3). add new boat\n4). register\n0). Exit\n # ");
+        int input = getInput();
+
+
+        switch (input){
+            case -1:
+                BoatMenu(false);
+            case 1:
+                BoatMenu(true);
+                break;
+            case 2:
+                // remove boats
+                System.out.print("\nBoat ID: ");
+                String boatID = scan.nextLine();
+                // remove boat based on boatID.
+                break;
+            case 3:
+                // add new boat
+                break;
+            case 4:
+                // register boat to a berth, might be updated
+                break;
+            case 0:
+                // return to previus menu
+                break;
+        }
     }
 }
