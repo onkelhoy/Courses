@@ -126,7 +126,7 @@ public class Menu {
 
 
     private void PreMenu(){
-        System.out.println("\n\n\n----------------------------------------------------------------------------------------------------------------\n\n");
+        System.out.println("\n\n\n===============================================================================================================\n===============================================================================================================\n");
     }
     private void MSTmenu(){
         PreMenu();
@@ -171,6 +171,7 @@ public class Menu {
                 break;
             case 1:
                 // show user info menu
+                UserInfoMenu();
                 break;
             case 2:
                 // show boats menu
@@ -207,7 +208,66 @@ public class Menu {
 
     private void UserInfoMenu(){
         PreMenu();
-        //System.out.print(String.format("--- User info menu ---\n1. Username: %s\n2. Email: %s\n3. Name: %s\n4. ", ));
+        Member m = yatchclub.getMember();
+        System.out.print(String.format("--- User info menu ---\n0. Go back\n1: Save\n\nChangeable <number:change>\n  2. Username: %s\n  3. Email: %s\n  4. Name: %s\n  5. Change Password\n\nIdentity: %s\nMembership fee: %s\n\n?: ", m.getUsername(), m.getEmail(), m.getName(), m.getIdentity(), (m.hasPayedMembership() ? "has payed" : "has not payed")));
+
+        String input = scan.next();
+        int number = -1;
+        if(input.length() > 1){
+            String[] arr = input.split(":");
+            try{
+                number = Integer.parseInt(arr[0]);
+            }
+            catch (Exception e){ }
+            input = arr[1];
+
+            switch (number){
+                case -1://error
+                    showError("Number : string - is only supported");
+                    UserInfoMenu();
+                    break;
+                case 2: //usn
+                    m.setUsername(input);
+                    UserInfoMenu();
+                    break;
+                case 3: //email
+                    m.setEmail(input);
+                    UserInfoMenu();
+                    break;
+                case 4: //name
+                    m.setName(input);
+                    UserInfoMenu();
+                    break;
+                case 5: //password
+                    UserInfoMenu();
+                    break;
+                default:
+                    showError("Only option 2-5 can have 2 values");
+                    UserInfoMenu();
+            }
+        }
+        else {
+            try{
+                number = Integer.parseInt(input);
+            }
+            catch (Exception e){ }
+
+            switch (number){
+                case -1://error
+                    showError("only numbers!");
+                    UserInfoMenu();
+                    break;
+                case 0: //go back
+                    MSTmenu();
+                    break;
+                case 1: //save
+                    MSTmenu();
+                    break;
+                default:
+                    showError("Only option 0-1 can have a number");
+                    UserInfoMenu();
+            }
+        }
     }
 
     private void showError(String error){

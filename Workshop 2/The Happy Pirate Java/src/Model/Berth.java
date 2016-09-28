@@ -7,6 +7,9 @@ import javax.xml.bind.annotation.XmlElement;
  */
 public class Berth {
     private int fee; // the cost of berth
+    private boolean seasonPayment;
+
+    public boolean getSeasonPayment() { return seasonPayment; }
 
     public Berth(Boat boat, Member member){
         // create a berth based on boat and have the members info
