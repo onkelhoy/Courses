@@ -23,7 +23,7 @@ public class Menu {
 
     private void AuthenticateMenu(){
         PreMenu();
-        System.out.print("1). login.\n2). register\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). login.\n2). register\n0). Exit\n # ");
         String choise = scan.nextLine();
         switch (choise){
             case "1":
@@ -130,6 +130,7 @@ public class Menu {
     }
     private void MSTmenu(){
         PreMenu();
+        System.out.println(String.format("--- %s Menu ---", yatchclub.getMember().getType()));
         System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
         switch (yatchclub.getMember().getType()){
             case "secretary":
@@ -148,9 +149,7 @@ public class Menu {
         int input = -1;
         try { input = scan.nextInt(); }
         catch (Exception e) {
-            System.out.println("Wrong input (only numbers)");
-            System.out.print("press any key to proceed.. ");
-            scan.next();
+            showError("Wrong input (only numbers)");
             MSTmenu();
         }
 
@@ -206,8 +205,6 @@ public class Menu {
         System.out.print("Press enter to continue.. ");
         try {
             System.in.read();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException e) { }
     }
 }
