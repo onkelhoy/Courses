@@ -24,7 +24,7 @@ public class Menu {
     private void AuthenticateMenu(){
         PreMenu();
         System.out.print("--- Authenticate Menu ---\n1). login.\n2). register\n0). Exit\n # ");
-        String choise = scan.nextLine();
+        String choise = scan.next();
         switch (choise){
             case "1":
                 LoginMenu();
@@ -45,9 +45,9 @@ public class Menu {
     private void LoginMenu(){
         PreMenu();
         System.out.print("--- Login Menu ---\nUsername: ");
-        String uName = scan.nextLine();
+        String uName = scan.next();
         System.out.print("Password: ");
-        String pass = scan.nextLine();
+        String pass = scan.next();
 
         if(yatchclub.login(uName, pass)){
             MSTmenu();
@@ -66,18 +66,18 @@ public class Menu {
 
         System.out.println("--- Register Menu ---");
         System.out.print("Username: ");
-        String userName = scan.nextLine();
+        String userName = scan.next();
 
         System.out.print("Email: ");
-        String eMail = scan.nextLine();
+        String eMail = scan.next();
 
         System.out.print("Identity nr: ");
-        String id = scan.nextLine();
+        String id = scan.next();
 
         System.out.print("Password: ");
-        String password = scan.nextLine();
+        String password = scan.next();
         System.out.print("Password again: ");
-        String password1 = scan.nextLine();
+        String password1 = scan.next();
 
         if(password.equals(password1)){
             if(yatchclub.register(userName, password, eMail, id)){
@@ -237,7 +237,8 @@ public class Menu {
             case 2:
                 // remove boats
                 System.out.print("\nBoat ID: ");
-                String boatID = scan.nextLine();
+                String boatID = scan.next();
+                System.out.print(boatID);
                 // remove boat based on boatID.
                 break;
             case 3:
