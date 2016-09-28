@@ -24,12 +24,13 @@
 ####*iteration 2*
 - [x] login function
 - [x] register function
-- [ ] boats menu
+- [x] boats menu
 - [ ] user info menu
-- [ ] structure how edit member will work
+- [x] structure how edit member will work
 
-####*iteration 2*
+####*iteration 3*
 - [x] member *class* work with xml
 - [x] boat *class* work with xml
 - [ ] secretary *class* work with xml
 - [ ] treasurer *class* work with xml
+- [ ] season simulator(10 min/per one whole simulation)
