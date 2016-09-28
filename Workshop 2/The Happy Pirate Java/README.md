@@ -1,5 +1,18 @@
 ##The Happy Pirate java edition
 
+some git commands
+1. pulling project (GET PROJECT) (you can skip *i-ii* if you have not made any changes)
+	1. git add .
+	2. git commit -m "your info"
+	3. git pull
+2. pushing project (UPDATE PROJECT)
+	1. git add .
+	2. git commit -m "your info"
+	3. git push origin master
+		* if error occurs..
+		* git pull
+		* git push origin master
+
 
 ###Iterations:
 ####*iteration 1 - done :balloon:*
