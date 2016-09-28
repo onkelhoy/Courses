@@ -68,7 +68,7 @@ public class Menu {
         System.out.print("Username: ");
         String userName = scan.nextLine();
 
-        System.out.print("eMail: ");
+        System.out.print("Email: ");
         String eMail = scan.nextLine();
 
         System.out.print("Identity nr: ");
@@ -153,7 +153,7 @@ public class Menu {
             MSTmenu();
         }
 
-
+        String type = yatchclub.getMember().getType();
 
         switch (input){
             case 0:
@@ -172,32 +172,32 @@ public class Menu {
             case 4:
                 // show payments menu
                 break;
-        }
+            case 5:
+                if(type.equals("secretary") || type.equals("treasurer")) {} //show members meny (more info)
+                else {} //show members meny
+                break;
+            case 6:
+                if(type.equals("secretary")) {}
+                else if(type.equals("treasurer")) {}
+                else showError("only values 0 - 5 are accepted");
 
-        if(yatchclub.getMember().getType().equals("secretary")){
-            if(input == 5) {} // show members meny (more info)
-            else if(input == 6) {} // show club calendar meny
-            else if(input == 7) {} // show berth registrations meny
-            else {
-                showError("only values 0 - 7 are accepted");
-                MSTmenu();
-            }
+                break;
+            case 7:
+                if(type.equals("secretary")) {}
+                else if(type.equals("treasurer")) showError("only values 0 - 6 are accepted");
+                else showError("only values 0 - 5 are accepted");
+
+                break;
+            default:
+                if(type.equals("secretary")) showError("only values 0 - 7 are accepted");
+                else if(type.equals("treasurer")) showError("only values 0 - 6 are accepted");
+                else showError("only values 0 - 5 are accepted");
         }
-        else if(yatchclub.getMember().getType().equals("treasurer")) {
-            if(input == 5) {} // show members meny (more info)
-            else if(input == 6) {} // show club payments meny
-            else {
-                showError("only values 0 - 6 are accepted");
-                MSTmenu();
-            }
-        }
-        else {
-            if(input == 5) {} // show members meny!
-            else {
-                showError("only values 0 - 5 are accepted");
-                MSTmenu();
-            }
-        }
+    }
+
+    private void UserInfoMenu(){
+        PreMenu();
+        System.out.print(String.format("--- User info menu ---\n1. Username: %s\n2. Email: %s\n3. Name: %s\n4. ", ));
     }
 
     private void showError(String error){

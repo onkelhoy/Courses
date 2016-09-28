@@ -9,7 +9,5 @@ import java.util.ArrayList;
 public class Secretary extends Member {
     private ArrayList<Berth> berthAssignments = new ArrayList<Berth>();
 
-    public Secretary(Element data) {
-        super(data);
-    }
+    public Secretary(Element data) { super(data); }
 }
