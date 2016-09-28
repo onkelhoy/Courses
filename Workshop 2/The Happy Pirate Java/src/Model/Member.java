@@ -32,7 +32,7 @@ public class Member {
         email       = data.getElementsByTagName("email").item(0).getTextContent();
         type        = data.getElementsByTagName("type").item(0).getTextContent();
 
-        NodeList boatsxml = data.getElementsByTagName("boats");
+        NodeList boatsxml = data.getElementsByTagName("boat");
         for(int i = 0; i < boatsxml.getLength(); i++){
             boats.add(new Boat((Element)boatsxml.item(0)));
         }

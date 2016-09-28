@@ -29,7 +29,7 @@ public class YatchClub {
 
 
     public boolean login(String usn, String pass){
-        NodeList l = memberDB.Search("//member[username[text() = '"+usn+"'] and password[text() = '"+pass+"']]");
+        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s'] and password[text() = '%s']]", usn, pass));
         if(l == null || l.getLength() == 0) return false;
         else {
             member = new Member((Element) l.item(0));
@@ -40,7 +40,7 @@ public class YatchClub {
 
     public boolean register(String usn, String password, String email, String identity){
         String id = genereteId(10);
-        // do a valitation for identity for the 'sake of fun'
+        // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
 
         Element m, p, u, e, i, s, n, a, b, t;
         m = memberDB.getDoc().createElement("member");
@@ -72,7 +72,7 @@ public class YatchClub {
         m.appendChild(s);
         m.appendChild(a);
 
-        String format = String.format("//member[username[text() = '%1s'] or email[text() = '%2s'] or identity[text() = '%3s']]", usn, email, identity);
+        String format = String.format("//member[username[text() = '%s'] or email[text() = '%s'] or identity[text() = '%s']]", usn, email, identity);
         if(memberDB.Search(format).getLength() != 0){
             return false;
         }
@@ -82,6 +82,7 @@ public class YatchClub {
         return true;
     }
 
+
     private String genereteId(int length){
         char[] values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#%&".toCharArray();
         StringBuilder strb = new StringBuilder();
@@ -90,7 +91,7 @@ public class YatchClub {
             strb.append(values[rand.nextInt(values.length)]);
         }
 
-        /*if(memberDB.Search("//member/id[text() = '"+strb.toString()+"']").getLength() == 0){
+        /*if(memberDB.Search(String.format("//member/id[text() = '%s']", strb.toString())).getLength() == 0){
             return genereteId(length);
         }*/
         return strb.toString();
