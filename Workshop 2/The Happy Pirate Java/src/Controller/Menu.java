@@ -31,6 +31,7 @@ public class Menu {
                 break;
             case "2":
                 AnonymousMenu();
+                break;
             case "3":
                 RegistrationMenu();
                 break;
@@ -47,8 +48,26 @@ public class Menu {
 
     private void AnonymousMenu(){
         PreMenu();
-        System.out.print("--- Anonymous Menu ---");
+        System.out.print("--- Anonymous Menu ---\n1). List\n2). See Details\n3). Search\n0) Exit");
 
+        String choise = scan.next();
+        switch (choise){
+            case "1":
+                // list
+                break;
+            case "2":
+                // see details
+                break;
+            case "3":
+                // search
+                break;
+            case "4":
+                AuthenticateMenu();
+                break;
+            default:
+                System.out.println("That command in not valid.\nTry again!");
+                AuthenticateMenu();
+        }
 
     }
 
