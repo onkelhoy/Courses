@@ -32,6 +32,8 @@ public class Menu {
             case "2":
                 RegistrationMenu();
                 break;
+            case "3":
+                // put search method here
             case "0":
                 System.out.println("Thank you for visiting The Happy Pirate yacht club.");
                 scan.close();
@@ -287,7 +289,7 @@ public class Menu {
             // show boats
         }
         // \n4). register might be edited in the future.
-        System.out.print("--- Boat Menu ---\n1). list boats.\n2). remove boats\n3). add new boat\n4). register\n0). Exit\n # ");
+        System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n0). Exit\n # ");
         int input = getInput();
 
 
@@ -304,18 +306,37 @@ public class Menu {
                 if(boatID.equals("0")) BoatMenu(listValue);
                 else {
                     // remove boat based on boatID.
-
                 }
                 break;
             case 3:
                 // add new boat
+                addNewBoat();
                 break;
             case 4:
                 // register boat to a berth, might be updated
                 break;
+
+            // case 5: edit a specific boat functionality, to keep in mind
+
             case 0:
                 MSTmenu();
                 break;
         }
+    }
+
+    private void addNewBoat(){
+        System.out.print("--- Add new boat ---");
+
+        //Boat name is not a property
+        System.out.print("\nBoat Name: ");
+        String input = scan.next();
+        System.out.print(("\nBoat Type: "));
+        input = scan.next();
+        System.out.print("Boat Length: ");
+        input = scan.next();
+
+        // save to xmlDB
+        System.out.print("\nBoat has been saved");
+        BoatMenu(false);
     }
 }
