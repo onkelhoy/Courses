@@ -7,15 +7,18 @@ import java.util.Calendar;
  */
 public class SearchExpression {
     static public String ConvertQuery(String query){
+        query = query.replaceAll(" ", "");
         String expression = "";
 
         String[] ors = query.split("or");
         for(int i = 0; i < ors.length; i++){
             String[] ands = ors[i].split("and");    // e.g. [a=3 and b>2], [a=1 and b<1]
 
+            String a = "";
             for(int j = 0; j < ands.length; j++){
-
+                a += convertPart(ands[j]) + (j < ands.length - 1 ? " and " : "");
             }
+            expression += a + (i < ors.length - 1 ? " or " : "");
         }
 
         return expression;
@@ -24,31 +27,17 @@ public class SearchExpression {
 
     static private String convertPart(String queryPart){
         String expressionPart = "";
-        String[] arr = queryPart.split(">=");
-        if(arr.length == 2){ // >=
+        String operator = "";
+        String[] arr, types = new String[]{">=", "<=", "==", "=", ">", "<"};
 
+        for(int i = 0; i< types.length; i++){
+            arr = queryPart.split(types[i]);
+            if(arr.length == 2){
+                return getField(arr[0], (types[i].equals("==") ? "=": types[i]), arr[1]);
+            }
         }
-        else arr = queryPart.split("<=");
-        if(arr.length == 2){ // <=
-
-        }
-        else arr = queryPart.split("=");
-        if(arr.length == 2){ // =
-
-        }
-        else arr = queryPart.split(">");
-        if(arr.length == 2){ // >
-
-        }
-        else arr = queryPart.split("<");
-        if(arr.length == 2){ // <
-
-        }
-        else {
-            //no type found..
-        }
-
-        return expressionPart;
+        //no operation found
+        return "";
     }
 
     static private String getField(String fieldName, String operator, String value){
@@ -80,14 +69,18 @@ public class SearchExpression {
 
                 break;
             case "boattype":
-                field = String.format("boat[@type %s '%s']", operator, value);
+                field = String.format("boats/boat[@type = '%s']", value);
                 break;
             case "boats":
                 field = "count(boats/boat)";
                 break;
             case "boatlength":
-                field = "";
+                field = String.format("boats/boat[@length %s '%s']", operator, value);
                 break;
+            default:
+                if(operator.equals("=") && value.contains("*")){
+                    field = String.format("%s[contains(%s)]", fieldName, value.replace('*', ' ').replace(" ", ""));
+                }
         }
 
         return field;
