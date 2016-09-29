@@ -1,6 +1,7 @@
 package Controller;
 
 import Helper.FileHandler;
+import Helper.HashAndAuth;
 import Model.Member;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -13,6 +14,7 @@ import java.util.Scanner;
  */
 public class YatchClub {
 
+    private HashAndAuth haa = new HashAndAuth();
     private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
     private Member member;
     public Member getMember() { return member; }
@@ -29,11 +31,16 @@ public class YatchClub {
 
 
     public boolean login(String usn, String pass){
-        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s'] and password[text() = '%s']]", usn, pass));
+        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
         if(l == null || l.getLength() == 0) return false;
         else {
-            member = new Member((Element) l.item(0));
-            return true; //true login success false fail'd to login.
+            Element e = (Element) l.item(0);
+            String dbpass = e.getElementsByTagName("password").item(0).getTextContent();
+            if(haa.authenticate(pass, dbpass)) {
+                member = new Member(e);
+                return true; //true login success false fail'd to login.
+            }
+            else return false;
         }
 
     }
@@ -57,7 +64,7 @@ public class YatchClub {
         u.setTextContent(usn);
         s.setTextContent(identity);
         e.setTextContent(email);
-        p.setTextContent(password);
+        p.setTextContent(haa.hash(password));
         i.setTextContent(id);
         t.setTextContent("member");
 

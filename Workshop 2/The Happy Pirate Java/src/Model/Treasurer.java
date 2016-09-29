@@ -10,7 +10,4 @@ public class Treasurer extends Member {
         super(data);
     }
 
-
-
-
 }
