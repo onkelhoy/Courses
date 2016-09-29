@@ -23,7 +23,9 @@ public class FileHandler {
     private XPath xpath = null;
     private String path = "";
 
-    public Document getDoc(){ return xmlDoc; }
+    public Document getDoc(){
+        return xmlDoc;
+    }
 
     public FileHandler(String fileName) {
         path = "content/"+fileName+"DB.xml";
@@ -32,8 +34,7 @@ public class FileHandler {
         xpath = xFactory.newXPath();
 
         try {
-            DocumentBuilderFactory Bfactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = Bfactory.newDocumentBuilder();
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
             File file = new File(path);
             if(file.exists()){

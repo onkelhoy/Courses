@@ -20,6 +20,25 @@ public class Member {
             email,
             type;
 
+    public String getName()     { return name; }
+    public String getUsername() { return username; }
+    public String getIdentity() { return identity; }
+    public String getEmail()    { return email; }
+
+
+    public void setName(String name)            { this.name = name; }
+    public void setUsername(String username)    { this.username = username; }
+    public void setIdentity(String identity)    { this.identity = identity; }
+    public void setEmail(String email)          { this.email = email; } // secerity can be aplied here
+    public boolean hasPayedMembership() {
+        boolean pay = false;
+        for(Boat b : boats){
+            pay = b.hasPayed();
+            if(!pay) break;
+        }
+
+        return pay;
+    }
 
     public String getType(){ return type.toLowerCase(); }
     //constructor, getters and setters

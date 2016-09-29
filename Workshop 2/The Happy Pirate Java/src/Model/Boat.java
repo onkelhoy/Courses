@@ -32,6 +32,9 @@ public class Boat implements Comparable<Boat> {
     public String toString(){
         return "";
     }
+    public boolean hasPayed() {
+        return berth.getSeasonPayment();
+    }
 
     @Override
     public int compareTo(Boat o) {

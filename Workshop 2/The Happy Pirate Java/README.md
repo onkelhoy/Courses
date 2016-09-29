@@ -21,15 +21,22 @@
 - [x] create register meny
 - [x] create MST meny
 
-####*iteration 2*
+####*iteration 2 - done :balloon:*
 - [x] login function
 - [x] register function
-- [ ] boats menu
-- [ ] user info menu
-- [ ] structure how edit member will work
+- [x] boats menu
+- [x] user info menu
+- [x] structure how edit member will work
 
-####*iteration 2*
+####*iteration 3*
+- [ ] Check Grade 2 task 5
+- [ ] Check Grade 3 task 1 - not logged in users should be able to see information
+- [ ] Check Grade 3 task 2
+- [ ] Discuss on we should implement it (design)
+
+####*iteration 4*
 - [x] member *class* work with xml
 - [x] boat *class* work with xml
 - [ ] secretary *class* work with xml
 - [ ] treasurer *class* work with xml
+- [ ] season simulator(10 min/per one whole simulation)

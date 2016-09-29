@@ -23,7 +23,7 @@ public class Menu {
 
     private void AuthenticateMenu(){
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). login.\n2). register\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n0). Exit\n # ");
         String choise = scan.next();
         switch (choise){
             case "1":
@@ -33,11 +33,11 @@ public class Menu {
                 RegistrationMenu();
                 break;
             case "0":
-                System.out.println("Have a nice day sir, bye bye!!!");
+                System.out.println("Thank you for visiting The Happy Pirate yacht club.");
                 scan.close();
                 break;
             default:
-                System.out.println("Wrong input...\nTry again!!!");
+                System.out.println("That command in not valid.\nTry again!");
                 AuthenticateMenu();
         }
 
@@ -55,7 +55,7 @@ public class Menu {
 
         else{
             PreMenu();
-            System.out.println("failed logged in");
+            System.out.println("That username and password is not valid\nTry again!");
             AuthenticateMenu();
         }
 
@@ -89,7 +89,7 @@ public class Menu {
                 RegistrationMenu();
             }
         } else{
-            System.out.println("Passwords don't match!!!\n try again!!!");
+            System.out.println("Passwords does not match!\nTry again!!!");
             RegistrationMenu();
         }
 
@@ -126,11 +126,14 @@ public class Menu {
 
 
     private void PreMenu(){
-        System.out.println("\n\n\n----------------------------------------------------------------------------------------------------------------\n\n");
+        System.out.println("\n\n\n===============================================================================================================\n===============================================================================================================\n");
     }
     private void MSTmenu(){
         PreMenu();
-        System.out.println(String.format("--- %s Menu ---", yatchclub.getMember().getType()));
+        String type = yatchclub.getMember().getType();
+        type = type.substring(0, 1).toUpperCase() + type.substring(1);
+
+        System.out.println(String.format("--- %s Menu ---", type));
         System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
         switch (yatchclub.getMember().getType()){
             case "secretary":
@@ -171,6 +174,7 @@ public class Menu {
                 break;
             case 1:
                 // show user info menu
+                UserInfoMenu();
                 break;
             case 2:
                 // show boats menu
@@ -207,7 +211,66 @@ public class Menu {
 
     private void UserInfoMenu(){
         PreMenu();
-        //System.out.print(String.format("--- User info menu ---\n1. Username: %s\n2. Email: %s\n3. Name: %s\n4. ", ));
+        Member m = yatchclub.getMember();
+        System.out.print(String.format("--- User info menu ---\n0. Go back\n1: Save\n\nChangeable <number:change>\n  2. Username: %s\n  3. Email: %s\n  4. Name: %s\n  5. Change Password\n\nIdentity: %s\nMembership fee: %s\n\n?: ", m.getUsername(), m.getEmail(), m.getName(), m.getIdentity(), (m.hasPayedMembership() ? "has payed" : "has not payed")));
+
+        String input = scan.next();
+        int number = -1;
+        if(input.length() > 1){
+            String[] arr = input.split(":");
+            try{
+                number = Integer.parseInt(arr[0]);
+            }
+            catch (Exception e){ }
+            input = arr[1];
+
+            switch (number){
+                case -1://error
+                    showError("Number : string - is only supported");
+                    UserInfoMenu();
+                    break;
+                case 2: //usn
+                    m.setUsername(input);
+                    UserInfoMenu();
+                    break;
+                case 3: //email
+                    m.setEmail(input);
+                    UserInfoMenu();
+                    break;
+                case 4: //name
+                    m.setName(input);
+                    UserInfoMenu();
+                    break;
+                case 5: //password
+                    UserInfoMenu();
+                    break;
+                default:
+                    showError("Only option 2-5 can have 2 values");
+                    UserInfoMenu();
+            }
+        }
+        else {
+            try{
+                number = Integer.parseInt(input);
+            }
+            catch (Exception e){ }
+
+            switch (number){
+                case -1://error
+                    showError("only numbers!");
+                    UserInfoMenu();
+                    break;
+                case 0: //go back
+                    MSTmenu();
+                    break;
+                case 1: //save
+                    MSTmenu();
+                    break;
+                default:
+                    showError("Only option 0-1 can have a number");
+                    UserInfoMenu();
+            }
+        }
     }
 
     private void showError(String error){
@@ -236,10 +299,13 @@ public class Menu {
                 break;
             case 2:
                 // remove boats
-                System.out.print("\nBoat ID: ");
+                System.out.print("\n(0 to quit)\nBoat ID: ");
                 String boatID = scan.next();
-                System.out.print(boatID);
-                // remove boat based on boatID.
+                if(boatID.equals("0")) BoatMenu(listValue);
+                else {
+                    // remove boat based on boatID.
+
+                }
                 break;
             case 3:
                 // add new boat
@@ -248,7 +314,7 @@ public class Menu {
                 // register boat to a berth, might be updated
                 break;
             case 0:
-                // return to previus menu
+                MSTmenu();
                 break;
         }
     }
