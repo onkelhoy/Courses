@@ -1,0 +1,8 @@
+2016-09-29
+ Removed proposal - now secretary only confirms the registrations (dont know if i should show the pre/off season)
+ Removed manages asociation from Member and boat
+ Removed treasurer as it served no purpose
+ Removed clubcalendar
+ Changed relationship name "has" to "linked" - a boat and a berth is linked together
+ Added relationship between member and calendar - views as a member can view/list their calendar events
+ Changed relationship name "creates" to "reserves" between boat and registrations - dont know if this shows that boats and berth can be created without assigned (as i dont really understood what Ioseff ment)
