@@ -21,11 +21,11 @@
 - [x] create register meny
 - [x] create MST meny
 
-####*iteration 2*
+####*iteration 2 - done :balloon:*
 - [x] login function
 - [x] register function
 - [x] boats menu
-- [ ] user info menu
+- [x] user info menu
 - [x] structure how edit member will work
 
 ####*iteration 3*
