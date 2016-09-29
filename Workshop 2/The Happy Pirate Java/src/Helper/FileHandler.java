@@ -23,7 +23,9 @@ public class FileHandler {
     private XPath xpath = null;
     private String path = "";
 
-    public Document getDoc(){ return xmlDoc; }
+    public Document getDoc(){
+        return xmlDoc;
+    }
 
     public FileHandler(String fileName) {
         path = "content/"+fileName+"DB.xml";

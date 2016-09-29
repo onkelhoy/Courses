@@ -23,7 +23,7 @@ public class Menu {
 
     private void AuthenticateMenu(){
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). login.\n2). register\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n0). Exit\n # ");
         String choise = scan.next();
         switch (choise){
             case "1":
@@ -33,11 +33,11 @@ public class Menu {
                 RegistrationMenu();
                 break;
             case "0":
-                System.out.println("Have a nice day sir, bye bye!!!");
+                System.out.println("Thank you for visiting The Happy Pirate yacht club.");
                 scan.close();
                 break;
             default:
-                System.out.println("Wrong input...\nTry again!!!");
+                System.out.println("That command in not valid.\nTry again!");
                 AuthenticateMenu();
         }
 
@@ -55,7 +55,7 @@ public class Menu {
 
         else{
             PreMenu();
-            System.out.println("failed logged in");
+            System.out.println("That username and password is not valid\nTry again!");
             AuthenticateMenu();
         }
 
@@ -89,7 +89,7 @@ public class Menu {
                 RegistrationMenu();
             }
         } else{
-            System.out.println("Passwords don't match!!!\n try again!!!");
+            System.out.println("Passwords does not match!\nTry again!!!");
             RegistrationMenu();
         }
 
@@ -308,7 +308,7 @@ public class Menu {
                 // register boat to a berth, might be updated
                 break;
             case 0:
-                // return to previus menu
+                // return to previous menu
                 break;
         }
     }
