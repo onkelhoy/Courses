@@ -16,7 +16,27 @@ public class YatchClub {
     private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
     private Member member;
     public Member getMember() { return member; }
-    public void setMember() { member = null; }
+    public void setMember(boolean toNull) {
+        if(toNull) member = null;
+        else {
+            //save dataase based on member object info
+            Element e = (Element)memberDB.Search(String.format("//member[id[text() = '%s']]", member.getId())).item(0);
+            e.getElementsByTagName("name").item(0).setTextContent(member.getName());
+            e.getElementsByTagName("username").item(0).setTextContent(member.getUsername());
+            e.getElementsByTagName("type").item(0).setTextContent(member.getType());
+            e.getElementsByTagName("email").item(0).setTextContent(member.getEmail());
+            String p = member.getPassword();
+            System.out.println(p);
+            try {
+            if(p.substring(0, 8).equals("changed:")){
+                String pass = p.substring(8);   // do a hash on this later..
+                e.getElementsByTagName("password").item(0).setTextContent(pass);
+            }} catch (IndexOutOfBoundsException ie) {}
+            //e.getElementsByTagName("boats").item(0);
+
+            memberDB.Save();
+        }
+    }
 
     public YatchClub(){
         // loading/creating the databases
