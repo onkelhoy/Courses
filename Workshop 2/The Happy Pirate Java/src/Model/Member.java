@@ -24,12 +24,14 @@ public class Member {
     public String getUsername() { return username; }
     public String getIdentity() { return identity; }
     public String getEmail()    { return email; }
+    public String getPassword() { return password; }
 
 
     public void setName(String name)            { this.name = name; }
     public void setUsername(String username)    { this.username = username; }
     public void setIdentity(String identity)    { this.identity = identity; }
     public void setEmail(String email)          { this.email = email; } // secerity can be aplied here
+    public void setPassword(String password)    { this.password = "changed:"+password; }
     public boolean hasPayedMembership() {
         boolean pay = false;
         for(Boat b : boats){
