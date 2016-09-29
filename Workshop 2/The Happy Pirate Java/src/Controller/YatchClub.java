@@ -22,7 +22,9 @@ public class YatchClub {
             //save dataase based on member object info
             Element e = (Element)memberDB.Search(String.format("//member[id[text() = '%s']]", member.getId())).item(0);
             e.getElementsByTagName("name").item(0).setTextContent(member.getName());
-            e.getElementsByTagName("username").item(0).setTextContent(member.getUsername());
+            if(memberDB.Search(String.format("//username[text() = '%s']", member.getUsername())).getLength() == 0){
+                e.getElementsByTagName("username").item(0).setTextContent(member.getUsername());
+            }
             e.getElementsByTagName("type").item(0).setTextContent(member.getType());
             e.getElementsByTagName("email").item(0).setTextContent(member.getEmail());
             String p = member.getPassword();
