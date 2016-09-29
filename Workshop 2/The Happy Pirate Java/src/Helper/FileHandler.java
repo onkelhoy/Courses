@@ -32,8 +32,7 @@ public class FileHandler {
         xpath = xFactory.newXPath();
 
         try {
-            DocumentBuilderFactory Bfactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = Bfactory.newDocumentBuilder();
+            DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
 
             File file = new File(path);
             if(file.exists()){
