@@ -296,10 +296,13 @@ public class Menu {
                 break;
             case 2:
                 // remove boats
-                System.out.print("\nBoat ID: ");
+                System.out.print("\n(0 to quit)\nBoat ID: ");
                 String boatID = scan.next();
-                System.out.print(boatID);
-                // remove boat based on boatID.
+                if(boatID.equals("0")) BoatMenu(listValue);
+                else {
+                    // remove boat based on boatID.
+
+                }
                 break;
             case 3:
                 // add new boat
@@ -308,7 +311,7 @@ public class Menu {
                 // register boat to a berth, might be updated
                 break;
             case 0:
-                // return to previous menu
+                MSTmenu();
                 break;
         }
     }
