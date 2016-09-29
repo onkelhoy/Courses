@@ -134,13 +134,13 @@ public class Menu {
         type = type.substring(0, 1).toUpperCase() + type.substring(1);
 
         System.out.println(String.format("--- %s Menu ---", type));
-        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
+        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Contacts");
         switch (yatchclub.getMember().getType()){
             case "secretary":
-                System.out.print("\n6. Club Calendar\n7. Berth Registrations");
+                System.out.print("\n6. Club Calendar\n7. Berth Registrations\n");
                 break;
             case "treasurer":
-                System.out.print("\n6. Club Payments"); //change to better name later
+                System.out.print("\n6. Club Payments\n"); //change to better name later
                 break;
         }
 
