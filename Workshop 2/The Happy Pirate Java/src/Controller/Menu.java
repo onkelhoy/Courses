@@ -144,7 +144,7 @@ public class Menu {
         type = type.substring(0, 1).toUpperCase() + type.substring(1);
 
         System.out.println(String.format("--- %s Menu ---", type));
-        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
+        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Contacts");
         switch (yatchclub.getMember().getType()){
             case "secretary":
                 System.out.print("\n6. Club Calendar\n7. Berth Registrations");
@@ -198,7 +198,7 @@ public class Menu {
                 break;
             case 5:
                 if(type.equals("secretary") || type.equals("treasurer")) {} //show members meny (more info)
-                else {} //show members meny
+                else {contactsmenu();} //show members meny
                 break;
             case 6:
                 if(type.equals("secretary")) {}
@@ -217,6 +217,22 @@ public class Menu {
                 else if(type.equals("treasurer")) showError("only values 0 - 6 are accepted");
                 else showError("only values 0 - 5 are accepted");
         }
+    }
+
+    private void contactsmenu(){
+        PreMenu();
+        System.out.print("\n1). List members\n2). Search member \n0). Back\n # ");
+        String choise = scan.next();
+        switch(choise){
+            case "1":
+                break;
+            case "2":
+                break;
+            case "0":
+                MSTmenu();
+                break;
+        }
+
     }
 
     private void UserInfoMenu(){
