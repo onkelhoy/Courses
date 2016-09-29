@@ -1,6 +1,5 @@
 package Controller;
 
-import Helper.FileHandler;
 import Model.Member;
 
 import java.io.IOException;
@@ -23,17 +22,17 @@ public class Menu {
     ///// Menu methods//////////////////////////////////////////////////////////////////////////////////////////////////////
     private void AuthenticateMenu() {
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). Login\n2. Anonymous\n3). Register\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Login\n2. Register\n3). Anonymous\n0). Exit\n # ");
         String choise = scan.next();
         switch (choise) {
             case "1":
                 LoginMenu();
                 break;
             case "2":
-                AnonymousMenu();
+                RegistrationMenu();
                 break;
             case "3":
-                RegistrationMenu();
+                AnonymousMenu();
                 break;
             case "0":
                 System.out.println("Thank you for visiting The Happy Pirate yacht club.");
@@ -45,20 +44,36 @@ public class Menu {
         }
     }
 
-    private void AnonymousMenu() {
+    private void ContactsMenu() {
         PreMenu();
-        System.out.print("--- Anonymous Menu ---\n1). List\n2). See Details\n3). Search\n0) Exit");
-
+        System.out.print("\n1). List members\n2). Search member \n0). Back\n # ");
         String choise = scan.next();
         switch (choise) {
             case "1":
-                // list
                 break;
             case "2":
-                // see details
+                break;
+            case "0":
+                MSTmenu();
+                break;
+        }
+    }
+
+    private void AnonymousMenu() {
+        PreMenu();
+        System.out.print("--- Anonymous Menu ---\n1). List\n2). See Details\n3). Search\n0) Exit");
+        String choise = scan.next();
+
+        switch (choise) {
+            case "1":
+                // list all members
+                break;
+            case "2":
+                // see details about a member
+
                 break;
             case "3":
-                // search
+                // search for members
                 break;
             case "4":
                 AuthenticateMenu();
@@ -102,9 +117,9 @@ public class Menu {
         System.out.print("Password: ");
         String password = scan.next();
         System.out.print("Password again: ");
-        String password1 = scan.next();
+        String passwordRetype = scan.next();
 
-        if (password.equals(password1)) {
+        if (password.equals(passwordRetype)) {
             if (yatchclub.register(userName, password, eMail, id)) {
                 System.out.println("Successful registration");
                 LoginMenu();
@@ -116,7 +131,6 @@ public class Menu {
             System.out.println("Passwords does not match!\nTry again!!!");
             RegistrationMenu();
         }
-
     }
 
     private void MSTmenu() {
@@ -163,9 +177,11 @@ public class Menu {
                 break;
             case 3:
                 // show calendar menu
+                CalenderMenu();
                 break;
             case 4:
                 // show payments menu
+                PaymentsMenu();
                 break;
             case 5:
                 if (type.equals("secretary") || type.equals("treasurer")) {
@@ -191,22 +207,6 @@ public class Menu {
                 else if (type.equals("treasurer")) showError("only values 0 - 6 are accepted");
                 else showError("only values 0 - 5 are accepted");
         }
-    }
-
-    private void ContactsMenu() {
-        PreMenu();
-        System.out.print("\n1). List members\n2). Search member \n0). Back\n # ");
-        String choise = scan.next();
-        switch (choise) {
-            case "1":
-                break;
-            case "2":
-                break;
-            case "0":
-                MSTmenu();
-                break;
-        }
-
     }
 
     private void UserInfoMenu() {
@@ -329,6 +329,14 @@ public class Menu {
         // save to xmlDB
         System.out.print("\nBoat has been saved");
         BoatMenu(false);
+    }
+
+    private void CalenderMenu(){
+
+    }
+
+    private void PaymentsMenu(){
+
     }
 
     ///// Help methods/////////////////////////////////////////////////////////////////////////////////////////////////////
