@@ -213,7 +213,7 @@ public class Menu {
 
     private void contactsmenu(){
         PreMenu();
-        System.out.println("\n1). List members\n2). Search member \n0). Back\n # ");
+        System.out.print("\n1). List members\n2). Search member \n0). Back\n # ");
         String choise = scan.next();
         switch(choise){
             case "1":
