@@ -130,7 +130,10 @@ public class Menu {
     }
     private void MSTmenu(){
         PreMenu();
-        System.out.println(String.format("--- %s Menu ---", yatchclub.getMember().getType()));
+        String type = yatchclub.getMember().getType();
+        type = type.substring(0, 1).toUpperCase() + type.substring(1);
+
+        System.out.println(String.format("--- %s Menu ---", type));
         System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Show Members");
         switch (yatchclub.getMember().getType()){
             case "secretary":
