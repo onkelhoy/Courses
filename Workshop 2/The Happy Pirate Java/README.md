@@ -32,7 +32,7 @@
 - [ ] Check Grade 2 task 5
 - [ ] Check Grade 3 task 1 - not logged in users should be able to see information
 - [ ] Check Grade 3 task 2
-- [ ] Discuss on we should implement it (design)
+- [ ] Discuss on how we should implement it (design)
 
 ####*iteration 4*
 - [x] member *class* work with xml

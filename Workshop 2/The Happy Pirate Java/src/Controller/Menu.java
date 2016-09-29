@@ -23,17 +23,17 @@ public class Menu {
 
     private void AuthenticateMenu(){
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Login\n2. Anonymous\n3). Register\n0). Exit\n # ");
         String choise = scan.next();
         switch (choise){
             case "1":
                 LoginMenu();
                 break;
             case "2":
+                AnonymousMenu();
+            case "3":
                 RegistrationMenu();
                 break;
-            case "3":
-                // put search method here
             case "0":
                 System.out.println("Thank you for visiting The Happy Pirate yacht club.");
                 scan.close();
@@ -44,6 +44,14 @@ public class Menu {
         }
 
     }
+
+    private void AnonymousMenu(){
+        PreMenu();
+        System.out.print("--- Anonymous Menu ---");
+
+
+    }
+
     private void LoginMenu(){
         PreMenu();
         System.out.print("--- Login Menu ---\nUsername: ");
