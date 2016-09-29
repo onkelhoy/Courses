@@ -213,7 +213,7 @@ public class Menu {
 
     private void contactsmenu(){
         PreMenu();
-        System.out.println("\n1). List members\n 2). Search member \n0). back");
+        System.out.println("\n1). List members\n2). Search member \n0). Back\n # ");
         String choise = scan.next();
         switch(choise){
             case "1":
@@ -223,7 +223,6 @@ public class Menu {
             case "0":
                 MSTmenu();
                 break;
-
         }
 
     }
