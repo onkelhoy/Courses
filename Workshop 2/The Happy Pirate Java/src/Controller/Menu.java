@@ -171,7 +171,7 @@ public class Menu {
                 MSTmenu();
                 break;
             case 0:
-                yatchclub.setMember(); //logout
+                yatchclub.setMember(true); //logout
                 AuthenticateMenu();
                 break;
             case 1:
@@ -244,6 +244,7 @@ public class Menu {
                     UserInfoMenu();
                     break;
                 case 5: //password
+                    m.setPassword(input);
                     UserInfoMenu();
                     break;
                 default:
@@ -266,6 +267,7 @@ public class Menu {
                     MSTmenu();
                     break;
                 case 1: //save
+                    yatchclub.setMember(false);
                     MSTmenu();
                     break;
                 default:

@@ -1,6 +1,7 @@
 package Controller;
 
 import Helper.FileHandler;
+import Helper.HashAndAuth;
 import Model.Member;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -13,10 +14,33 @@ import java.util.Scanner;
  */
 public class YatchClub {
 
+    private HashAndAuth haa = new HashAndAuth();
     private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
     private Member member;
     public Member getMember() { return member; }
-    public void setMember() { member = null; }
+    public void setMember(boolean toNull) {
+        if(toNull) member = null;
+        else {
+            //save dataase based on member object info
+            Element e = (Element)memberDB.Search(String.format("//member[id[text() = '%s']]", member.getId())).item(0);
+            e.getElementsByTagName("name").item(0).setTextContent(member.getName());
+            if(memberDB.Search(String.format("//username[text() = '%s']", member.getUsername())).getLength() == 0){
+                e.getElementsByTagName("username").item(0).setTextContent(member.getUsername());
+            }
+            e.getElementsByTagName("type").item(0).setTextContent(member.getType());
+            e.getElementsByTagName("email").item(0).setTextContent(member.getEmail());
+            String p = member.getPassword();
+            System.out.println(p);
+            try {
+            if(p.substring(0, 8).equals("changed:")){
+                String pass = p.substring(8);   // do a hash on this later..
+                e.getElementsByTagName("password").item(0).setTextContent(haa.hash(pass));
+            }} catch (IndexOutOfBoundsException ie) {}
+            //e.getElementsByTagName("boats").item(0);
+
+            memberDB.Save();
+        }
+    }
 
     public YatchClub(){
         // loading/creating the databases
@@ -29,11 +53,16 @@ public class YatchClub {
 
 
     public boolean login(String usn, String pass){
-        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s'] and password[text() = '%s']]", usn, pass));
+        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
         if(l == null || l.getLength() == 0) return false;
         else {
-            member = new Member((Element) l.item(0));
-            return true; //true login success false fail'd to login.
+            Element e = (Element) l.item(0);
+            String dbpass = e.getElementsByTagName("password").item(0).getTextContent();
+            if(haa.authenticate(pass, dbpass)) {
+                member = new Member(e);
+                return true; //true login success false fail'd to login.
+            }
+            else return false;
         }
 
     }
@@ -57,7 +86,7 @@ public class YatchClub {
         u.setTextContent(usn);
         s.setTextContent(identity);
         e.setTextContent(email);
-        p.setTextContent(password);
+        p.setTextContent(haa.hash(password));
         i.setTextContent(id);
         t.setTextContent("member");
 
