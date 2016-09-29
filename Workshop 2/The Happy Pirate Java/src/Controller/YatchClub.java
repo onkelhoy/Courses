@@ -34,7 +34,7 @@ public class YatchClub {
             try {
             if(p.substring(0, 8).equals("changed:")){
                 String pass = p.substring(8);   // do a hash on this later..
-                e.getElementsByTagName("password").item(0).setTextContent(pass);
+                e.getElementsByTagName("password").item(0).setTextContent(haa.hash(pass));
             }} catch (IndexOutOfBoundsException ie) {}
             //e.getElementsByTagName("boats").item(0);
 
