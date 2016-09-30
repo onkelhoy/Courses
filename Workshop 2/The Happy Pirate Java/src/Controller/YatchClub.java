@@ -3,6 +3,7 @@ package Controller;
 import Helper.FileHandler;
 import Helper.HashAndAuth;
 import Helper.SearchExpression;
+import Helper.SeasonSimulator;
 import Model.Boat;
 import Model.Member;
 import org.w3c.dom.Element;
@@ -19,9 +20,11 @@ public class YatchClub {
     private HashAndAuth haa = new HashAndAuth();
     private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
     private Member member;
+    private SeasonSimulator simulator;
 
-    public YatchClub(){
+    public YatchClub(SeasonSimulator simulator){
         // loading/creating the databases
+        this.simulator = simulator;
         memberDB = new FileHandler("member");
         berthDB = new FileHandler("berth");
         calendarDB = new FileHandler("calendar");

@@ -18,7 +18,7 @@ public class SearchExpression {
             for(int j = 0; j < ands.length; j++){
                 a += convertPart(ands[j]) + (j < ands.length - 1 ? " and " : "");
             }
-            expression += a + (i < ors.length - 2 ? " or " : "");
+            expression += a + (i < ors.length - 1 ? " or " : "");
         }
 
         return String.format("//member[%s]", expression);
