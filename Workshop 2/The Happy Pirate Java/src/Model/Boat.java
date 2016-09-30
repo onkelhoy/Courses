@@ -9,14 +9,16 @@ import org.w3c.dom.Element;
 public class Boat implements Comparable<Boat> {
     // private variables
     private Berth berth;
-    private String type, id;
+    private String type, id, name;
     private int lenght;
 
     //constructor, getters and setters
     public Boat(Element data){
-        String slenght  = data.getElementsByTagName("length").item(0).getTextContent();
-        type            = data.getElementsByTagName("type").item(0).getTextContent();
-        id              = data.getElementsByTagName("id").item(0).getTextContent();
+        String slenght  = data.getAttribute("length");
+        type            = data.getAttribute("type");
+        id              = data.getAttribute("id");
+        name            = data.getAttribute("name");
+
 
 
         try{
@@ -26,6 +28,7 @@ public class Boat implements Comparable<Boat> {
             lenght = -1;
         }
     }
+
 
     public String getType() { return type; }
     // print out boat info

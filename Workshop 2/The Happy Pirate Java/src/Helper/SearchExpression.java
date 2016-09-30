@@ -41,9 +41,11 @@ public class SearchExpression {
     }
 
     static private String getField(String fieldName, String operator, String value){
-        String field = fieldName + operator + value;
+        String field = fieldName + operator + String.format("'%s'", value);
         String pre = (fieldName.contains("(") ? "(" : "");
         switch (fieldName.replaceAll("\\W", "")){
+            case "password":
+                return "";
             case "gender":
                 field = pre + "substring(identity, 10, 1) mod 2 = " + (value.equals("man") ? 1 : 0); //YYYYMMDD XXGC <- G = gender
                 break;

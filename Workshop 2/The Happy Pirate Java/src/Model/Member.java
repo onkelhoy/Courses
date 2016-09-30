@@ -63,7 +63,14 @@ public class Member {
 
     // printing out info
     public String verboseInfo(){
-        return "";
+        String idn = "";
+        try {
+            idn = identity.substring(0, 9);
+        }
+        catch (Exception e){
+            idn = identity;
+        }
+        return String.format("USERNAME: %s\tEMAIL: %s\tNAME: %s\nID: %s\tIDENTITY: %s\n", username, email, name, id, idn);
     }
     public String compactInfo(){
         return "";
