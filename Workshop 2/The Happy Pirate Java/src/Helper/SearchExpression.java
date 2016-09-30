@@ -7,7 +7,7 @@ import java.util.Calendar;
  */
 public class SearchExpression {
     static public String ConvertQuery(String query){
-        query = query.replaceAll(" ", "");
+        query = query.replaceAll(" ", "").toLowerCase();
         String expression = "";
 
         String[] ors = query.split("or");
@@ -18,10 +18,10 @@ public class SearchExpression {
             for(int j = 0; j < ands.length; j++){
                 a += convertPart(ands[j]) + (j < ands.length - 1 ? " and " : "");
             }
-            expression += a + (i < ors.length - 1 ? " or " : "");
+            expression += a + (i < ors.length - 2 ? " or " : "");
         }
 
-        return expression;
+        return String.format("//member[%s]", expression);
     }
 
 
@@ -33,7 +33,7 @@ public class SearchExpression {
         for(int i = 0; i< types.length; i++){
             arr = queryPart.split(types[i]);
             if(arr.length == 2){
-                return getField(arr[0], (types[i].equals("==") ? "=": types[i]), arr[1]);
+                return getField(arr[0], (types[i].equals("==") ? "=": types[i]), arr[1].replaceAll("'", ""));
             }
         }
         //no operation found
@@ -42,12 +42,13 @@ public class SearchExpression {
 
     static private String getField(String fieldName, String operator, String value){
         String field = fieldName + operator + value;
-        switch (fieldName){
+        String pre = (fieldName.contains("(") ? "(" : "");
+        switch (fieldName.replaceAll("\\W", "")){
             case "gender":
-                field = "substring(identity, 10, 1) mod 2 = " + (value.equals("man") ? 1 : 0); //YYYYMMDD XXGC <- G = gender
+                field = pre + "substring(identity, 10, 1) mod 2 = " + (value.equals("man") ? 1 : 0); //YYYYMMDD XXGC <- G = gender
                 break;
             case "age":
-                field = String.format("(%s - substring(identity, 0, 5)) %s %s", Calendar.getInstance().get(Calendar.YEAR), operator, value);
+                field = String.format("%s(%s - substring(identity, 0, 5)) %s %s", pre, Calendar.getInstance().get(Calendar.YEAR), operator, value);
                 break;
             case "month":
                 field = "";
@@ -65,21 +66,21 @@ public class SearchExpression {
                 else if(value.equals("dec") || value.equals("december")) value = "12";
                 else value = "01"; //did not set propper month
 
-                field = String.format("substring(identity, 5, 2) %s %s", operator, value);
+                field = String.format("%ssubstring(identity, 5, 2) %s %s", pre, operator, value);
 
                 break;
             case "boattype":
-                field = String.format("boats/boat[@type = '%s']", value);
+                field = String.format("%sboats/boat[@type = '%s']", pre, value);
                 break;
             case "boats":
-                field = "count(boats/boat)";
+                field = String.format("%scount(boats/boat) %s %s", pre, operator, value);
                 break;
             case "boatlength":
-                field = String.format("boats/boat[@length %s '%s']", operator, value);
+                field = String.format("%sboats/boat[@length %s '%s']", pre, operator, value);
                 break;
             default:
                 if(operator.equals("=") && value.contains("*")){
-                    field = String.format("%s[contains(%s)]", fieldName, value.replace('*', ' ').replace(" ", ""));
+                    field = String.format("%s[contains(text(), '%s')]", fieldName, value.replace('*', ' ').replace(" ", ""));
                 }
         }
 
