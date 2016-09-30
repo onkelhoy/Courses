@@ -40,3 +40,5 @@
 - [ ] secretary *class* work with xml
 - [ ] treasurer *class* work with xml
 - [ ] season simulator(10 min/per one whole simulation)
+
+####*iteration 5*
