@@ -82,7 +82,7 @@ public class Pnr {
     public String GeneratePnr(){
         return getSecondPart(getFirstPart());
     }
-    public boolean Correct(String pnr){
+    public boolean Valid(String pnr){
         switch (pnr.length()){ //(swe)identity number can be 12 or 10 digits long
             case 12:
                 return (getLast(pnr.substring(2))+"").equals(pnr.charAt(11)+"");
@@ -92,5 +92,21 @@ public class Pnr {
                     //if(pnr.contains("-")) return Correct(pnr.replace("-", "")); // this would be the code for it..
                 return false; //its not valid as its not even 10 or 12
         }
+    }
+    public String Correct(String pnr){
+        pnr.replace("-", "");
+        if (pnr.length() == 10){
+            switch (pnr.charAt(0)){
+                case '0':
+                case '1':
+                    pnr = "20"+pnr;
+                    break;
+                default:
+                    pnr = "19"+pnr;
+            }
+        }
+
+        if(!Valid(pnr)) pnr = GeneratePnr(); // it corrects it
+        return pnr;
     }
 }

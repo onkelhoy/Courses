@@ -1,9 +1,6 @@
 package Controller;
 
-import Helper.FileHandler;
-import Helper.HashAndAuth;
-import Helper.SearchExpression;
-import Helper.SeasonSimulator;
+import Helper.*;
 import Model.Boat;
 import Model.Member;
 import org.w3c.dom.Element;
@@ -20,6 +17,7 @@ public class YatchClub {
     private HashAndAuth haa = new HashAndAuth();
     private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
     private Member member;
+    private Pnr pnr;
     private SeasonSimulator simulator;
 
     public YatchClub(SeasonSimulator simulator){
@@ -28,6 +26,7 @@ public class YatchClub {
         memberDB = new FileHandler("member");
         berthDB = new FileHandler("berth");
         calendarDB = new FileHandler("calendar");
+        pnr = new Pnr();
 
         Menu menu = new Menu(this, new Scanner(System.in));
     }
@@ -73,9 +72,10 @@ public class YatchClub {
         }
 
     }
-    public boolean register(String usn, String password, String email, String identity){
+    public int register(String usn, String password, String email, String identity){
         String id = genereteId(10);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
+        if(!pnr.Valid(identity)) return -2;
 
         Element m, p, u, e, i, s, n, a, b, t;
         m = memberDB.getDoc().createElement("member");
@@ -109,12 +109,12 @@ public class YatchClub {
 
         String format = String.format("//member[username[text() = '%s'] or email[text() = '%s'] or identity[text() = '%s']]", usn, email, identity);
         if(memberDB.Search(format).getLength() != 0){
-            return false;
+            return -1;
         }
 
         memberDB.getDoc().getDocumentElement().appendChild(m);
         memberDB.Save();
-        return true;
+        return 1;
     }
 
     public void saveBoat(String name, String type, String length){

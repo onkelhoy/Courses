@@ -65,12 +65,19 @@ public class Menu {
         String passwordRetype = scan.nextLine();
 
         if (password.equals(passwordRetype)) {
-            if (yatchclub.register(userName, password, eMail, id)) {
-                System.out.println("Successful registration");
-                LoginMenu();
-            } else {
-                showError("\n\nThis user information is already in use");
-                AuthenticateMenu();
+            switch (yatchclub.register(userName, password, eMail, id)){
+                case 1:
+                    System.out.println("Successful registration");
+                    LoginMenu();
+                    break;
+                case -1:
+                    showError("\n\nThis user information is already in use");
+                    AuthenticateMenu();
+                    break;
+                case -2:
+                    showError("Your identity was wrong! - YYYYMMDDXXXC");
+                    AuthenticateMenu();
+                    break;
             }
         } else {
             System.out.println("Passwords does not match!\nTry again!!!");
@@ -353,6 +360,8 @@ public class Menu {
                 if (type.equals("secretary")) showError("only values 0 - 7 are accepted");
                 else if (type.equals("treasurer")) showError("only values 0 - 6 are accepted");
                 else showError("only values 0 - 5 are accepted");
+
+                MSTmenu();
         }
     }
     private void SplashScreen() {
