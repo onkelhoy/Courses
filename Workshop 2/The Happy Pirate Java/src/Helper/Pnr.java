@@ -80,7 +80,7 @@ public class Pnr {
 
     // public
     public String GeneratePnr(){
-        return getSecondPart(getFirstPart());
+        return Correct(getSecondPart(getFirstPart()));
     }
     public boolean Valid(String pnr){
         switch (pnr.length()){ //(swe)identity number can be 12 or 10 digits long

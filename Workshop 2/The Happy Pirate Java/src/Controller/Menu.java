@@ -1,5 +1,8 @@
 package Controller;
 
+import Helper.Pnr;
+import Model.Boat;
+import Model.CalendarEvent;
 import Model.Member;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -64,6 +67,30 @@ public class Menu {
         System.out.print("Password again: ");
         String passwordRetype = scan.nextLine();
 
+        Pnr pnr = new Pnr();
+        if(!pnr.Valid(id)) {
+            System.out.print("\nYour identity was wrong! - YYYYMMDDXXXC\nWould you like to correct it? (y/n): ");
+            String ans = scan.nextLine();
+            switch (ans.toLowerCase()){
+                case "y":
+                case "yes":
+                    while(true) {
+                        System.out.print("Would you like to generete or write your own?\nI want to generete (y/n): ");
+                        ans = scan.nextLine().toLowerCase();
+                        if (ans.equals("n") || ans.equals("no")) {
+                            System.out.print("identity: ");
+                            id = scan.nextLine();
+                            if(pnr.Valid(id)) break;
+                        }
+                        else {
+                            id = pnr.GeneratePnr();
+                            break;
+                        }
+                    }
+
+                    break;
+            }
+        }
         if (password.equals(passwordRetype)) {
             switch (yatchclub.register(userName, password, eMail, id)){
                 case 1:
@@ -72,10 +99,6 @@ public class Menu {
                     break;
                 case -1:
                     showError("\n\nThis user information is already in use");
-                    AuthenticateMenu();
-                    break;
-                case -2:
-                    showError("Your identity was wrong! - YYYYMMDDXXXC");
                     AuthenticateMenu();
                     break;
             }
@@ -203,7 +226,80 @@ public class Menu {
         }
     }
     private void CalenderMenu(){
+        PreMenu();
+        System.out.print("--- Calendar Menu ---\n0. go back\n1. list\n2. show all\n?: ");
+        String ans = scan.nextLine();
+        int s = -1, c = -1;
 
+        switch (ans){
+            case "0":
+                MSTmenu();
+                break;
+            case "1":
+                System.out.print("\noffset: ");
+                String start = scan.nextLine();
+                System.out.print("count: ");
+                String count = scan.nextLine();
+
+                try {
+                    s = Integer.parseInt(start);
+                    c = Integer.parseInt(count);
+                }
+                catch (Exception e){ }
+
+                if(c == -1 || s == -1){
+                    showError("offset and count must be numbers!");
+                    CalenderMenu();
+                    break;
+                }
+            case "2":
+                //show all
+                NodeList ls = yatchclub.SearchDB("id = " + yatchclub.getMember().getId(), "calendar");
+                if(c == -1 && s == -1) {c = ls.getLength(); s = 0;}
+                if(s < ls.getLength()){
+                    for (int i = 0; i < c; i++) {
+                        CalendarEvent cal = new CalendarEvent((Element)ls.item(i+s));
+
+                        if(cal.dead) yatchclub.RemoveEvent(cal);
+                        else System.out.print(cal.toString());
+                    }
+                    showError("");
+                }
+                else showError((ls.getLength() != 0 ? "\noffset was too high" : "\nthere were no events"));
+                // show calendar events from index: offset and
+
+                CalenderMenu();
+                break;
+            default:
+                showError("only numbers 0-2 are allowed");
+                CalenderMenu();
+        }
+    }
+    private void ClubCalendarMenu() {
+        PreMenu();
+        System.out.print("--- Club Calendar ---\n1. list\n2. add\n3. remove\n4. change\n?: ");
+        String ans = scan.nextLine();
+
+        switch (ans){
+            case "0":
+                MSTmenu();
+                break;
+            case "1":
+                break;
+            case "2":
+                break;
+            case "3":
+                break;
+            case "4":
+                System.out.print("id: ");
+                String id = scan.nextLine();
+
+
+                break;
+            default:
+                showError("only number 0-4 are valid input");
+                ClubCalendarMenu();
+        }
     }
     private void PaymentsMenu(){
 
@@ -213,6 +309,9 @@ public class Menu {
         PreMenu();
         if (listValue) {
             // show boats
+            for(Boat b : yatchclub.getMember().getBoats()){
+                System.out.print(b.toString());
+            }
         }
         // \n4). register might be edited in the future.
         System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n0). Exit\n # ");
@@ -227,9 +326,15 @@ public class Menu {
                 // remove boats
                 System.out.print("\n(0 to quit)\nBoat ID: ");
                 String boatID = scan.nextLine();
-                if (boatID.equals("0")) BoatMenu(listValue);
+                if (boatID.equals("0")) BoatMenu(false);
                 else {
                     // remove boat based on boatID.
+                    if(yatchclub.RemoveNode(String.format("//boat[@id = %s]", boatID), "member")){
+                        showError("Boat was successfully removed"); //success
+                    }
+                    else showError("Some error occurred and boat could not be removed!");
+
+                    BoatMenu(false);
                 }
                 break;
             case "3":
@@ -261,7 +366,18 @@ public class Menu {
         System.out.print("Boat Length: ");
         String blength = scan.nextLine();
 
-        yatchclub.saveBoat(bname, btype, blength);
+
+        switch (yatchclub.saveBoat(bname, btype, blength)){
+            case 0:
+                showError("Boat was saved");
+                break;
+            case -1:
+                showError("Boat could not be added due to some unknown reason");
+                break;
+            case -2:
+                showError(String.format("Boat length was not a valid length [0-%s]", yatchclub.getMaxlength()));
+                break;
+        }
         // save to xmlDB
         System.out.print("\nBoat has been saved");
         BoatMenu(false);
@@ -346,7 +462,10 @@ public class Menu {
                 break;
             case "6":
                 if (type.equals("secretary")) {
+                    // show club calendar
+                    ClubCalendarMenu();
                 } else if (type.equals("treasurer")) {
+                    // show club payments [payment history and such]
                 } else showError("only values 0 - 5 are accepted");
 
                 break;

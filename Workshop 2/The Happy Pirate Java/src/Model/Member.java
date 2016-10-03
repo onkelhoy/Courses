@@ -12,19 +12,14 @@ import java.util.ArrayList;
 public class Member {
     //private variables
     private ArrayList<Boat> boats = new ArrayList<Boat>();
-    private String name,
-            username,
-            password,
-            identity,
-            id,
-            email,
-            type;
+    private String name, username, password, identity, id, email, type;
 
     public String getName()     { return name; }
     public String getUsername() { return username; }
     public String getIdentity() { return identity; }
     public String getEmail()    { return email; }
     public String getPassword() { return password; }
+    public ArrayList<Boat> getBoats() { return boats; }
 
 
     public void setName(String name)            { this.name = name; }
@@ -33,7 +28,7 @@ public class Member {
     public void setEmail(String email)          { this.email = email; } // secerity can be aplied here
     public void setPassword(String password)    { this.password = "changed:"+password; }
     public boolean hasPayedMembership() {
-        boolean pay = false;
+        boolean pay = true; // if no boats then no payment
         for(Boat b : boats){
             pay = b.hasPayed();
             if(!pay) break;
@@ -43,7 +38,8 @@ public class Member {
     }
 
     public String getType(){ return type.toLowerCase(); }
-    //constructor, getters and setters
+    public String getId(){ return id; }
+
     public Member(Element data){
         username    = data.getElementsByTagName("username").item(0).getTextContent();
         name        = data.getElementsByTagName("name").item(0).getTextContent();
@@ -58,8 +54,6 @@ public class Member {
             boats.add(new Boat((Element)boatsxml.item(0)));
         }
     }
-    public String getId(){ return id; }
-
 
     // printing out info
     public String verboseInfo(){
@@ -74,5 +68,15 @@ public class Member {
     }
     public String compactInfo(){
         return "";
+    }
+
+    public void addBoat(Boat boat){ boats.add(boat); }
+    public String createBoatId(){
+        if(boats.size() > 0){
+            int latestIndex = Integer.parseInt(boats.get(boats.size()-1).getId().substring(10));
+
+            return id + ++latestIndex;
+        }
+        else return id + 0;
     }
 }

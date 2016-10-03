@@ -1,13 +1,17 @@
 package Controller;
 
 import Helper.*;
+import Model.Berth;
 import Model.Boat;
+import Model.CalendarEvent;
 import Model.Member;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by henry on 2016-09-25.
@@ -15,10 +19,10 @@ import java.util.Scanner;
 public class YatchClub {
 
     private HashAndAuth haa = new HashAndAuth();
-    private FileHandler memberDB, calendarDB, berthDB; //berthRegistrations
+    private FileHandler memberDB, calendarDB, berthDB, paymentDB; //berthRegistrations
     private Member member;
-    private Pnr pnr;
     private SeasonSimulator simulator;
+    private int maxlength = 70; //standard
 
     public YatchClub(SeasonSimulator simulator){
         // loading/creating the databases
@@ -26,7 +30,7 @@ public class YatchClub {
         memberDB = new FileHandler("member");
         berthDB = new FileHandler("berth");
         calendarDB = new FileHandler("calendar");
-        pnr = new Pnr();
+        paymentDB = new FileHandler("payment");
 
         Menu menu = new Menu(this, new Scanner(System.in));
     }
@@ -56,6 +60,7 @@ public class YatchClub {
             memberDB.Save();
         }
     }
+    public int getMaxlength() { return maxlength; }
 
     // methodes
     public boolean login(String usn, String pass){
@@ -73,9 +78,8 @@ public class YatchClub {
 
     }
     public int register(String usn, String password, String email, String identity){
-        String id = genereteId(10);
+        String id = genereteId(10, true);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
-        if(!pnr.Valid(identity)) return -2;
 
         Element m, p, u, e, i, s, n, a, b, t;
         m = memberDB.getDoc().createElement("member");
@@ -117,7 +121,7 @@ public class YatchClub {
         return 1;
     }
 
-    public void saveBoat(String name, String type, String length){
+    public int saveBoat(String name, String type, String slength){
         /**
          * check season
          * if pre/off
@@ -131,21 +135,107 @@ public class YatchClub {
 
         // add boat to member
         //member.createBoat(new Boat(name, type, length), false);
+
+        int length;
+        try {
+            length = Integer.parseInt(slength);
+        }
+        catch (Exception e){
+            length = 0;
+        }
+
+        if(length != 0) { // and if under certain limit set by the yatchClub
+            String boatId = member.createBoatId();
+            SeasonSimulator.Time time = simulator.GetSeason();
+
+            Element boat = memberDB.getDoc().createElement("boat");
+            boat.setAttribute("id", boatId);
+            boat.setAttribute("name", name);
+            boat.setAttribute("type", type);
+            boat.setAttribute("length", slength);
+            boat.setAttribute("payed", "0"); //has not payed
+
+            Boat b = new Boat(boat);
+            Berth berth = new Berth(b, member);
+
+            switch (time.name()) {
+                case "season": //berth can be assigned directly
+                    boat.setAttribute("price", berth.getFee()+"");
+                    break;
+                case "pre_season":
+                case "off_season": //berth added to berthDB so secretary can assigen them
+                    //add to berthDB
+                    Element berthElm = berthDB.getDoc().createElement("Berth");
+                    berthElm.setAttribute("memberId", member.getId());
+                    berthElm.setAttribute("boatId", boatId);
+                    berthElm.setAttribute("fee", berth.getFee()+""); // fee is based on certain "unknown" rules
+
+                    berthDB.Append(berthElm);
+                    berthDB.Save();
+                    break;
+            }
+
+            memberDB.Search(String.format("//member[id='%s']/boats", member.getId())).item(0).appendChild(boat);
+            memberDB.Save();
+
+
+            //member.addBoat(b);
+
+            return 0; // it all went fine
+        }
+        else return -2; // length of boat was 0 or too long... (or not a valid int)
+    }
+    public boolean RemoveNode(String expression, String db){
+        switch (db.toLowerCase()){
+            case "member":
+                return remove(expression, memberDB);
+            case "berth":
+                return remove(expression, berthDB);
+            case "calendar":
+                return remove(expression, calendarDB);
+            case "payment":
+                return remove(expression, paymentDB);
+        }
+        return false; // something wierd happened
+    }
+    private boolean remove(String expression, FileHandler db){
+        try {
+            Node rem = db.Search(expression).item(0);
+            rem.getParentNode().removeChild(rem);
+            return true;
+        }
+        catch (Exception e){
+            return false;
+        }
     }
     public NodeList SearchDB(String query, String db){
         String expression = SearchExpression.ConvertQuery(query);
         switch (db.toLowerCase()){
             case "member":
-                return memberDB.Search(expression);
+                return memberDB.Search(String.format("//member[%s]",expression));
             case "calendar":
-                return calendarDB.Search(expression);
+                return calendarDB.Search(String.format("//event[%s]",expression));
             case "berth":
-                return berthDB.Search(expression);
+                return berthDB.Search(String.format("//berth[%s]",expression));
+            case "payment":
+                return paymentDB.Search(String.format("//payment[%s]",expression));
         }
         return null;
     }
 
-    private String genereteId(int length){
+    public void RemoveEvent(CalendarEvent event){
+        event.Remove(calendarDB);
+    }
+    public void AddEvent(int endTime, int startTime, String name, String eventInfo, String memberId){
+        CalendarEvent event = new CalendarEvent(calendarDB, endTime, startTime, name, memberId, eventInfo, genereteId(10, false));
+        calendarDB.Append(event.getEvent());
+        calendarDB.Save();
+    }
+    public void ChangeEvent(String id, int endTime, int startTime, String name, String eventInfo, String memberID) {
+
+    }
+
+    private String genereteId(int length, boolean mem){
         char[] values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#%&".toCharArray();
         StringBuilder strb = new StringBuilder();
         Random rand = new Random();
@@ -153,8 +243,11 @@ public class YatchClub {
             strb.append(values[rand.nextInt(values.length)]);
         }
 
-        if(memberDB.Search(String.format("//member[id = '%s']", strb.toString())).getLength() != 0){
-            return genereteId(length);
+        if(mem && memberDB.Search(String.format("//member[id = '%s']", strb.toString())).getLength() != 0){
+            return genereteId(length, mem);
+        }
+        else if(calendarDB.Search(String.format("//event[@id = '%s'", strb.toString())).getLength() != 0){
+            return genereteId(length, mem);
         }
         return strb.toString();
     }

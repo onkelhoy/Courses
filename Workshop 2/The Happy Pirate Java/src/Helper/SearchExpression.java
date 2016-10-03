@@ -21,7 +21,7 @@ public class SearchExpression {
             expression += a + (i < ors.length - 1 ? " or " : "");
         }
 
-        return String.format("//member[%s]", expression);
+        return expression;
     }
 
 

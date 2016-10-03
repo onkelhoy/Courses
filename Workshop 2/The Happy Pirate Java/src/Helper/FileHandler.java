@@ -55,7 +55,7 @@ public class FileHandler {
     }
 
     public void Append(Node node){
-        xmlDoc.appendChild(node);
+        xmlDoc.getDocumentElement().appendChild(node);
     }
     public NodeList Search(String expression) {
         try {
