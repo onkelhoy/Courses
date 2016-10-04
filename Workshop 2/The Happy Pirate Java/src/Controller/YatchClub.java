@@ -154,6 +154,7 @@ public class YatchClub {
             boat.setAttribute("type", type);
             boat.setAttribute("length", slength);
             boat.setAttribute("payed", "0"); //has not payed
+            boat.setAttribute("price", "0");
 
             Boat b = new Boat(boat);
             Berth berth = new Berth(b, member);
@@ -179,7 +180,7 @@ public class YatchClub {
             memberDB.Save();
 
 
-            //member.addBoat(b);
+            member.addBoat(b);
 
             return 0; // it all went fine
         }

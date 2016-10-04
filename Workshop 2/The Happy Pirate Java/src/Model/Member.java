@@ -42,7 +42,7 @@ public class Member {
     public String getType(){ return type.toLowerCase(); }
     public String getId(){ return id; }
 
-    public Member(Element data, Database db){
+    public Member(Element data){
         this.db = db;
         username    = data.getElementsByTagName("username").item(0).getTextContent();
         name        = data.getElementsByTagName("name").item(0).getTextContent();
