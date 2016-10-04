@@ -1,6 +1,6 @@
 package Model;
 
-import Helper.FileHandler;
+import Helper.Database;
 import org.w3c.dom.Element;
 
 
@@ -19,7 +19,7 @@ public class Berth {
         if(boat.getLenght() != -1) fee = boat.getLenght() * 10 + boat.getTypeValue() * 100 - member.getBoats().size() * 4;
     }
 
-    public Berth(Element data, FileHandler memberDB){
+    public Berth(Element data, Database memberDB){
         // create a berth based on data (secretary)
 
         Boat boat = new Boat((Element)memberDB.Search(String.format("//boat[@id='%s']", data.getAttribute("id"))).item(0));

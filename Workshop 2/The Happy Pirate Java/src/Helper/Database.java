@@ -17,7 +17,7 @@ import java.io.File;
 /**
  * Created by henry on 2016-09-20.
  */
-public class FileHandler {
+public class Database {
     //private variables
     private Document xmlDoc = null;
     private XPath xpath = null;
@@ -27,7 +27,7 @@ public class FileHandler {
         return xmlDoc;
     }
 
-    public FileHandler(String fileName) {
+    public Database(String fileName) {
         path = "content/"+fileName+"DB.xml";
 
         XPathFactory xFactory = XPathFactory.newInstance();

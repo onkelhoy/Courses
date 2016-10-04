@@ -1,5 +1,6 @@
-package Controller;
+package View;
 
+import Controller.YatchClub;
 import Helper.Pnr;
 import Model.Boat;
 import Model.CalendarEvent;
@@ -10,9 +11,6 @@ import org.w3c.dom.NodeList;
 import java.io.IOException;
 import java.util.Scanner;
 
-/**
- * Created by henry on 2016-09-20.
- */
 public class Menu {
     private Scanner scan = null;
     private YatchClub yatchclub;

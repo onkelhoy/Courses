@@ -1,6 +1,6 @@
 package Model;
 
-import Helper.FileHandler;
+import Helper.Database;
 import org.w3c.dom.Element;
 
 import java.util.Date;
@@ -26,7 +26,7 @@ public class CalendarEvent {
             // remove event maybe
         }
     }
-    public CalendarEvent(FileHandler db, int endTime, int startTime, String name, String memeberId, String eventInfo, String id){
+    public CalendarEvent(Database db, int endTime, int startTime, String name, String memeberId, String eventInfo, String id){
         event = db.getDoc().createElement("event");
         event.setAttribute("createTime", new Date().getTime()+"");
         event.setAttribute("endTime", endTime+"");
@@ -38,7 +38,7 @@ public class CalendarEvent {
         event.setAttribute("name", name);
     }
 
-    public void Remove(FileHandler db){
+    public void Remove(Database db){
         db.getDoc().getDocumentElement().removeChild(event);
         db.Save();
     }

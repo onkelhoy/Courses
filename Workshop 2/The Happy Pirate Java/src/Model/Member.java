@@ -1,5 +1,6 @@
 package Model;
 
+import Helper.Database;
 import Model.Boat;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 public class Member {
     //private variables
     private ArrayList<Boat> boats = new ArrayList<Boat>();
+    private Database db;
     private String name, username, password, identity, id, email, type;
 
     public String getName()     { return name; }
@@ -40,7 +42,8 @@ public class Member {
     public String getType(){ return type.toLowerCase(); }
     public String getId(){ return id; }
 
-    public Member(Element data){
+    public Member(Element data, Database db){
+        this.db = db;
         username    = data.getElementsByTagName("username").item(0).getTextContent();
         name        = data.getElementsByTagName("name").item(0).getTextContent();
         identity    = data.getElementsByTagName("identity").item(0).getTextContent();

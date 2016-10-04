@@ -5,13 +5,13 @@ import Model.Berth;
 import Model.Boat;
 import Model.CalendarEvent;
 import Model.Member;
+import View.Menu;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import java.util.Random;
 import java.util.Scanner;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by henry on 2016-09-25.
@@ -19,7 +19,7 @@ import java.util.concurrent.ExecutionException;
 public class YatchClub {
 
     private HashAndAuth haa = new HashAndAuth();
-    private FileHandler memberDB, calendarDB, berthDB, paymentDB; //berthRegistrations
+    private Database memberDB, calendarDB, berthDB, paymentDB; //berthRegistrations
     private Member member;
     private SeasonSimulator simulator;
     private int maxlength = 70; //standard
@@ -27,10 +27,10 @@ public class YatchClub {
     public YatchClub(SeasonSimulator simulator){
         // loading/creating the databases
         this.simulator = simulator;
-        memberDB = new FileHandler("member");
-        berthDB = new FileHandler("berth");
-        calendarDB = new FileHandler("calendar");
-        paymentDB = new FileHandler("payment");
+        memberDB = new Database("member");
+        berthDB = new Database("berth");
+        calendarDB = new Database("calendar");
+        paymentDB = new Database("payment");
 
         Menu menu = new Menu(this, new Scanner(System.in));
     }
@@ -198,7 +198,7 @@ public class YatchClub {
         }
         return false; // something wierd happened
     }
-    private boolean remove(String expression, FileHandler db){
+    private boolean remove(String expression, Database db){
         try {
             Node rem = db.Search(expression).item(0);
             rem.getParentNode().removeChild(rem);
@@ -246,9 +246,9 @@ public class YatchClub {
         if(mem && memberDB.Search(String.format("//member[id = '%s']", strb.toString())).getLength() != 0){
             return genereteId(length, mem);
         }
-        else if(calendarDB.Search(String.format("//event[@id = '%s'", strb.toString())).getLength() != 0){
+        /*else if(calendarDB.Search(String.format("//event[@id = '%s'", strb.toString())).getLength() != 0){
             return genereteId(length, mem);
-        }
+        }*/
         return strb.toString();
     }
 }

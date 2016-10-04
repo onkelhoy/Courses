@@ -1,5 +1,3 @@
-package View;
-
 import Controller.YatchClub;
 import Helper.Pnr;
 import Helper.SeasonSimulator;
