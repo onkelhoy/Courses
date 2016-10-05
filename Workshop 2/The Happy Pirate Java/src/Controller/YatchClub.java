@@ -17,16 +17,18 @@ import java.util.Scanner;
 public class YatchClub {
 
     private HashAndAuth haa = new HashAndAuth();
-    private Database memberDB, calendarDB, berthDB; //berthRegistrations
+    private Database memberDB, calendarDB, berthDB, paymentDB; //berthRegistrations
     private Member member;
     private SeasonSimulator simulator;
     private int maxlength, berthCount;
 
+    //constructor
     public YatchClub(SeasonSimulator.Time time, int maxlength, int maxcount){
         // loading/creating the databases
         memberDB = new Database("member");
         berthDB = new Database("berth");
         calendarDB = new Database("calendar");
+        paymentDB = new Database("payment");
         simulator = new SeasonSimulator(time, this);
 
         this.maxlength = (maxlength > 0 ? maxlength : 70); //standard 70
@@ -37,67 +39,13 @@ public class YatchClub {
         berthCount -= memberDB.Search("//boat").getLength(); // deleting all taken spaces
     }
 
-    // get and set
+    // member
     public Member getMember() { return member; }
-    public void setMember(boolean toNull) {
-        if(toNull) member = null;
-        else {
-            //save dataase based on member object info
-            Element e = (Element)memberDB.Search(String.format("//member[id[text() = '%s']]", member.getId())).item(0);
-            e.getElementsByTagName("name").item(0).setTextContent(member.getName());
-            if(memberDB.Search(String.format("//username[text() = '%s']", member.getUsername())).getLength() == 0){
-                e.getElementsByTagName("username").item(0).setTextContent(member.getUsername());
-            }
-            e.getElementsByTagName("type").item(0).setTextContent(member.getType());
-            e.getElementsByTagName("email").item(0).setTextContent(member.getEmail());
-            String p = member.getPassword();
-
-            try {
-                if(p.substring(0, 8).equals("changed:")){
-                    String pass = p.substring(8);   // do a hash on this later..
-                    e.getElementsByTagName("password").item(0).setTextContent(haa.hash(pass));
-                }} catch (IndexOutOfBoundsException ie) {}
-            //e.getElementsByTagName("boats").item(0);
-
-            memberDB.Save();
-        }
+    public void setMember() {
+        member = null;
     }
-    public int getMaxlength() { return maxlength; }
 
-    // methodes
-    public void newSeason(){
-        //new season now.. remove all boats that hasent been payed, and make those that have been set to not payed
-
-        NodeList members = memberDB.Search("//member");
-        if(members != null) {
-            for (int i = 0; i < members.getLength(); i++) {
-                Element memberElm = (Element) members.item(i);
-                addEvent(createEvent(new Date().getTime(), new Date().getTime() + 30 * 60000,
-                        "New Season", "Make sure to pay your fee so we dont have to remove a boat from you!",
-                        memberElm.getAttribute("id"))); //creates a event and adds it to calenderDB, event is there a full circle
-
-                NodeList boats = memberElm.getElementsByTagName("boat");
-                for (int j = 0; j < boats.getLength(); j++) {
-                    Element boat = (Element) boats.item(j);
-                    if (boat.getAttribute("payed").equals("1")) {
-                        //payed
-                        boat.setAttribute("payed", "0");
-                    } else {
-                        //not payed.. member should still pay (add a general payment for member)
-                        Date now = new Date(new Date().getTime() + 10 * 60000); // 60000ms in 1min
-                        addEvent(createEvent(new Date().getTime(), new Date().getTime() + 10 * 60000,
-                                "Boat Removed", String.format("Boat: (%s) removed due to fee not payed",
-                                        boat.getAttribute("name")), memberElm.getAttribute("id"))); //creates a event and adds it to calenderDB
-
-                        boat.getParentNode().removeChild(boat);
-                    }
-                }
-            }
-
-            memberDB.Save();
-            calendarDB.Save();
-        } else System.out.println("Error, cant get member list");
-    }
+    // authenticate
     public boolean login(String usn, String pass){
         NodeList l = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
         if(l == null || l.getLength() == 0) return false;
@@ -156,6 +104,7 @@ public class YatchClub {
         return 1;
     }
 
+    //boat
     public int saveBoat(String name, String type, String slength){
         /**
          * check season
@@ -232,18 +181,26 @@ public class YatchClub {
             }
         }
 
-        try {
-            Element boat = (Element) memberDB.Search(String.format("//boat[@id = '%s']", id)).item(0);
-            if(!name.equals("")) boat.setAttribute("name", name);
-            if(!type.equals("")) boat.setAttribute("type", type);
-            if(!slength.equals("")) boat.setAttribute("length", slength);
-            if(!payed.equals("")) boat.setAttribute("payed", payed);
-
+        if(member.updateBoat(id, name, slength, type, payed)) {
             memberDB.Save();
-            return 1; // it all went fine
+            if(payed.equals("1")){
+                //payed save to payementDB
+
+            }
+            return 0;
         }
-        catch (IndexOutOfBoundsException e){ return -1; }
+        else return -1; //did not find
     }
+    public boolean removeBoat(String id){
+        if(member.removeBoat(id)) {
+            berthCount++;
+            memberDB.Save();
+            return true;
+        }
+        else return false;
+    }
+
+    //databases
     public boolean RemoveNode(String expression, String db){
         switch (db.toLowerCase()){
             case "member":
@@ -267,50 +224,21 @@ public class YatchClub {
         }
         return null;
     }
-
-    public void AddEvent(long endTime, long startTime, String name, String eventInfo, String memberId){
-        Element elm = createEvent(endTime, startTime, name, eventInfo, memberId);
-
-        ((Secretary)member).addEvent(elm);
-        calendarDB.Append(elm);
-        calendarDB.Save();
-    }
-    public void RemoveEvent(CalendarEvent event){
-        event.getEvent().getParentNode().removeChild(event.getEvent());
-        calendarDB.Save();
-    }
-    public boolean ChangeEvent(String id, String endTime, String startTime, String name, String eventInfo, String memberID) {
-        try {
-            Element event = (Element) calendarDB.Search(String.format("//event[@id = '%s']", id)).item(0);
-            event.setAttribute("endTime", endTime);
-            event.setAttribute("startTime", startTime);
-            event.setAttribute("name", name);
-            event.setAttribute("eventInfo", eventInfo);
-            event.setAttribute("memberID", memberID);
-
-            calendarDB.Save();
-            return true;
+    public void updateDB(String dbname){
+        switch (dbname.toLowerCase()){
+            case "member":
+                memberDB.Save();
+                break;
+            case "calendar":
+                calendarDB.Save();
+                break;
+            case "berth":
+                berthDB.Save();
+                break;
+            case "payment":
+                paymentDB.Save();
+                break;
         }
-        catch (IndexOutOfBoundsException e) {
-            return false;
-        }
-    }
-
-    private void addEvent(Element event){
-        calendarDB.getDoc().getDocumentElement().appendChild(event);
-    }
-    private Element createEvent(long endTime, long startTime, String name, String eventInfo, String memberId){
-        Element event = calendarDB.getDoc().createElement("event");
-        event.setAttribute("createTime", new Date().getTime()+"");
-        event.setAttribute("endTime", endTime+"");
-        event.setAttribute("startTime", startTime+"");
-        event.setAttribute("memberid", memberId);
-        event.setAttribute("event", eventInfo);
-        event.setAttribute("id", genereteId(10, false));
-
-        event.setAttribute("name", name);
-
-        return event;
     }
     private boolean remove(String expression, Database db){
         try {
@@ -324,6 +252,79 @@ public class YatchClub {
         }
     }
 
+    //calendar
+    public void AddEvent(String endTime, String name, String eventInfo, String memberId){
+        Element elm = createEvent(endTime, name, eventInfo, memberId);
+
+        ((Secretary)member).addEvent(elm);
+        calendarDB.Append(elm);
+        calendarDB.Save();
+    }
+    public boolean ChangeEvent(String id, String endTime, String name, String eventInfo, String memberID) {
+        try {
+            new CalendarEvent((Element) calendarDB.Search(String.format("//event[@id = '%s']", id)).item(0)).Update(endTime, name, eventInfo, memberID);
+            calendarDB.Save();
+            return true;
+        }
+        catch (IndexOutOfBoundsException e) {
+            return false;
+        }
+    }
+    private void addEvent(Element event){
+        calendarDB.getDoc().getDocumentElement().appendChild(event);
+    }
+    private Element createEvent(String endTime, String name, String eventInfo, String memberId){
+        Element event = calendarDB.getDoc().createElement("event");
+        event.setAttribute("createTime", new Date().toString());
+        event.setAttribute("endTime", endTime+"");
+        event.setAttribute("memberid", memberId);
+        event.setAttribute("event", eventInfo);
+        event.setAttribute("id", genereteId(10, false));
+
+        event.setAttribute("name", name);
+
+        return event;
+    }
+
+
+    // other
+    public void newSeason(){
+        //new season now.. remove all boats that hasent been payed, and make those that have been set to not payed
+
+        NodeList members = memberDB.Search("//member");
+        if(members != null) {
+            for (int i = 0; i < members.getLength(); i++) {
+                Element memberElm = (Element) members.item(i);
+                if(memberElm.getElementsByTagName("boat").getLength() > 0) {
+                    addEvent(createEvent(new Date(new Date().getTime() + 10 * 60000).toString(),
+                            "New Season", "Make sure to pay your fee so we dont have to remove a boat from you!",
+                            memberElm.getElementsByTagName("id").item(0).getTextContent())); //creates a event and adds it to calenderDB, event is there a full circle
+
+                    NodeList boats = memberElm.getElementsByTagName("boat");
+                    for (int j = 0; j < boats.getLength(); j++) {
+                        Element boat = (Element) boats.item(j);
+                        if (boat.getAttribute("payed").equals("1")) {
+                            //payed
+                            boat.setAttribute("payed", "0");
+                        } else {
+                            //not payed.. member should still pay (add a general payment for member)
+                            Date end = new Date(new Date().getTime() + 10 * 60000); // 60000ms in 1min
+
+                            addEvent(createEvent(end.toString(),"Boat Removed", String.format("Boat: (%s) removed due to fee not payed",
+                                    boat.getAttribute("name")), memberElm.getElementsByTagName("id").item(0).getTextContent())); //creates a event and adds it to calenderDB
+
+                            boat.getParentNode().removeChild(boat);
+                            j--; //boat was removed
+                        }
+                    }
+                }
+            }
+
+            memberDB.Save();
+            calendarDB.Save();
+        } else System.out.println("Error, cant get member list");
+    }
+    public int getMaxlength() { return maxlength; }
     private String genereteId(int length, boolean mem){
         char[] values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#%&".toCharArray();
         StringBuilder strb = new StringBuilder();

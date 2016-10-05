@@ -1,1 +1,23 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><members><member><username>henry</username><password>$31$16$SA5PCH8oHVrFGvHvWKuA97QWag_mhTCALbhuaZmbCf4</password><email>henry@temp.se</email><boats/><type>member</type><name>Henry Pap</name><id>#X6oELRlxc</id><identity>194806229474</identity><address/></member></members>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<members>
+  <member>
+    <username>henry</username>
+    <password>$31$16$qp0fNSQ1Ri-f1xKnuX26WZ3q-CJtgkM21SDH5uYMe7U</password>
+    <email>henry@temp.se</email>
+    <boats>
+      
+      
+    
+      
+      
+    
+    
+    <boat id="h9bww#pazG0" length="4" name="bajs" payed="0" price="240" type="a"/>
+    </boats>
+    <type>member</type>
+    <name/>
+    <id>h9bww#pazG</id>
+    <identity>200709197602</identity>
+    <address/>
+  </member>
+</members>

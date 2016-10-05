@@ -16,7 +16,7 @@ public class Berth {
 
         // the price should be on some rules.. for now this will be the rule:
         // price = boat.length * 10 + boat.type * 60 - member.boatcount * 4
-        if(boat.getLenght() != -1) fee = boat.getLenght() * 10 + boat.getTypeValue() * 100 - member.getBoats().size() * 4;
+        if(boat.getLength() != -1) fee = boat.getLength() * 10 + boat.getTypeValue() * 100 - member.getBoatCount() * 4;
     }
 
     public Berth(Element data, Database memberDB){
@@ -25,6 +25,6 @@ public class Berth {
         Boat boat = new Boat((Element)memberDB.Search(String.format("//boat[@id='%s']", data.getAttribute("id"))).item(0));
         Member member = new Member((Element)memberDB.Search(String.format("//member[id = '%s']", data.getAttribute("memberid"))).item(0));
 
-        if(boat.getLenght() != -1) fee = boat.getLenght() * 10 + boat.getTypeValue() * 100 - member.getBoats().size() * 4;
+        if(boat.getLength() != -1) fee = boat.getLength() * 10 + boat.getTypeValue() * 100 - member.getBoatCount() * 4;
     }
 }

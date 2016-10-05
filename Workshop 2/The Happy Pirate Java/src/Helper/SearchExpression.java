@@ -7,7 +7,7 @@ import java.util.Calendar;
  */
 public class SearchExpression {
     static public String ConvertQuery(String query){
-        query = query.replaceAll(" ", "").toLowerCase();
+        query = query.replaceAll(" ", "");
         String expression = "";
 
         String[] ors = query.split("or");
@@ -33,7 +33,7 @@ public class SearchExpression {
         for(int i = 0; i< types.length; i++){
             arr = queryPart.split(types[i]);
             if(arr.length == 2){
-                return getField(arr[0], (types[i].equals("==") ? "=": types[i]), arr[1].replaceAll("'", ""));
+                return getField(arr[0].toLowerCase(), (types[i].equals("==") ? "=": types[i]), arr[1].replaceAll("'", ""));
             }
         }
         //no operation found

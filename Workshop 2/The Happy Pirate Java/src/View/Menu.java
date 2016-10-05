@@ -9,6 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 public class Menu {
@@ -186,7 +187,7 @@ public class Menu {
                     UserInfoMenu();
                     break;
                 case 2: //usn
-                    m.setUsername(input);
+                    if(!m.setUsername(input, yatchclub)) showError("This username was already taken!");
                     UserInfoMenu();
                     break;
                 case 3: //email
@@ -219,7 +220,7 @@ public class Menu {
                     MSTmenu();
                     break;
                 case 1: //save
-                    yatchclub.setMember(false);
+                    yatchclub.updateDB("member");
                     MSTmenu();
                     break;
                 default:
@@ -259,13 +260,14 @@ public class Menu {
                 }
             case "2":
                 //show all
-                NodeList ls = yatchclub.SearchDB("@id = " + yatchclub.getMember().getId(), "calendar");
+                NodeList ls = yatchclub.SearchDB("@memberid = " + yatchclub.getMember().getId(), "calendar");
                 if(c == -1 && s == -1) {c = ls.getLength(); s = 0;}
                 if(s < ls.getLength()){
+                    System.out.print("\n");
                     for (int i = 0; i < c; i++) {
                         CalendarEvent cal = new CalendarEvent((Element)ls.item(i+s));
 
-                        if(cal.dead) yatchclub.RemoveEvent(cal);
+                        if(cal.dead) yatchclub.updateDB("calendar");
                         else System.out.print(cal.toString());
                     }
                     showError("");
@@ -319,12 +321,14 @@ public class Menu {
         PreMenu();
         if (listValue) {
             // show boats
-            for(Boat b : yatchclub.getMember().getBoats()){
+            Iterator<Boat> i = yatchclub.getMember().getBoats();
+            while(i.hasNext()){
+                Boat b = i.next();
                 System.out.print(b.toString());
             }
         }
         // \n4). register might be edited in the future.
-        System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n0). Exit\n # ");
+        System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n5). Change\n0). Exit\n # ");
         String input = scan.nextLine();
 
 
@@ -339,10 +343,10 @@ public class Menu {
                 if (boatID.equals("0")) BoatMenu(false);
                 else {
                     // remove boat based on boatID.
-                    if(yatchclub.RemoveNode(String.format("//boat[@id = %s]", boatID), "member")){
+                    if(yatchclub.removeBoat(boatID)) {
                         showError("Boat was successfully removed"); //success
                     }
-                    else showError("Some error occurred and boat could not be removed!");
+                    else showError("Boat not found!");
 
                     BoatMenu(false);
                 }
@@ -353,9 +357,39 @@ public class Menu {
                 break;
             case "4":
                 // register boat to a berth, might be updated
+                System.out.print("\n(0 to quit)\nBoat ID: ");
+                boatID = scan.nextLine();
+                if (boatID.equals("0")) BoatMenu(false);
+                else {
+                    int u = yatchclub.updateBoat(boatID, "", "", "", "1");
+                    showError((u == 0) ? "Boat successfully registered" : (u == -1 ? "boat was not found" : "unknown error"));
+                    BoatMenu(false);
+                }
                 break;
 
-            // case 5: edit a specific boat functionality, to keep in mind
+            case "5": // edit a specific boat functionality, to keep in mind
+                System.out.print("\nEdit boat (dont have to set all fields)\nBoat ID: ");
+                boatID = scan.nextLine();
+                System.out.print("Name: ");
+                String name = scan.nextLine();
+                System.out.print("Type: ");
+                String type = scan.nextLine();
+                System.out.print("Length: ");
+                String length = scan.nextLine();
+
+                System.out.print("\nconfirm (y/n): ");
+                String ans = scan.nextLine();
+                switch (ans.toLowerCase()){
+                    case "y":
+                    case "yes":
+                        int u = yatchclub.updateBoat(boatID, name, type, length, "");
+                        showError((u == 0) ? "Boat successfully updated" : (u == -1 ? "boat was not found" : "boat length was not valid or too long"));
+                        break;
+                    default:
+                        BoatMenu(false); //no
+                }
+                BoatMenu(false); //no
+                break;
 
             case "0":
                 MSTmenu();
@@ -371,7 +405,7 @@ public class Menu {
         //Boat name is not a property
         System.out.print("\nBoat Name: ");
         String bname = scan.nextLine();
-        System.out.print(("\nBoat Type: "));
+        System.out.print(("Boat Type: "));
         String btype = scan.nextLine();
         System.out.print("Boat Length: ");
         String blength = scan.nextLine();
@@ -443,7 +477,7 @@ public class Menu {
 
         switch (input) {
             case "0":
-                yatchclub.setMember(true); //logout
+                yatchclub.setMember(); //logout
                 StartMenu();
                 break;
             case "1":
