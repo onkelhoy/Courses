@@ -22,21 +22,18 @@ public class Menu {
         StartMenu();
     }
 
-    //************** Meny Fields ****************************************************************************************//
+    //************** Menu Fields ****************************************************************************************//
 
     // Authenticate is grade 3, case 1 needs to go
     private void StartMenu() {
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n3). Anonymous\n0). Exit\n # ");
+        System.out.print("--- Start Menu ---\n1). Register\n2). Anonymous\n0). Exit\n # ");
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
-                LoginMenu();
-                break;
-            case "2":
                 RegistrationMenu();
                 break;
-            case "3":
+            case "2":
                 ContactsMenu("Anonymous", false);
                 StartMenu();
                 break;
@@ -53,6 +50,9 @@ public class Menu {
         PreMenu();
 
         System.out.println("--- Register Menu ---");
+        System.out.print("Name: ");
+        String name = scan.nextLine();
+
         System.out.print("Username: ");
         String userName = scan.nextLine();
 
@@ -92,10 +92,10 @@ public class Menu {
             }
         }
         if (password.equals(passwordRetype)) {
-            switch (yatchclub.register(userName, password, eMail, id)){
+            switch (yatchclub.register(name, userName, password, eMail, id)){
                 case 1:
                     System.out.println("Successful registration");
-                    LoginMenu();
+                    StartMenu();
                     break;
                 case -1:
                     showError("\n\nThis user information is already in use");
@@ -108,36 +108,27 @@ public class Menu {
         }
     }
 
-    // LoginMenu can be omitted for grade2
-    private void LoginMenu() {
-        PreMenu();
-        System.out.print("--- Login Menu ---\nUsername: ");
-        String uName = scan.nextLine();
-        System.out.print("Password: ");
-        String pass = scan.nextLine();
-
-        if (yatchclub.login(uName, pass)) {
-            MSTmenu();
-        } else {
-            PreMenu();
-            showError("That username and password is not valid");
-            StartMenu();
-        }
-
-    }
-
     private void ContactsMenu(String Name, Boolean compact) {
         PreMenu();
-        System.out.print(String.format("--- %s Menu ---\n1). List members\n2). Search member \n0). Back\n # ", Name));
+        System.out.print(String.format("--- %s Menu ---\n1). List members(Compact)\n2). List members(Verbose) \n0). Back\n # ", Name));
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
+                // add list boats
                 PrintMembers("username = '*'", false);
-                showError(""); // works as a continue message as well :)
+                // Need to come to by typing username MSTmenu();
+                System.out.print("\nUser info by username: ");
+                String userName = scan.next();
+                if( yatchclub.userInfo(userName)){
+                    MSTmenu();
+                }else{
+                    PreMenu();
+                    showError("That username is not valid");
+                    ContactsMenu(Name, compact);
+                }
                 break;
             case "2":
-                SearchField(compact);
-                // when no more search it should continue to this..
+                //put verbose list here
                 ContactsMenu(Name, compact);
                 break;
             case "0":
@@ -406,7 +397,9 @@ public class Menu {
 
     // this is not mentioned in grade2
     private void SearchField(boolean compact){
-        System.out.print("\n--- Search ----\n Fields that can be searched on: \n\tboats, boatlength, boattype \n\tname, username, id, identity\n\tage, month, email, gender\n\n Search: ");
+        System.out.print("\n--- Search ----\n Fields that can be searched on: \n\tboats, boatlength, boattype \n\tname, username, id, identity\n\tage, month, email, gender\n" +
+                "An example, Search: username = 'ada*'" +
+                "\n\nSearch: ");
         String query = scan.nextLine();
 
         PrintMembers(query, compact);
@@ -430,6 +423,10 @@ public class Menu {
                 System.out.print("\n" + (compact ? m.compactInfo() : m.verboseInfo()));
             }
         }
+    }
+
+    private void PintBoats(){
+        // list boatsfor compact list
     }
 
     //************ Prompt methods ***************************************************************************************//

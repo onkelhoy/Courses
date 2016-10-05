@@ -37,13 +37,20 @@
 ####*iteration 4*
 - [x] member *class* work with xml
 - [x] boat *class* work with xml
-- [ ] secretary *class* work with xml
-- [ ] treasurer *class* work with xml
+- [x] secretary *class* work with xml
+- [x] treasurer *class* work with xml
 - [x] season simulator(10 min/per one whole simulation)
 
 ####*iteration 5*
-- [ ] add boat
-- [ ] remove boat
-- [ ] berth assignment
+- [x] add boat
+- [x] remove boat
+- [x] berth assignment
 - [x] add, remove boat meny
 - [ ] secretary berth meny
+
+####*iteration 5*
+- [ ] list boats in compact list
+- [ ] change boat information
+
+####*iteration 6*
+- [ ]

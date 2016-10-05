@@ -112,7 +112,21 @@ public class YatchClub {
         }
 
     }
-    public int register(String usn, String password, String email, String identity){
+
+    // for grade2 to bypass login and to go to MSTmenu
+    public boolean userInfo(String usn){
+        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
+        if(l == null || l.getLength() == 0){
+            return false;
+        } else{
+            Element e = (Element) l.item(0);
+            member = new Member(e);
+            return true;
+        }
+    }
+
+
+    public int register(String name, String usn, String password, String email, String identity){
         String id = genereteId(10, true);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
 
@@ -128,6 +142,7 @@ public class YatchClub {
         s = memberDB.getDoc().createElement("identity");
         a = memberDB.getDoc().createElement("address");
 
+        n.setTextContent(name);
         u.setTextContent(usn);
         s.setTextContent(identity);
         e.setTextContent(email);
@@ -146,7 +161,7 @@ public class YatchClub {
         m.appendChild(s);
         m.appendChild(a);
 
-        String format = String.format("//member[username[text() = '%s'] or email[text() = '%s'] or identity[text() = '%s']]", usn, email, identity);
+        String format = String.format("//member[username[text() = '%s'] or email[text() = '%s'] or identity[text() = '%s']]",name, usn, email, identity);
         if(memberDB.Search(format).getLength() != 0){
             return -1;
         }

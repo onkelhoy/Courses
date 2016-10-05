@@ -1,15 +1,2 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<calendars>
-  <event createTime="Wed Oct 05 17:26:13 CEST 2016" endTime="Wed Oct 05 17:36:13 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="DnlptJ?vGj" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 17:26:14 CEST 2016" endTime="Wed Oct 05 17:36:14 CEST 2016" event="Boat: (first) removed due to fee not payed" id="oAf3pqYhFc" memberid="h9bww#pazG" name="Boat Removed"/>
-<event createTime="Wed Oct 05 17:27:57 CEST 2016" endTime="Wed Oct 05 17:37:57 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="7%8D&amp;#JEaN" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 17:27:57 CEST 2016" endTime="Wed Oct 05 17:37:57 CEST 2016" event="Boat: (bajs) removed due to fee not payed" id="JbdpUQDwdc" memberid="h9bww#pazG" name="Boat Removed"/>
-<event createTime="Wed Oct 05 17:29:03 CEST 2016" endTime="Wed Oct 05 17:39:03 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="CgXdCttl5P" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 17:29:04 CEST 2016" endTime="Wed Oct 05 17:39:04 CEST 2016" event="Boat: (first) removed due to fee not payed" id="K6pT8JIQg?" memberid="h9bww#pazG" name="Boat Removed"/>
-  <event createTime="Wed Oct 05 17:29:04 CEST 2016" endTime="Wed Oct 05 17:39:04 CEST 2016" event="Boat: (b) removed due to fee not payed" id="BDQS5Yfq?g" memberid="h9bww#pazG" name="Boat Removed"/>
-  <event createTime="Wed Oct 05 17:29:04 CEST 2016" endTime="Wed Oct 05 17:39:04 CEST 2016" event="Boat: (c) removed due to fee not payed" id="%kcdSseZJH" memberid="h9bww#pazG" name="Boat Removed"/>
-<event createTime="Wed Oct 05 18:47:45 CEST 2016" endTime="Wed Oct 05 18:57:45 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="YcylTOhXLN" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 18:47:45 CEST 2016" endTime="Wed Oct 05 18:57:45 CEST 2016" event="Boat: (a) removed due to fee not payed" id="EhXZO1PRlP" memberid="h9bww#pazG" name="Boat Removed"/>
-<event createTime="Wed Oct 05 18:48:56 CEST 2016" endTime="Wed Oct 05 18:58:56 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="viutx!wuLk" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 18:48:56 CEST 2016" endTime="Wed Oct 05 18:58:56 CEST 2016" event="Boat: (hej) removed due to fee not payed" id="KOZgxrxjL4" memberid="h9bww#pazG" name="Boat Removed"/>
-</calendars>
+<calendars></calendars>
