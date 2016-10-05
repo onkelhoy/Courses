@@ -114,13 +114,21 @@ public class Menu {
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
+                // add list boats
                 PrintMembers("username = '*'", false);
-                showError(""); // works as a continue message as well :)
-                ContactsMenu(Name, compact);
+                // Need to come to by typing username MSTmenu();
+                System.out.print("\nUser info by username: ");
+                String userName = scan.next();
+                if( yatchclub.userInfo(userName)){
+                    MSTmenu();
+                }else{
+                    PreMenu();
+                    showError("That username is not valid");
+                    ContactsMenu(Name, compact);
+                }
                 break;
             case "2":
-                SearchField(compact);
-                // when no more search it should continue to this..
+                //put verbose list here
                 ContactsMenu(Name, compact);
                 break;
             case "0":

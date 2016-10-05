@@ -112,6 +112,20 @@ public class YatchClub {
         }
 
     }
+
+    // for grade2 to bypass login and to go to MSTmenu
+    public boolean userInfo(String usn){
+        NodeList l = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
+        if(l == null || l.getLength() == 0){
+            return false;
+        } else{
+            Element e = (Element) l.item(0);
+            member = new Member(e);
+            return true;
+        }
+    }
+
+
     public int register(String name, String usn, String password, String email, String identity){
         String id = genereteId(10, true);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
