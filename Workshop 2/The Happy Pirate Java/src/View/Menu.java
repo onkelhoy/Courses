@@ -19,11 +19,13 @@ public class Menu {
         this.scan = scan;
         this.yatchclub = yatchclub;
         SplashScreen();
-        AuthenticateMenu();
+        StartMenu();
     }
 
     //************** Meny Fields ****************************************************************************************//
-    private void AuthenticateMenu() {
+
+    // Authenticate is grade 3, case 1 needs to go
+    private void StartMenu() {
         PreMenu();
         System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n3). Anonymous\n0). Exit\n # ");
         String choise = scan.nextLine();
@@ -36,7 +38,7 @@ public class Menu {
                 break;
             case "3":
                 ContactsMenu("Anonymous", false);
-                AuthenticateMenu();
+                StartMenu();
                 break;
             case "0":
                 System.out.println("Thank you for visiting The Happy Pirate yacht club.");
@@ -44,7 +46,7 @@ public class Menu {
                 break;
             default:
                 System.out.println("That command in not valid.\nTry again!");
-                AuthenticateMenu();
+                StartMenu();
         }
     }
     private void RegistrationMenu() {
@@ -97,7 +99,7 @@ public class Menu {
                     break;
                 case -1:
                     showError("\n\nThis user information is already in use");
-                    AuthenticateMenu();
+                    StartMenu();
                     break;
             }
         } else {
@@ -105,6 +107,8 @@ public class Menu {
             RegistrationMenu();
         }
     }
+
+    // LoginMenu can be omitted for grade2
     private void LoginMenu() {
         PreMenu();
         System.out.print("--- Login Menu ---\nUsername: ");
@@ -117,7 +121,7 @@ public class Menu {
         } else {
             PreMenu();
             showError("That username and password is not valid");
-            AuthenticateMenu();
+            StartMenu();
         }
 
     }
@@ -141,6 +145,7 @@ public class Menu {
         }
     }
 
+    // As we dont need login some parts nedd editing
     private void MSTmenu() {
         PreMenu();
         String type = yatchclub.getMember().getType();
@@ -223,6 +228,8 @@ public class Menu {
             }
         }
     }
+
+    // This is not mentioned in grade2
     private void CalenderMenu(){
         PreMenu();
         System.out.print("--- Calendar Menu ---\n0. go back\n1. list\n2. show all\n?: ");
@@ -273,6 +280,8 @@ public class Menu {
                 CalenderMenu();
         }
     }
+
+    // this is not mentioned in grad2
     private void ClubCalendarMenu() {
         PreMenu();
         System.out.print("--- Club Calendar ---\n1. list\n2. add\n3. remove\n4. change\n?: ");
@@ -299,10 +308,13 @@ public class Menu {
                 ClubCalendarMenu();
         }
     }
+
+    // not mentioned in grade2
     private void PaymentsMenu(){
 
     }
 
+    // Register might need to be omitted for grad2
     private void BoatMenu(boolean listValue) {
         PreMenu();
         if (listValue) {
@@ -391,6 +403,8 @@ public class Menu {
         } catch (IOException e) {
         }
     }
+
+    // this is not mentioned in grade2
     private void SearchField(boolean compact){
         System.out.print("\n--- Search ----\n Fields that can be searched on: \n\tboats, boatlength, boattype \n\tname, username, id, identity\n\tage, month, email, gender\n\n Search: ");
         String query = scan.nextLine();
@@ -430,7 +444,7 @@ public class Menu {
         switch (input) {
             case "0":
                 yatchclub.setMember(true); //logout
-                AuthenticateMenu();
+                StartMenu();
                 break;
             case "1":
                 // show user info menu
