@@ -54,18 +54,18 @@ public class SearchExpression {
                 break;
             case "month":
                 field = "";
-                if(value.equals("jan") || value.equals("january"))  value = "01";
-                else if(value.equals("feb") || value.equals("february")) value = "02";
-                else if(value.equals("mar") || value.equals("march"))    value = "03";
-                else if(value.equals("apr") || value.equals("april"))    value = "04";
-                else if(value.equals("may"))                             value = "05";
-                else if(value.equals("june"))                            value = "06";
-                else if(value.equals("july"))                            value = "07";
-                else if(value.equals("aug") || value.equals("august"))   value = "08";
-                else if(value.equals("sep")||value.equals("september"))  value = "09";
-                else if(value.equals("oct") || value.equals("october"))  value = "10";
-                else if(value.equals("nov") || value.equals("november")) value = "11";
-                else if(value.equals("dec") || value.equals("december")) value = "12";
+                if(value.equals("jan") || value.equals("january") || value.equals("1") || value.equals("01"))       value = "01";
+                else if(value.equals("feb") || value.equals("february") || value.equals("2") || value.equals("02")) value = "02";
+                else if(value.equals("mar") || value.equals("march") || value.equals("3") || value.equals("03"))    value = "03";
+                else if(value.equals("apr") || value.equals("april") || value.equals("4") || value.equals("04"))    value = "04";
+                else if(value.equals("may") || value.equals("5") || value.equals("05"))                             value = "05";
+                else if(value.equals("june") || value.equals("6") || value.equals("06"))                            value = "06";
+                else if(value.equals("july") || value.equals("7") || value.equals("07"))                            value = "07";
+                else if(value.equals("aug") || value.equals("august") || value.equals("8") || value.equals("08"))   value = "08";
+                else if(value.equals("sep")||value.equals("september") || value.equals("9") || value.equals("09"))  value = "09";
+                else if(value.equals("oct") || value.equals("october") || value.equals("10"))                       value = "10";
+                else if(value.equals("nov") || value.equals("november") || value.equals("11"))                      value = "11";
+                else if(value.equals("dec") || value.equals("december") || value.equals("12"))                      value = "12";
                 else value = "01"; //did not set propper month
 
                 field = String.format("%ssubstring(identity, 5, 2) %s %s", pre, operator, value);

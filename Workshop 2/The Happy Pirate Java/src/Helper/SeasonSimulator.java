@@ -1,5 +1,6 @@
 package Helper;
 
+import Controller.YatchClub;
 import sun.rmi.runtime.Log;
 
 import java.util.Date;
@@ -17,8 +18,10 @@ public class SeasonSimulator {
     }
 
     private Time currentSeason;
+    private YatchClub club;
 
-    public SeasonSimulator(Time season){
+    public SeasonSimulator(Time season, YatchClub club){
+        this.club = club;
         if(season == null) {
             Date d = new Date();
             int min = d.getMinutes();
@@ -37,6 +40,7 @@ public class SeasonSimulator {
         }
         else {
             currentSeason = season;
+            if(currentSeason.equals(Time.season)) club.newSeason();
             System.out.println(currentSeason.name());
         }
     }
@@ -63,6 +67,7 @@ public class SeasonSimulator {
                 break;
             case 4:
             case 1:
+                club.newSeason();
                 currentSeason = Time.season;
                 break;
             case 5:

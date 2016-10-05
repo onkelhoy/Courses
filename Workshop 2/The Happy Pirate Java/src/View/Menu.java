@@ -252,7 +252,7 @@ public class Menu {
                 }
             case "2":
                 //show all
-                NodeList ls = yatchclub.SearchDB("id = " + yatchclub.getMember().getId(), "calendar");
+                NodeList ls = yatchclub.SearchDB("@id = " + yatchclub.getMember().getId(), "calendar");
                 if(c == -1 && s == -1) {c = ls.getLength(); s = 0;}
                 if(s < ls.getLength()){
                     for (int i = 0; i < c; i++) {
