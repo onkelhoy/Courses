@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <calendars>
-  <event createTime="Wed Oct 05 20:53:11 CEST 2016" endTime="Wed Oct 05 21:03:11 CEST 2016" event="Make sure to pay your fee so we dont have to remove a boat from you!" id="HgF8FLrL0g" memberid="h9bww#pazG" name="New Season"/>
-  <event createTime="Wed Oct 05 20:53:11 CEST 2016" endTime="Wed Oct 05 21:03:11 CEST 2016" event="Boat: (bajs) removed due to fee not payed" id="3kMkwyB3U7" memberid="h9bww#pazG" name="Boat Removed"/>
+  
+
+<event createTime="Thu Oct 06 04:08:31 CEST 2016" endTime="Mon Jan 09 00:00:00 CET 2017" event="Everyone gets a free candy cuz its Henrys birthday!!" id="MjOdJtbJag" memberid="" name="Free Candy Day"/>
+<event createTime="Thu Oct 06 05:28:46 CEST 2016" endTime="Thu Oct 06 05:38:46 CEST 2016" event="Berth assigned by YatchClub secretary - remember to pay when the new season begins!" id="UnIRO9XzpM" memberid="?bi4aoGR65" name="Berth assigned"/>
+  <event createTime="Thu Oct 06 05:28:55 CEST 2016" endTime="Thu Oct 06 05:38:55 CEST 2016" event="Berth assigned by YatchClub secretary - remember to pay when the new season begins!" id="!vy6d0tojp" memberid="?bi4aoGR65" name="Berth assigned"/>
 </calendars>

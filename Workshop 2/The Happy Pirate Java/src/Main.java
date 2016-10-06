@@ -11,9 +11,9 @@ import java.util.TimerTask;
  */
 public class Main {
     public static void main(String[] args) throws IOException {
-        SeasonSimulator.Time time = SeasonSimulator.Time.season; // can be set to season, pre_season and off_season
+        SeasonSimulator.Time time = SeasonSimulator.Time.off_season; // can be set to season, pre_season and off_season
 
-        YatchClub TPH = new YatchClub(time, 70, 100);
+        YatchClub TPH = new YatchClub("The Happy Pirate", time, 70, 100);
 
     }
 }

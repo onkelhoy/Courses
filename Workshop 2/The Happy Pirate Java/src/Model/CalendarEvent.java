@@ -25,19 +25,25 @@ public class CalendarEvent {
             }
         } catch (Exception e){
             // remove event maybe
-            event.getParentNode().removeChild(event);
         }
     }
 
 
     public String toString(){
+        return info()+"\n\n";
+    }
+    public String compactInfo(){
+        return info()+String.format("\n\t\tmemberID: %s, EventID: %s\n\n", event.getAttribute("memberid"), event.getAttribute("id"));
+    }
+
+    private String info() {
         String end = event.getAttribute("endTime");
         try {
             Date e = new Date(event.getAttribute("endTime"));
             end = e.toString();
         }
         catch (Exception e){ }
-        return String.format("\tName: %s\n\t\tCreated: %s, End: %s\n\t\tEvent: %s\n\n", event.getAttribute("name"), event.getAttribute("createTime"), end, event.getAttribute("event"));
+        return String.format("\tName: %s\n\t\tCreated: %s, End: %s\n\t\tEvent: %s", event.getAttribute("name"), event.getAttribute("createTime"), end, event.getAttribute("event"));
     }
     public void Update(String endTime, String name, String eventInfo, String memberID){
         if(!endTime.equals("")) event.setAttribute("endTime", endTime);

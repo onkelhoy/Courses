@@ -33,6 +33,7 @@ public class Boat {
 
 
     public String getType() { return type; }
+    public String getFee() { return elm.getAttribute("price"); }
     public int getLength() { return length; }
     public int getTypeValue() {
         int typevalue = 2; // a normal boat such as roddbåt(dont know english name)
@@ -53,6 +54,7 @@ public class Boat {
     public String getId() { return id; }
     public void setBerth(Berth berth){ this.berth = berth; elm.setAttribute("price", berth.getFee()+""); }
 
+    public void Pay() { elm.setAttribute("payed", "1"); }
     public void update(String name, String type, String length, String payed){
         if(!name.equals("")){
             elm.setAttribute("name", name);

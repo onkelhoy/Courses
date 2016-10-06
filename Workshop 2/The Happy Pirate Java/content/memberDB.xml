@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <members>
-  <member>
+  <member type="member">
     <username>henry</username>
-    <password>$31$16$qp0fNSQ1Ri-f1xKnuX26WZ3q-CJtgkM21SDH5uYMe7U</password>
+    <password>$31$16$QTePnoVJRyAn_pqZR95g6WJzdMiP6bYyStUS_itAD-A</password>
     <email>henry@temp.se</email>
     <boats>
-      
+      <boat id="?bi4aoGR650" length="50" name="first" payed="0" price="800" type="motorboat"/>
+      <boat id="?bi4aoGR651" length="30" name="second" payed="0" price="696" type="sailboat"/>
     </boats>
-    <type>member</type>
-    <name>henry Pap</name>
-    <id>h9bww#pazG</id>
-    <identity>200709197602</identity>
+    <name/>
+    <id>?bi4aoGR65</id>
+    <identity>192508064991</identity>
+    <address/>
+  </member>
+  <member type="secretary">
+    <username>secretary</username>
+    <password>$31$16$Toc5lEpah-oBzfh7J0lur3Vtq3wV2ls7-M1n59RtLnk</password>
+    <email>secretary@THP.com</email>
+    <boats/>
+    <name/>
+    <id>hhy5xxj5fq</id>
+    <identity>195907240021</identity>
+    <address/>
+  </member>
+  <member type="treasurer">
+    <username>treasurer</username>
+    <password>$31$16$gCIBPlC3YiMJsfQLjsmZRcLGrke1_konQJGdTXBIphY</password>
+    <email>treasurer@THP.com</email>
+    <boats/>
+    <name/>
+    <id>qvjwPqCZbb</id>
+    <identity>201111149298</identity>
     <address/>
   </member>
 </members>

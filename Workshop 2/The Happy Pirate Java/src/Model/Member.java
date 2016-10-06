@@ -19,6 +19,22 @@ public class Member {
     private String name, username, password, identity, id, email, type;
     private Element elm;
 
+    public Member(Element data){
+        elm = data;
+        username    = data.getElementsByTagName("username").item(0).getTextContent();
+        name        = data.getElementsByTagName("name").item(0).getTextContent();
+        identity    = data.getElementsByTagName("identity").item(0).getTextContent();
+        id          = data.getElementsByTagName("id").item(0).getTextContent();
+        password    = data.getElementsByTagName("password").item(0).getTextContent();
+        email       = data.getElementsByTagName("email").item(0).getTextContent();
+        type        = data.getAttribute("type");
+
+        NodeList boatsxml = data.getElementsByTagName("boat");
+        for(int i = 0; i < boatsxml.getLength(); i++){
+            boats.add(new Boat((Element)boatsxml.item(0)));
+        }
+    }
+
     public String getName()     { return name; }
     public String getUsername() { return username; }
     public String getIdentity() { return identity; }
@@ -61,27 +77,21 @@ public class Member {
 
         return pay;
     }
+    public int getFee() {
+        int sum = 0;
+        for (Boat b : boats){
+            sum += Integer.parseInt(b.getFee());
+            //risk **but it should only be maintained by the system therefor no string can be added here (if not someone goes in database and changes..)**
+        }
+
+        return sum;
+    }
     public int getBoatCount() { return boats.size(); }
 
 
     public String getType(){ return type.toLowerCase(); }
     public String getId(){ return id; }
 
-    public Member(Element data){
-        elm = data;
-        username    = data.getElementsByTagName("username").item(0).getTextContent();
-        name        = data.getElementsByTagName("name").item(0).getTextContent();
-        identity    = data.getElementsByTagName("identity").item(0).getTextContent();
-        id          = data.getElementsByTagName("id").item(0).getTextContent();
-        password    = data.getElementsByTagName("password").item(0).getTextContent();
-        email       = data.getElementsByTagName("email").item(0).getTextContent();
-        type        = data.getElementsByTagName("type").item(0).getTextContent();
-
-        NodeList boatsxml = data.getElementsByTagName("boat");
-        for(int i = 0; i < boatsxml.getLength(); i++){
-            boats.add(new Boat((Element)boatsxml.item(0)));
-        }
-    }
 
     // printing out info
     public String verboseInfo(){
@@ -105,6 +115,15 @@ public class Member {
         return verboseInfo() + boatlist.toString();
     }
 
+    public void PayAll(YatchClub club){ //some sort of curency would be nice...
+        for(Boat b : boats){
+            if(!b.hasPayed()) {
+                b.Pay();
+                club.addPayment(b.getFee());
+            }
+        }
+        club.updateDB("payment");
+    }
     public void addBoat(Boat boat){ boats.add(boat); }
     public boolean removeBoat(String boatID) {
         Boat b = getBoat(boatID);
