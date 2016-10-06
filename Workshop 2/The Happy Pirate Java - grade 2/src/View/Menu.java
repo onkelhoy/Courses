@@ -58,11 +58,6 @@ public class Menu {
         System.out.print("Identity nr: ");
         String identity = scan.nextLine();
 
-        System.out.print("Password: ");
-        String password = scan.nextLine();
-        System.out.print("Password again: ");
-        String passwordRetype = scan.nextLine();
-
         Pnr pnr = new Pnr();
         if(!pnr.Valid(identity)) {
             System.out.print("\nYour identity was wrong! - YYYYMMDDXXXC\nWould you like to correct it? (y/n): ");
@@ -87,21 +82,8 @@ public class Menu {
                     break;
             }
         }
-        if (password.equals(passwordRetype)) {
-            switch (yatchclub.register(userName, eMail, identity)){
-                case 1:
-                    System.out.println("Successful registration");
-                    AnonymousMenu();
-                    break;
-                case -1:
-                    showMessage("\n\nThis user information is already in use");
-                    AuthenticateMenu();
-                    break;
-            }
-        } else {
-            System.out.println("Passwords does not match!\nTry again!!!");
-            RegistrationMenu();
-        }
+        yatchclub.register(userName, eMail, identity);
+        AuthenticateMenu();
     }
 
     private void AnonymousMenu() {

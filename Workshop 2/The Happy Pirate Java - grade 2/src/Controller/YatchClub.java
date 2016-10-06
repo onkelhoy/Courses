@@ -1,13 +1,10 @@
 package Controller;
 
-import Helper.*;
 import Model.*;
 import View.Menu;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import java.util.Date;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -38,8 +35,6 @@ public class YatchClub {
     public void setMember() {
         member = null;
     }
-
-
     public boolean anonymousUser(String usn){
         NodeList usnList = memberDB.Search(String.format("//member[username = '%s']", usn));
         if(usnList == null || usnList.getLength() == 0){
