@@ -12,12 +12,12 @@ public class Berth {
     public int getFee() { return fee; }
     private Element elm;
 
-    public Berth(Boat boat, Member member){
+    public Berth(Boat boat){
         // create a berth based on boat and have the members info
 
         // the price should be on some rules.. for now this will be the rule:
         // price = boat.length * 10 + boat.type * 60 - member.boatcount * 4
-        if(boat.getLength() != -1) fee = boat.getLength() * 10 + boat.getTypeValue() * 100 - member.getBoatCount() * 4;
+        if(boat.getLength() != -1) fee = boat.getLength() * 10 + boat.getTypeValue() * 100;
     }
 
     public Berth(Element data){

@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 public class Boat {
     // private variables
     private Berth berth;
-    private String type, id, name, payed, assigned;
+    private String type, id, name;
     private int length;
     private Element elm;
 
@@ -20,8 +20,6 @@ public class Boat {
         type            = data.getAttribute("type");
         id              = data.getAttribute("id");
         name            = data.getAttribute("name");
-        payed           = data.getAttribute("payed");
-        assigned        = data.getAttribute("assigned");
 
         try{
             length = Integer.parseInt(slength);
@@ -29,11 +27,10 @@ public class Boat {
         catch (Exception e){
             length = -1;
         }
+
+        berth = new Berth(this);
     }
 
-
-    public String getType() { return type; }
-    public String getFee() { return elm.getAttribute("price"); }
     public int getLength() { return length; }
     public int getTypeValue() {
         int typevalue = 2; // a normal boat such as roddbåt(dont know english name)
@@ -52,10 +49,9 @@ public class Boat {
         return typevalue;
     }
     public String getId() { return id; }
-    public void setBerth(Berth berth){ this.berth = berth; elm.setAttribute("price", berth.getFee()+""); }
+    public void setBerth(){ berth = new Berth(this); elm.setAttribute("price", berth.getFee()+""); }
 
-    public void Pay() { elm.setAttribute("payed", "1"); }
-    public void update(String name, String type, String length, String payed){
+    public void update(String name, String type, String length){
         if(!name.equals("")){
             elm.setAttribute("name", name);
             this.name = name;
@@ -68,20 +64,12 @@ public class Boat {
             elm.setAttribute("type", type);
             this.type = type;
         }
-        if(!payed.equals("")){
-            elm.setAttribute("payed", payed);
-            this.payed = payed;
-        }
     }
     public void delete(){
         elm.getParentNode().removeChild(elm);
     }
     // print out boat info
     public String toString(){
-        String ans = (assigned.equals("0") ? "not assigned yet" : (hasPayed() ? "yes" : "no"));
-        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Payed: %s\n", id, name, type, length, ans);
-    }
-    public boolean hasPayed() {
-        return payed.equals("1");
+        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Fee: %s\n", id, name, type, length, berth.getFee());
     }
 }
