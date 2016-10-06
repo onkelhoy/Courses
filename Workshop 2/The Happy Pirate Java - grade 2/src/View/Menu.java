@@ -32,16 +32,13 @@ public class Menu {
 
     private void AuthenticateMenu() {
         PreMenu();
-        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n3). Anonymous\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Register\n2). Anonymous\n0). Exit\n # ");
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
-                LoginMenu();
-                break;
-            case "2":
                 RegistrationMenu();
                 break;
-            case "3":
+            case "2":
                 ContactsMenu("Anonymous", false);
                 AuthenticateMenu();
                 break;
@@ -130,17 +127,19 @@ public class Menu {
     }
     private void ContactsMenu(String Name, Boolean compact) {
         PreMenu();
-        System.out.print(String.format("--- %s Menu ---\n1). List members\n2). Search member \n0). Back\n # ", Name));
+        System.out.print(String.format("--- %s Menu ---\n1). List members\n0). Back\n # ", Name));
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
                 PrintMembers("username = '*'", false);
+                System.out.print("See more details by typing USERNAME, blank+enter to quit.\nUSERNAME: ");
+                String usn = scan.nextLine();
+                if (yatchclub.anonymousUser(usn)){
+                    MSTmenu();
+                }else{
+                    ContactsMenu("Anonymous", false);
+                }
                 showMessage(""); // works as a continue message as well :)
-                break;
-            case "2":
-                SearchField(compact);
-                // when no more search it should continue to this..
-                ContactsMenu(Name, compact);
                 break;
             case "0":
                 break;
@@ -152,7 +151,7 @@ public class Menu {
         type = type.substring(0, 1).toUpperCase() + type.substring(1);
 
         System.out.println(String.format("--- %s Menu ---", type));
-        System.out.print("0. Logout\n1. User info\n2. Boats\n3. Calendar\n4. Payments\n5. Contacts");
+        System.out.print("0. Exit\n1. User info\n2. Boats");
         switch (yatchclub.getMember().getType()) {
             case "secretary":
                 System.out.print("\n6. Club Calendar\n7. Berth Registrations");
@@ -164,6 +163,73 @@ public class Menu {
 
         MSTprompt();
     }
+
+    private void MSTprompt() {
+
+        System.out.print("\n?: ");
+
+        String input = scan.nextLine();
+        String type = yatchclub.getMember().getType();
+
+        switch (input) {
+            case "0":
+                yatchclub.setMember(); //logout
+                AuthenticateMenu();
+                break;
+            case "1":
+                // show user info menu
+                UserInfoMenu();
+                break;
+            case "2":
+                // show boats menu
+                BoatMenu(false);
+                break;
+            /*case "3":
+                // show calendar menu
+                CalenderMenu();
+                break;
+            case "4":
+                // show payments menu
+                PaymentsMenu();
+                break;
+            case "5":
+                if (type.equals("secretary") || type.equals("treasurer")) {
+                    ContactsMenu("Contacts", true);
+                    MSTmenu();
+                } //show contacts meny (more info)
+                else {
+                    ContactsMenu("Contacts", false);
+                    MSTmenu();
+                } //show contacts meny
+                break;*/
+            case "6":
+                if (type.equals("secretary")) {
+                    // show club calendar
+                    ClubCalendarMenu();
+                } else if (type.equals("treasurer")) {
+                    // show club payments [payment history and such]
+                } else showMessage("only values 0 - 5 are accepted");
+
+                break;
+            case "7":
+                if (type.equals("secretary")) {
+                    BerthRegisterMenu();
+                }
+                else {
+                    if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
+                    else showMessage("only values 0 - 5 are accepted");
+                    MSTmenu();
+                }
+                break;
+            default:
+                if (type.equals("secretary")) showMessage("only values 0 - 7 are accepted");
+                else if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
+                else showMessage("only values 0 - 5 are accepted");
+
+                MSTmenu();
+        }
+    }
+
     private void UserInfoMenu() {
         PreMenu();
         Member m = yatchclub.getMember();
@@ -583,71 +649,6 @@ public class Menu {
 
     //************ Prompt methods ***************************************************************************************//
 
-    private void MSTprompt() {
-
-        System.out.print("\n?: ");
-
-        String input = scan.nextLine();
-        String type = yatchclub.getMember().getType();
-
-        switch (input) {
-            case "0":
-                yatchclub.setMember(); //logout
-                AuthenticateMenu();
-                break;
-            case "1":
-                // show user info menu
-                UserInfoMenu();
-                break;
-            case "2":
-                // show boats menu
-                BoatMenu(false);
-                break;
-            case "3":
-                // show calendar menu
-                CalenderMenu();
-                break;
-            case "4":
-                // show payments menu
-                PaymentsMenu();
-                break;
-            case "5":
-                if (type.equals("secretary") || type.equals("treasurer")) {
-                    ContactsMenu("Contacts", true);
-                    MSTmenu();
-                } //show contacts meny (more info)
-                else {
-                    ContactsMenu("Contacts", false);
-                    MSTmenu();
-                } //show contacts meny
-                break;
-            case "6":
-                if (type.equals("secretary")) {
-                    // show club calendar
-                    ClubCalendarMenu();
-                } else if (type.equals("treasurer")) {
-                    // show club payments [payment history and such]
-                } else showMessage("only values 0 - 5 are accepted");
-
-                break;
-            case "7":
-                if (type.equals("secretary")) {
-                    BerthRegisterMenu();
-                }
-                else {
-                    if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
-                    else showMessage("only values 0 - 5 are accepted");
-                    MSTmenu();
-                }
-                break;
-            default:
-                if (type.equals("secretary")) showMessage("only values 0 - 7 are accepted");
-                else if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
-                else showMessage("only values 0 - 5 are accepted");
-
-                MSTmenu();
-        }
-    }
     private void SplashScreen() {
         System.out.print("                                                  Welcome To:                                                  \n" +
                 "     __________________________________________________________________________________________________________\n" +

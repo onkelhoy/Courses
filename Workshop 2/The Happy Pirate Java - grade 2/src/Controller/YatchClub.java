@@ -72,6 +72,33 @@ public class YatchClub {
         }
 
     }
+
+    public boolean anonymousUser(String usn){
+        NodeList usnList = memberDB.Search(String.format("//member[username[text() = '%s']]", usn));
+        if(usnList == null || usnList.getLength() == 0){
+            return false;
+        }else{
+            Element e = (Element) usnList.item(0);
+            String userName = e.getElementsByTagName("username").item(0).getTextContent();
+            if (userName.equals(usn)){
+                switch (e.getAttribute("type")){
+                    case "member":
+                        member = new Member(e);
+                        break;
+                    case "secretary":
+                        member = new Secretary(e);
+                        break;
+                    case "treasurer":
+                        member = new Treasurer(e);
+                        break;
+                }
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+    }
     public int register(String usn, String password, String email, String identity){
         String id = genereteId(10, true);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
