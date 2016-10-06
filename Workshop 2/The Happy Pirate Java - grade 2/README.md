@@ -1,6 +1,9 @@
 ##The Happy Pirate java edition
 
-###some git commands
+###Diagrams
+To use the diagrams .png file just open them in the draw.io website.
+
+###Some git commands
 1. pulling project (GET PROJECT) (you can skip *i-ii* if you have not made any changes)
 	1. git add .
 	2. git commit -m "your info"
