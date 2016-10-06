@@ -34,23 +34,29 @@
 - [x] Check Grade 3 task 2
 - [x] Discuss on we should implement it (design)
 
-####*iteration 4*
+####*iteration 4 - done :balloon:*
 - [x] member *class* work with xml
 - [x] boat *class* work with xml
 - [x] secretary *class* work with xml
 - [x] treasurer *class* work with xml
 - [x] season simulator(10 min/per one whole simulation)
 
-####*iteration 5*
+####*iteration 5 - done :balloon:*
 - [x] add boat
 - [x] remove boat
 - [x] berth assignment
 - [x] add, remove boat meny
-- [ ] secretary berth meny
+- [x] secretary berth meny
 
-####*iteration 5*
-- [ ] list boats in compact list
-- [ ] change boat information
+####*iteration 6 - done :balloon:*
+- [x] list boats in compact list
+- [x] change boat information
+- [x] payment menu
+- [x] payment history
+- [x] berth assignment
 
-####*iteration 6*
-- [ ]
+####*iteration 7*
+- [ ] delete member
+- [ ] properly work with GRASP
+- [ ] move menu to controller
+- [ ] have a console in view that takes all the outputs and inputs from menu (no asscosiation or dependency from controller) 

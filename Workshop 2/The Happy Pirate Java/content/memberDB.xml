@@ -33,4 +33,17 @@
     <identity>201111149298</identity>
     <address/>
   </member>
+<member type="member">
+    <username>seldin</username>
+    <password>$31$16$G3Iqkz-Qw4BwZjtZDLQZW9GjT-ijydutFQTpsuBGkuE</password>
+    <email>cooldude@</email>
+    <boats>
+      <boat id="iHlxPEtwXn0" length="20" name="Titanic" payed="0" price="0" type="Motorboat"/>
+      <boat id="iHlxPEtwXn1" length="15" name="Båten Anna" payed="0" price="0" type="Motorboat"/>
+    </boats>
+    <name/>
+    <id>iHlxPEtwXn</id>
+    <identity>882233</identity>
+    <address/>
+  </member>
 </members>

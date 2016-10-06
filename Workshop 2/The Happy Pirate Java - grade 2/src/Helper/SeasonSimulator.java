@@ -41,7 +41,7 @@ public class SeasonSimulator {
         else {
             currentSeason = season;
             if(currentSeason.equals(Time.season)) club.newSeason();
-            System.out.println(currentSeason.name());
+            // System.out.println(currentSeason.name());
         }
     }
 

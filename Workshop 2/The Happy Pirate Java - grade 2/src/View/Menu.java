@@ -2,6 +2,7 @@ package View;
 
 import Controller.YatchClub;
 import Helper.Pnr;
+import Model.Berth;
 import Model.Boat;
 import Model.CalendarEvent;
 import Model.Member;
@@ -9,6 +10,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Menu {
@@ -19,23 +25,25 @@ public class Menu {
         this.scan = scan;
         this.yatchclub = yatchclub;
         SplashScreen();
-        StartMenu();
+        AuthenticateMenu();
     }
 
     //************** Menu Fields ****************************************************************************************//
 
-    // Authenticate is grade 3, case 1 needs to go
-    private void StartMenu() {
+    private void AuthenticateMenu() {
         PreMenu();
-        System.out.print("--- Start Menu ---\n1). Register\n2). Anonymous\n0). Exit\n # ");
+        System.out.print("--- Authenticate Menu ---\n1). Login\n2). Register\n3). Anonymous\n0). Exit\n # ");
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
-                RegistrationMenu();
+                LoginMenu();
                 break;
             case "2":
+                RegistrationMenu();
+                break;
+            case "3":
                 ContactsMenu("Anonymous", false);
-                StartMenu();
+                AuthenticateMenu();
                 break;
             case "0":
                 System.out.println("Thank you for visiting The Happy Pirate yacht club.");
@@ -43,16 +51,13 @@ public class Menu {
                 break;
             default:
                 System.out.println("That command in not valid.\nTry again!");
-                StartMenu();
+                AuthenticateMenu();
         }
-    }
+    } //start menu
     private void RegistrationMenu() {
         PreMenu();
 
         System.out.println("--- Register Menu ---");
-        System.out.print("Name: ");
-        String name = scan.nextLine();
-
         System.out.print("Username: ");
         String userName = scan.nextLine();
 
@@ -60,7 +65,7 @@ public class Menu {
         String eMail = scan.nextLine();
 
         System.out.print("Identity nr: ");
-        String id = scan.nextLine();
+        String identity = scan.nextLine();
 
         System.out.print("Password: ");
         String password = scan.nextLine();
@@ -68,7 +73,7 @@ public class Menu {
         String passwordRetype = scan.nextLine();
 
         Pnr pnr = new Pnr();
-        if(!pnr.Valid(id)) {
+        if(!pnr.Valid(identity)) {
             System.out.print("\nYour identity was wrong! - YYYYMMDDXXXC\nWould you like to correct it? (y/n): ");
             String ans = scan.nextLine();
             switch (ans.toLowerCase()){
@@ -79,11 +84,11 @@ public class Menu {
                         ans = scan.nextLine().toLowerCase();
                         if (ans.equals("n") || ans.equals("no")) {
                             System.out.print("identity: ");
-                            id = scan.nextLine();
-                            if(pnr.Valid(id)) break;
+                            identity = scan.nextLine();
+                            if(pnr.Valid(identity)) break;
                         }
                         else {
-                            id = pnr.GeneratePnr();
+                            identity = pnr.GeneratePnr();
                             break;
                         }
                     }
@@ -92,14 +97,14 @@ public class Menu {
             }
         }
         if (password.equals(passwordRetype)) {
-            switch (yatchclub.register(name, userName, password, eMail, id)){
+            switch (yatchclub.register(userName, password, eMail, identity)){
                 case 1:
                     System.out.println("Successful registration");
-                    StartMenu();
+                    LoginMenu();
                     break;
                 case -1:
-                    showError("\n\nThis user information is already in use");
-                    StartMenu();
+                    showMessage("\n\nThis user information is already in use");
+                    AuthenticateMenu();
                     break;
             }
         } else {
@@ -107,36 +112,40 @@ public class Menu {
             RegistrationMenu();
         }
     }
+    private void LoginMenu() {
+        PreMenu();
+        System.out.print("--- Login Menu ---\nUsername: ");
+        String uName = scan.nextLine();
+        System.out.print("Password: ");
+        String pass = scan.nextLine();
 
+        if (yatchclub.login(uName, pass)) {
+            MSTmenu();
+        } else {
+            PreMenu();
+            showMessage("That username and password is not valid");
+            AuthenticateMenu();
+        }
+
+    }
     private void ContactsMenu(String Name, Boolean compact) {
         PreMenu();
-        System.out.print(String.format("--- %s Menu ---\n1). List members(Compact)\n2). List members(Verbose) \n0). Back\n # ", Name));
+        System.out.print(String.format("--- %s Menu ---\n1). List members\n2). Search member \n0). Back\n # ", Name));
         String choise = scan.nextLine();
         switch (choise) {
             case "1":
-                // add list boats
                 PrintMembers("username = '*'", false);
-                // Need to come to by typing username MSTmenu();
-                System.out.print("\nUser info by username: ");
-                String userName = scan.next();
-                if( yatchclub.userInfo(userName)){
-                    MSTmenu();
-                }else{
-                    PreMenu();
-                    showError("That username is not valid");
-                    ContactsMenu(Name, compact);
-                }
+                showMessage(""); // works as a continue message as well :)
                 break;
             case "2":
-                //put verbose list here
+                SearchField(compact);
+                // when no more search it should continue to this..
                 ContactsMenu(Name, compact);
                 break;
             case "0":
                 break;
         }
     }
-
-    // As we dont need login some parts nedd editing
     private void MSTmenu() {
         PreMenu();
         String type = yatchclub.getMember().getType();
@@ -155,7 +164,6 @@ public class Menu {
 
         MSTprompt();
     }
-
     private void UserInfoMenu() {
         PreMenu();
         Member m = yatchclub.getMember();
@@ -173,11 +181,11 @@ public class Menu {
 
             switch (number) {
                 case -1://error
-                    showError("Number : string - is only supported");
+                    showMessage("Number : string - is only supported");
                     UserInfoMenu();
                     break;
                 case 2: //usn
-                    m.setUsername(input);
+                    if(!m.setUsername(input, yatchclub)) showMessage("This username was already taken!");
                     UserInfoMenu();
                     break;
                 case 3: //email
@@ -193,7 +201,7 @@ public class Menu {
                     UserInfoMenu();
                     break;
                 default:
-                    showError("Only option 2-5 can have 2 values");
+                    showMessage("Only option 2-5 can have 2 values");
                     UserInfoMenu();
             }
         } else {
@@ -203,24 +211,22 @@ public class Menu {
 
             switch (number) {
                 case -1://error
-                    showError("only numbers!");
+                    showMessage("only numbers!");
                     UserInfoMenu();
                     break;
                 case 0: //go back
                     MSTmenu();
                     break;
                 case 1: //save
-                    yatchclub.setMember(false);
+                    yatchclub.updateDB("member");
                     MSTmenu();
                     break;
                 default:
-                    showError("Only option 0-1 can have a number");
+                    showMessage("Only option 0-1 can have a number");
                     UserInfoMenu();
             }
         }
     }
-
-    // This is not mentioned in grade2
     private void CalenderMenu(){
         PreMenu();
         System.out.print("--- Calendar Menu ---\n0. go back\n1. list\n2. show all\n?: ");
@@ -244,40 +250,108 @@ public class Menu {
                 catch (Exception e){ }
 
                 if(c == -1 || s == -1){
-                    showError("offset and count must be numbers!");
+                    showMessage("offset and count must be numbers!");
                     CalenderMenu();
                     break;
                 }
             case "2":
                 //show all
-                NodeList ls = yatchclub.SearchDB("@id = " + yatchclub.getMember().getId(), "calendar");
+                NodeList ls = yatchclub.SearchDB("@memberid = " + yatchclub.getMember().getId() + " or @memberid = ''", "calendar"); //get all events associated with member, or all the club events
                 if(c == -1 && s == -1) {c = ls.getLength(); s = 0;}
                 if(s < ls.getLength()){
+                    System.out.print("\n");
                     for (int i = 0; i < c; i++) {
                         CalendarEvent cal = new CalendarEvent((Element)ls.item(i+s));
 
-                        if(cal.dead) yatchclub.RemoveEvent(cal);
+                        if(cal.dead) yatchclub.updateDB("calendar");
                         else System.out.print(cal.toString());
                     }
-                    showError("");
+                    showMessage("");
                 }
-                else showError((ls.getLength() != 0 ? "\noffset was too high" : "\nthere were no events"));
+                else showMessage((ls.getLength() != 0 ? "\noffset was too high" : "\nthere were no events"));
                 // show calendar events from index: offset and
 
                 CalenderMenu();
                 break;
             default:
-                showError("only numbers 0-2 are allowed");
+                showMessage("only numbers 0-2 are allowed");
                 CalenderMenu();
         }
     }
-
-    // this is not mentioned in grad2
     private void ClubCalendarMenu() {
         PreMenu();
-        System.out.print("--- Club Calendar ---\n1. list\n2. add\n3. remove\n4. change\n?: ");
+        System.out.print("--- Club Calendar ---\n1. list\n2. add\n3. remove\n4. change\n0. Exit\n #: ");
         String ans = scan.nextLine();
 
+        switch (ans){
+            case "0":
+                MSTmenu();
+                break;
+            case "1":
+                NodeList list = yatchclub.SearchDB("@id = '*'", "calendar");
+                for (int i = 0; i < list.getLength(); i++){
+                    CalendarEvent event = new CalendarEvent((Element) list.item(i));
+                    if(event.dead) yatchclub.updateDB("calendar");
+                    else System.out.print(event.compactInfo());
+                }
+                showMessage("");
+                ClubCalendarMenu();
+                break;
+            case "2":
+                System.out.print("\nAdd an event\nName: ");
+                String name = scan.nextLine();
+                System.out.print("EndTime (dd mmmm yyyy): ");//this breaks the season time thats fakes a year into 30min.. but the princip is still the same
+                String end = scan.nextLine();
+                System.out.print("Event: ");
+                String event = scan.nextLine();
+                System.out.print("To specific Member (don't have to be set)\n\tmemberID: ");
+                String memberid = scan.nextLine();
+
+                end = getEndTime(end);
+
+                if(!end.equals("0")) {
+                    yatchclub.AddEvent(end, name, event, memberid);
+                    showMessage("Event added to clubcalendar!");
+                }
+                ClubCalendarMenu();
+                break;
+            case "3":
+                System.out.print("\nRemove event\nEvent id: ");
+                String id = scan.nextLine();
+                if(yatchclub.RemoveNode(String.format("//event[@id = '%s']", id), "calendar")) showMessage("Event removed");
+                else showMessage("Cant find event");
+
+                ClubCalendarMenu();
+                break;
+            case "4":
+                System.out.print("\nChange event - the only field that has to be set is id!\nEvent id: ");
+                id = scan.nextLine();
+                System.out.print("Name: ");
+                name = scan.nextLine();
+                System.out.print("EndTime (Day Month Year): ");
+                end = scan.nextLine();
+                System.out.print("Event: ");
+                event = scan.nextLine();
+                System.out.print("MemberID: ");
+                memberid = scan.nextLine();
+
+                if(!end.equals("")) end = getEndTime(end);
+                if(!end.equals("0")){
+                    yatchclub.ChangeEvent(id, end, name, event, memberid);
+                }
+                ClubCalendarMenu();
+                break;
+            default:
+                showMessage("only number 0-4 are valid input");
+                ClubCalendarMenu();
+        }
+    }
+    private void PaymentsMenu(){
+        PreMenu();
+        System.out.print(String.format("--- Payment Menu ---\nCurrent Fee: %s\nHas payed fee\n1. pay all\n2. history\n0. Exit\n # ",
+                yatchclub.getMember().getFee(), yatchclub.getMember().hasPayedMembership()));
+
+        String ans = scan.nextLine();
         switch (ans){
             case "0":
                 MSTmenu();
@@ -286,36 +360,23 @@ public class Menu {
                 break;
             case "2":
                 break;
-            case "3":
-                break;
-            case "4":
-                System.out.print("id: ");
-                String id = scan.nextLine();
-
-
-                break;
             default:
-                showError("only number 0-4 are valid input");
-                ClubCalendarMenu();
+                showMessage("only number 0-2 are valid");
+                PaymentsMenu();
         }
     }
-
-    // not mentioned in grade2
-    private void PaymentsMenu(){
-
-    }
-
-    // Register might need to be omitted for grad2
     private void BoatMenu(boolean listValue) {
         PreMenu();
         if (listValue) {
             // show boats
-            for(Boat b : yatchclub.getMember().getBoats()){
+            Iterator<Boat> i = yatchclub.getMember().getBoats();
+            while(i.hasNext()){
+                Boat b = i.next();
                 System.out.print(b.toString());
             }
         }
         // \n4). register might be edited in the future.
-        System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n0). Exit\n # ");
+        System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Register\n5). Change\n0). Exit\n # ");
         String input = scan.nextLine();
 
 
@@ -330,10 +391,10 @@ public class Menu {
                 if (boatID.equals("0")) BoatMenu(false);
                 else {
                     // remove boat based on boatID.
-                    if(yatchclub.RemoveNode(String.format("//boat[@id = %s]", boatID), "member")){
-                        showError("Boat was successfully removed"); //success
+                    if(yatchclub.removeBoat(boatID)) {
+                        showMessage("Boat was successfully removed"); //success
                     }
-                    else showError("Some error occurred and boat could not be removed!");
+                    else showMessage("Boat not found!");
 
                     BoatMenu(false);
                 }
@@ -344,15 +405,45 @@ public class Menu {
                 break;
             case "4":
                 // register boat to a berth, might be updated
+                System.out.print("\n(0 to quit)\nBoat ID: ");
+                boatID = scan.nextLine();
+                if (boatID.equals("0")) BoatMenu(false);
+                else {
+                    int u = yatchclub.updateBoat(boatID, "", "", "", "1");
+                    showMessage((u == 0) ? "Boat successfully registered" : (u == -1 ? "boat was not found" : "unknown error"));
+                    BoatMenu(false);
+                }
                 break;
 
-            // case 5: edit a specific boat functionality, to keep in mind
+            case "5": // edit a specific boat functionality, to keep in mind
+                System.out.print("\nEdit boat (dont have to set all fields)\nBoat ID: ");
+                boatID = scan.nextLine();
+                System.out.print("Name: ");
+                String name = scan.nextLine();
+                System.out.print("Type: ");
+                String type = scan.nextLine();
+                System.out.print("Length: ");
+                String length = scan.nextLine();
+
+                System.out.print("\nconfirm (y/n): ");
+                String ans = scan.nextLine();
+                switch (ans.toLowerCase()){
+                    case "y":
+                    case "yes":
+                        int u = yatchclub.updateBoat(boatID, name, type, length, "");
+                        showMessage((u == 0) ? "Boat successfully updated" : (u == -1 ? "boat was not found" : "boat length was not valid or too long"));
+                        break;
+                    default:
+                        BoatMenu(false); //no
+                }
+                BoatMenu(false); //no
+                break;
 
             case "0":
                 MSTmenu();
                 break;
             default:
-                showError("Only number 0-4 are valid");
+                showMessage("Only number 0-4 are valid");
                 BoatMenu(false);
         }
     }
@@ -362,7 +453,7 @@ public class Menu {
         //Boat name is not a property
         System.out.print("\nBoat Name: ");
         String bname = scan.nextLine();
-        System.out.print(("\nBoat Type: "));
+        System.out.print(("Boat Type: "));
         String btype = scan.nextLine();
         System.out.print("Boat Length: ");
         String blength = scan.nextLine();
@@ -370,23 +461,77 @@ public class Menu {
 
         switch (yatchclub.saveBoat(bname, btype, blength)){
             case 0:
-                showError("Boat was saved");
+                showMessage("Boat was saved");
                 break;
             case -1:
-                showError("Boat could not be added due to some unknown reason");
+                showMessage("Boat could not be added due to some unknown reason");
                 break;
             case -2:
-                showError(String.format("Boat length was not a valid length [0-%s]", yatchclub.getMaxlength()));
+                showMessage(String.format("Boat length was not a valid length [0-%s]", yatchclub.getMaxlength()));
                 break;
         }
         // save to xmlDB
         System.out.print("\nBoat has been saved");
         BoatMenu(false);
     }
+    private void BerthRegisterMenu(){
+        if(!yatchclub.isSeason()) {
+            PreMenu();
+            System.out.print("--- Berth Registrations Menu ---\n1. list\n2. assign\n3. declain\n0. Exit\n # ");
+            String ans = scan.nextLine();
+
+            switch (ans) {
+                case "0":
+                    MSTmenu();
+                    break;
+                case "1":
+                    NodeList list = yatchclub.SearchDB("@fee >= 0", "berth"); //select all berths
+                    for(int i = 0; i < list.getLength(); i++){
+                        System.out.println(new Berth((Element)list.item(i)).toString());
+                    }
+                    showMessage("");
+                    BerthRegisterMenu();
+                    break;
+                case "2":
+                    System.out.print("\nDecline berth\nBoatID: ");
+                    String boatID = scan.nextLine();
+
+                    int feedback = yatchclub.assignBerth(boatID);
+                    switch (feedback){
+                        case 1:
+                            showMessage("Boat successfully assigned of berth");
+                            break;
+                        case 0:
+                            showMessage("Could not find boat");
+                            break;
+                        case -1:
+                            showMessage("No more space for boats in " + yatchclub.getName());
+                            break;
+                    }
+                    BerthRegisterMenu();
+                    break;
+                case "3":
+                    System.out.print("\nDecline berth\nBoatID: ");
+                    boatID = scan.nextLine();
+
+                    if(yatchclub.declineBerth(boatID)) showMessage("Boat successfully declined of berth");
+                    else showMessage("Could not find boat");
+                    BerthRegisterMenu();
+                    break;
+                default:
+                    showMessage("only number 0-3 is valid");
+                    BerthRegisterMenu();
+            }
+        }
+        else {
+            showMessage("Its still season!");
+            MSTmenu();
+        }
+    }
 
     //************** Help methods ***************************************************************************************//
 
-    private void showError(String error) {
+    private void showMessage(String error) {
         System.out.println(error);
         System.out.print("Press enter to continue.. ");
         try {
@@ -394,12 +539,8 @@ public class Menu {
         } catch (IOException e) {
         }
     }
-
-    // this is not mentioned in grade2
     private void SearchField(boolean compact){
-        System.out.print("\n--- Search ----\n Fields that can be searched on: \n\tboats, boatlength, boattype \n\tname, username, id, identity\n\tage, month, email, gender\n" +
-                "An example, Search: username = 'ada*'" +
-                "\n\nSearch: ");
+        System.out.print("\n--- Search ----\n Fields that can be searched on: \n\tboats, boatlength, boattype \n\tname, username, id, identity\n\tage, month, email, gender\n\n Search: ");
         String query = scan.nextLine();
 
         PrintMembers(query, compact);
@@ -424,9 +565,20 @@ public class Menu {
             }
         }
     }
-
-    private void PintBoats(){
-        // list boatsfor compact list
+    private String getEndTime(String end){
+        Date date = null;
+        try {
+            DateFormat format = new SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH);
+            date = format.parse(end);
+            return date.toString();
+        } catch (Exception e) {
+            System.out.print("\nOBS endTime is not valid!\nplease use this format (dd mmmm yyyy)\nendTime (0 to quit): ");
+            end = scan.nextLine();
+            if(end.equals("0")){
+                return "0";
+            }
+            else return getEndTime(end);
+        }
     }
 
     //************ Prompt methods ***************************************************************************************//
@@ -440,8 +592,8 @@ public class Menu {
 
         switch (input) {
             case "0":
-                yatchclub.setMember(true); //logout
-                StartMenu();
+                yatchclub.setMember(); //logout
+                AuthenticateMenu();
                 break;
             case "1":
                 // show user info menu
@@ -475,19 +627,23 @@ public class Menu {
                     ClubCalendarMenu();
                 } else if (type.equals("treasurer")) {
                     // show club payments [payment history and such]
-                } else showError("only values 0 - 5 are accepted");
+                } else showMessage("only values 0 - 5 are accepted");
 
                 break;
             case "7":
                 if (type.equals("secretary")) {
-                } else if (type.equals("treasurer")) showError("only values 0 - 6 are accepted");
-                else showError("only values 0 - 5 are accepted");
-
+                    BerthRegisterMenu();
+                }
+                else {
+                    if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
+                    else showMessage("only values 0 - 5 are accepted");
+                    MSTmenu();
+                }
                 break;
             default:
-                if (type.equals("secretary")) showError("only values 0 - 7 are accepted");
-                else if (type.equals("treasurer")) showError("only values 0 - 6 are accepted");
-                else showError("only values 0 - 5 are accepted");
+                if (type.equals("secretary")) showMessage("only values 0 - 7 are accepted");
+                else if (type.equals("treasurer")) showMessage("only values 0 - 6 are accepted");
+                else showMessage("only values 0 - 5 are accepted");
 
                 MSTmenu();
         }

@@ -56,6 +56,7 @@
 - [x] berth assignment
 
 ####*iteration 7*
-- [ ] propperly work with GRASP
+- [ ] delete member
+- [ ] properly work with GRASP
 - [ ] move menu to controller
 - [ ] have a console in view that takes all the outputs and inputs from menu (no asscosiation or dependency from controller) 

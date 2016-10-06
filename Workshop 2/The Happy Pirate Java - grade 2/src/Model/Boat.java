@@ -10,11 +10,13 @@ public class Boat {
     // private variables
     private Berth berth;
     private String type, id, name, payed, assigned;
-    private int lenght;
+    private int length;
+    private Element elm;
 
     //constructor, getters and setters
     public Boat(Element data){
-        String slenght  = data.getAttribute("length");
+        elm = data;
+        String slength  = data.getAttribute("length");
         type            = data.getAttribute("type");
         id              = data.getAttribute("id");
         name            = data.getAttribute("name");
@@ -22,16 +24,17 @@ public class Boat {
         assigned        = data.getAttribute("assigned");
 
         try{
-            lenght = Integer.parseInt(slenght);
+            length = Integer.parseInt(slength);
         }
         catch (Exception e){
-            lenght = -1;
+            length = -1;
         }
     }
 
 
     public String getType() { return type; }
-    public int getLenght() { return lenght; }
+    public String getFee() { return elm.getAttribute("price"); }
+    public int getLength() { return length; }
     public int getTypeValue() {
         int typevalue = 2; // a normal boat such as roddbåt(dont know english name)
         switch (type.toLowerCase()){
@@ -49,15 +52,36 @@ public class Boat {
         return typevalue;
     }
     public String getId() { return id; }
-    public void setBerth(Berth berth){ this.berth = berth; }
+    public void setBerth(Berth berth){ this.berth = berth; elm.setAttribute("price", berth.getFee()+""); }
 
+    public void Pay() { elm.setAttribute("payed", "1"); }
+    public void update(String name, String type, String length, String payed){
+        if(!name.equals("")){
+            elm.setAttribute("name", name);
+            this.name = name;
+        }
+        if(!length.equals("")){
+            elm.setAttribute("length", length);
+            this.length = Integer.parseInt(length);
+        }
+        if(!type.equals("")){
+            elm.setAttribute("type", type);
+            this.type = type;
+        }
+        if(!payed.equals("")){
+            elm.setAttribute("payed", payed);
+            this.payed = payed;
+        }
+    }
+    public void delete(){
+        elm.getParentNode().removeChild(elm);
+    }
     // print out boat info
     public String toString(){
         String ans = (assigned.equals("0") ? "not assigned yet" : (hasPayed() ? "yes" : "no"));
-        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Payed: %s\n", id, name, type, lenght, ans);
+        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Payed: %s\n", id, name, type, length, ans);
     }
     public boolean hasPayed() {
         return payed.equals("1");
     }
-
 }
