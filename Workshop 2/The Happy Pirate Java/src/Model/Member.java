@@ -103,7 +103,7 @@ public class Member {
             idn = identity;
         }
         return String.format("USERNAME: %s\tEMAIL: %s\tNAME: %s\nID: %s\tIDENTITY: %s\n", username, email, name, id, idn);
-    }
+    }   //need to change name with compact.. and have a private info function same as in grade 2..
     public String compactInfo(){
         StringBuilder boatlist = new StringBuilder();
         boatlist.append("\n\tBoats:");
