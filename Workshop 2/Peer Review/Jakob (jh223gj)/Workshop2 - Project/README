@@ -1,0 +1,19 @@
+I never use Java outside of school assignments so I have very little 
+knowledge about the Java environment. However, I have successfully 
+compiled and tested this program on two different Linux distributions
+using only
+	$ javac Registry.java
+	$ java Registry
+from the "src"-directory. 
+If that doesn't work, try to compile specifying the classpath.
+
+The menus in the program are a bit buggy, you may have to press ENTER 
+more than once (the requirements state that "it does not need to be 
+user friendly"). 
+
+The file "members.xml" already contains two members so you can
+verify if the file loading works.
+
+The diagrams consists of one class diagram and two sequence diagrams,
+one for "Create Member" and one for "List Members". I have simplified
+several of the names in the diagrams.
