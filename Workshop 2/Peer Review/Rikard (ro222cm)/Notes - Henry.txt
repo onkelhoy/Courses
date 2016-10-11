@@ -13,4 +13,11 @@ not check the type in xmlHandlers but only in boat.
 Memberinfo, MemberList and XmlHandlers servers no purpose of a class, MemberInfo could be in Member class, and XmlHandlers 
 could be in MemberDB, MemberList is a list class, it should implement a list instead of having it beacuse if not it could just be a list
 be a list in RegistryCtrl
+3.
+What purpose does UpdateMember have (as a class)? its like a menu class but it only handles Member events, why not just have
+some sort of a menu class that handles all the menu things instead of splitting it up in both RegistryCrtl and UpdateMember
+
+ClassDiagram:
+1.
+its a bit messy - two MemberDB?
 ------------------------------------------------------------------------------------------------------------------------------
