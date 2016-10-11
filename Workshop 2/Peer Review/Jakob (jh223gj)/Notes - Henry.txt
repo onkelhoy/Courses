@@ -1,0 +1,15 @@
+UI:
+running the exuteble jar file gives alot of errors
+
+Code:
+Good cohiesion, classes are not too large but not too small
+Logic is good for the classes, no extra classes that helps (memberlist could be considered only be a list, or
+implement list instead of a class that has a list).
+The project lacks of comments
+
+
+There are no dead code, perhaps the q to quit anyware but it is 
+
+ClassDiagram:
+model-view separation is not the best as its both dependend on model and boat.
+
