@@ -1,4 +1,5 @@
--i think maybee MemberDB, MemberList, UpdateMember and MemberInfo could be the same class... and then make the Member class internal to that one
-and the boat class an internal to the memberclass.
-othervice clean code
+-The names of the some classes is mi missleading
+-i think maybee MemberDB, MemberList, UpdateMember, Member and MemberInfo could be the same class...
+
++ good model view seperation
 ------------------------------------------------------------------------------------------------------------------------------
