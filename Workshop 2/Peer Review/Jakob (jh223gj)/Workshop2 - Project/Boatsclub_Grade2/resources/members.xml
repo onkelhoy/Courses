@@ -20,4 +20,14 @@
         <name>1</name>
         <personal_number>111111-1116</personal_number>
     </member>
+    <member>
+        <id>4</id>
+        <name>Seldin Music</name>
+        <personal_number>880418-9739</personal_number>
+        <boat>
+            <id>40</id>
+            <type>Sailboat</type>
+            <length>10.0</length>
+        </boat>
+    </member>
 </memberList>
