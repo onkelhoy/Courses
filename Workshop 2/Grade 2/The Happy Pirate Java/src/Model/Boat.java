@@ -31,7 +31,6 @@ public class Boat {
         berth = new Berth(this);
     }
 
-    public int getLength() { return length; }
     public int getTypeValue() {
         int typevalue = 2; // a normal boat such as roddbåt(dont know english name)
         switch (type.toLowerCase()){
@@ -48,8 +47,6 @@ public class Boat {
 
         return typevalue;
     }
-    public String getId() { return id; }
-    public void setBerth(){ berth = new Berth(this); elm.setAttribute("price", berth.getFee()+""); }
 
     public void update(String name, String type, String length){
         if(!name.equals("")){
@@ -65,11 +62,26 @@ public class Boat {
             this.type = type;
         }
     }
+
     public void delete(){
         elm.getParentNode().removeChild(elm);
     }
+
     // print out boat info
     public String toString(){
-        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Fee: %s\n", id, name, type, length, berth.getFee());
+        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Fee: %s\n", id, name, type, length, berth.getBerthFee());
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setBerth(){
+        berth = new Berth(this);
+        elm.setAttribute("price", berth.getBerthFee()+"");
+    }
+
+    public int getLength() {
+        return length;
     }
 }

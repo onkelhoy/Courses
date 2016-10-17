@@ -31,42 +31,11 @@ public class Member {
         }
     }
 
-    public String getName()     { return name; }
-    public String getUsername() { return username; }
-    public String getIdentity() { return identity; }
-    public String getEmail()    { return email; }
-    public Iterator<Boat> getBoats() { return boats.iterator(); }
-
-
-    public void setName(String name) {
-        this.name = name;
-        elm.getElementsByTagName("name").item(0).setTextContent(name);
-    }
-    public boolean setUsername(String username, YatchClub club) {
-        //check existing
-        if(club.SearchDB("//member[username = "+username+"]").getLength() == 0) {
-            this.username = username;
-            elm.getElementsByTagName("username").item(0).setTextContent(username);
-            return true;
-        }
-        else return false;
-    }
-    public void setIdentity(String identity) {
-        this.identity = identity;
-        elm.getElementsByTagName("identity").item(0).setTextContent(identity);
-    }
-    public void setEmail(String email) {
-        this.email = email;
-        elm.getElementsByTagName("email").item(0).setTextContent(email);
-    } // secerity can be aplied here
-
-    public String getId(){ return id; }
-
-
     // printing out info
     public String compactInfo(){
         return info() + "\tBoats: " + boats.size()+"\n";
     }
+
     public String verboseInfo(){
         StringBuilder boatlist = new StringBuilder();
         boatlist.append("\tBoats:\n");
@@ -77,6 +46,7 @@ public class Member {
 
         return info() + boatlist.toString()+"\n";
     }
+
     private String info(){
         String idn = "";
         try {
@@ -88,8 +58,11 @@ public class Member {
         return String.format("USERNAME: %s\tEMAIL: %s\tNAME: %s\nID: %s\tIDENTITY: %s\n", username, email, name, id, idn);
     }
 
-    public void addBoat(Boat boat){ boats.add(boat); }
-    public boolean removeBoat(String boatID) {
+    public void addBoat(Boat boat){
+        boats.add(boat);
+    }
+
+    public boolean removeBoat(String boatID){
         Boat b = getBoat(boatID);
         if(b == null) return false;
         b.delete();
@@ -108,14 +81,7 @@ public class Member {
         }
         return false; //cant find
     }
-    private Boat getBoat(String id){
-        for (Boat b : boats) {
-            if (b.getId().equals(id)) {
-                return b;
-            }
-        }
-        return null;
-    }
+
     public String createBoatId(){
         if(boats.size() > 0){
             int latestIndex = Integer.parseInt(boats.get(boats.size()-1).getId().substring(10));
@@ -127,5 +93,63 @@ public class Member {
 
     public void Remove(){
         elm.getParentNode().removeChild(elm);
+    }
+
+    public Iterator<Boat> getBoats(){
+        return boats.iterator();
+    }
+
+    private Boat getBoat(String id){
+        for (Boat b : boats) {
+            if (b.getId().equals(id)) {
+                return b;
+            }
+        }
+        return null;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public String getUsername(){
+        return username;
+    }
+
+    public String getIdentity(){
+        return identity;
+    }
+
+    public String getEmail(){
+        return email;
+    }
+
+    public void setName(String name){
+        this.name = name;
+        elm.getElementsByTagName("name").item(0).setTextContent(name);
+    }
+
+    public boolean setUsername(String username, YatchClub club){
+        //check existing
+        if(club.SearchDB("//member[username = "+username+"]").getLength() == 0) {
+            this.username = username;
+            elm.getElementsByTagName("username").item(0).setTextContent(username);
+            return true;
+        }
+        else return false;
+    }
+
+    public void setIdentity(String identity){
+        this.identity = identity;
+        elm.getElementsByTagName("identity").item(0).setTextContent(identity);
+    }
+
+    public void setEmail(String email){
+        this.email = email;
+        elm.getElementsByTagName("email").item(0).setTextContent(email);
+    } // secerity can be aplied here
+
+    public String getId(){
+        return id;
     }
 }

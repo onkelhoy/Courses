@@ -58,6 +58,7 @@ public class Database {
     public void Append(Node node){
         xmlDoc.getDocumentElement().appendChild(node);
     }
+
     public NodeList Search(String expression) {
         try {
             return (NodeList)xpath.compile(expression).evaluate(xmlDoc, XPathConstants.NODESET);

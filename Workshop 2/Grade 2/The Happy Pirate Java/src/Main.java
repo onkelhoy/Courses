@@ -8,6 +8,5 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
         YatchClub TPH = new YatchClub(70, 100);
-
     }
 }
