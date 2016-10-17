@@ -29,24 +29,28 @@ public class YatchClub {
 
         berthCount -= memberDB.Search("//boat[@price > 0]").getLength(); // deleting all taken spaces
     }
+    // member part
+    public Member getMember() {
+        return member;
+    }
 
-    // member
-    public Member getMember() { return member; }
     public void setMember() {
         member = null;
     }
+    // use as anonymous user
     public boolean anonymousUser(String usn){
         NodeList usnList = memberDB.Search(String.format("//member[username = '%s']", usn));
         if(usnList == null || usnList.getLength() == 0){
             return false;
-        }else{
+        }
+        else{
             Element e = (Element) usnList.item(0);
             String userName = e.getElementsByTagName("username").item(0).getTextContent();
-
             member = new Member(e);
             return true;
         }
     }
+    // register new user
     public int register(String usn, String email, String identity){
         String id = genereteId(10, true);
         // do a valitation for identity for the 'sake of fun' - obs different countries = different identity structures
@@ -86,7 +90,8 @@ public class YatchClub {
         return 1;
     }
 
-    //boat
+    // boat part
+    // add a boat to db
     public int saveBoat(String name, String type, String slength){
         /**
          * check season
@@ -131,15 +136,19 @@ public class YatchClub {
 
             return 0; // it all went fine
         }
-        else return -2; // length of boat was 0 or too long... (or not a valid int)
+        else{
+            return -2;
+        } // length of boat was 0 or too long... (or not a valid int)
     }
+    // Updateing boat info
     public int updateBoat(String id, String name, String type, String slength){
         int length;
         if(!slength.equals("")) {
             try {
                 length = Integer.parseInt(slength);
                 if(length > maxlength){int error = 1/0;}
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 return -2;
             }
         }
@@ -150,26 +159,34 @@ public class YatchClub {
         }
         else return -1; //did not find
     }
+    // Removes a boat
     public boolean removeBoat(String id){
         if(member.removeBoat(id)) {
             berthCount++;
             memberDB.Save();
             return true;
         }
-        else return false;
+        else{
+            return false;
+        }
     }
 
+    // ret Boat max length
+    public int getMaxlength() {
+        return maxlength;
+    }
 
-    //databases
+    //database part
+    // search in database
     public NodeList SearchDB(String expression){
         return memberDB.Search(expression);
     }
+    // saves database
     public void updateDB(){
         memberDB.Save();
     }
 
-    // other
-    public int getMaxlength() { return maxlength; }
+    // Generate user id
     private String genereteId(int length, boolean mem){
         char[] values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!?#%&".toCharArray();
         StringBuilder strb = new StringBuilder();
@@ -177,7 +194,6 @@ public class YatchClub {
         for(int i = 0; i < length; i++){
             strb.append(values[rand.nextInt(values.length)]);
         }
-
         if(memberDB.Search(String.format("//member[id = '%s']", strb.toString())).getLength() != 0){
             return genereteId(length, mem);
         }

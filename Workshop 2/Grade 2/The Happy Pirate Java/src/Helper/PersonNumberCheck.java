@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class PersonNumberCheck {
 
-    // private
+    // privates
+    // checks the date part of the personal number
     private String getFirstPart(){
         String y = "", m = "", d = "";
         Random rand = new Random();
@@ -23,6 +24,7 @@ public class PersonNumberCheck {
 
         return y + m + d;
     }
+    // Check the second part of the personal number
     private String getSecondPart(String firstPart){
         Random rand = new Random();
         int[] personnummer = new int[10];//{rand.nextInt(10), rand.nextInt(10), rand.nextInt(10)};
@@ -37,7 +39,6 @@ public class PersonNumberCheck {
             personnummer[i + 6] = x;
         }
 
-
         personnummer[9] = getLast(firstPart);
         String p = "";
         for(int i: personnummer){
@@ -48,6 +49,7 @@ public class PersonNumberCheck {
         String s = p.substring(0, 6) + p.substring(6, 10);
         return s;
     }
+    // calculates the last number of the personal number
     private int getLast(String pnr){
         int[] personnummer = new int[10];//{rand.nextInt(10), rand.nextInt(10), rand.nextInt(10)};
         for(int i = 0; i < pnr.length(); i++){
@@ -74,14 +76,15 @@ public class PersonNumberCheck {
             }
         }
         int C = 10 - (sum %= 10);
-
         return C;
     }
 
     // public
+    // a valid personal generator made for testing
     public String GeneratePnr(){
         return Correct(getSecondPart(getFirstPart()));
     }
+    // checks if valid
     public boolean Valid(String pnr){
         switch (pnr.length()){ //(swe)identity number can be 12 or 10 digits long
             case 12:
@@ -93,6 +96,7 @@ public class PersonNumberCheck {
                 return false; //its not valid as its not even 10 or 12
         }
     }
+    //Auto corects the Pnr for testing
     public String Correct(String pnr){
         pnr.replace("-", "");
         if (pnr.length() == 10){
