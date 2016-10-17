@@ -1,7 +1,7 @@
 package View;
 
 import Controller.YatchClub;
-import Helper.Pnr;
+import Helper.PersonNumberCheck;
 import Model.Boat;
 import Model.Member;
 import org.w3c.dom.Element;
@@ -58,8 +58,8 @@ public class Menu {
         System.out.print("Identity nr: ");
         String identity = scan.nextLine();
 
-        Pnr pnr = new Pnr();
-        if(!pnr.Valid(identity)) {
+        PersonNumberCheck personNumberCheck = new PersonNumberCheck();
+        if(!personNumberCheck.Valid(identity)) {
             System.out.print("\nYour identity was wrong! - YYYYMMDDXXXC\nWould you like to correct it? (y/n): ");
             String ans = scan.nextLine();
             switch (ans.toLowerCase()){
@@ -71,10 +71,10 @@ public class Menu {
                         if (ans.equals("n") || ans.equals("no")) {
                             System.out.print("identity: ");
                             identity = scan.nextLine();
-                            if(pnr.Valid(identity)) break;
+                            if(personNumberCheck.Valid(identity)) break;
                         }
                         else {
-                            identity = pnr.GeneratePnr();
+                            identity = personNumberCheck.GeneratePnr();
                             break;
                         }
                     }

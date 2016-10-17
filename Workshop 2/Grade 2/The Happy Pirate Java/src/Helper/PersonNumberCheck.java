@@ -2,7 +2,7 @@ package Helper;
 
 import java.util.Random;
 
-public class Pnr {
+public class PersonNumberCheck {
 
     // private
     private String getFirstPart(){
