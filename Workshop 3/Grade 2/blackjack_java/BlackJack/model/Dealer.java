@@ -60,7 +60,7 @@ public class Dealer extends Player {
     return false;
   }
 
-  public boolean Stand() {
+  public boolean Stand() { //subject in parameter
     if(m_deck != null){
       ShowHand();
 
@@ -69,6 +69,7 @@ public class Dealer extends Player {
       }
 
       while(m_hitRule.DoHit(this)){
+        //tell subject a new card was delt..
         Card c = m_deck.GetCard();
         c.Show(true);
         DealCard(c);

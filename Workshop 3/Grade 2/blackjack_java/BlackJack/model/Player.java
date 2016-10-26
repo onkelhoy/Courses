@@ -15,10 +15,7 @@ public class Player {
     System.out.println("Hello List World");
   }
   
-  public void DealCard(Card a_addToHand)
-  {
-    m_hand.add(a_addToHand);
-  }
+  public void DealCard(Card a_addToHand) { m_hand.add(a_addToHand); }
   
   public Iterable<Card> GetHand()
   {

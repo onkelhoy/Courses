@@ -10,5 +10,5 @@ public class RulesFactory {
     return new AmericanNewGameStrategy();
   }
 
-  public IWinStrategy GetWinRule() { return new PlayerAdvantegeWinStrategy(); }
+  public IWinStrategy GetWinRule() { return new DealerAdvantageWinStrategy(); }
 }

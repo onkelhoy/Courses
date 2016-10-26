@@ -29,10 +29,10 @@ public class Game {
     return m_dealer.Hit(m_player);
   }
   
-  public boolean Stand()
+  public boolean Stand() //subject in parameter
   {
     // TODO: Implement this according to Game_Stand.sequencediagram
-    return m_dealer.Stand();
+    return m_dealer.Stand(); //subject as parameter
   }
   
   public Iterable<Card> GetDealerHand()

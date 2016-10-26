@@ -28,9 +28,11 @@ public class PlayGame {
     }
     else if (input == 's')
     {
-        a_game.Stand();
+        a_game.Stand(); //subject as parameter
     }
 
     return input != 'q';
   }
+
+  //newCard..
 }
