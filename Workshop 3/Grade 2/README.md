@@ -7,7 +7,7 @@
 - [ ] Remove the bad, hidden, dependency between the controller and view (new game, hit, stand)
 - [ ] Design and implement a new rule variant for when the dealer should take one more card. The new variant is “Soft 17?, use the same design pattern already present for Hit. Soft 17 means that the dealer has 17 but in a combination of Ace and 6 (for example Ace, two, two, two). This means that the Dealern can get another card valued at 10 but still have 17 as the value of the ace is reduced to 1. Using the soft 17 rule the dealer should take another card (compared to the original rule when the dealer only takes cards on a score of 16 or lower).
 - [ ] Design and implement a variable rules for who wins the game. This variation could for example vary who wins on an equal score (in one implementation the Dealer wins, in the other the Player). The design should make it easy to add other variants without changing the Dealer.
-- [ ] The code for getting a card from the deck, show the card and give it to a player is duplicated in a number of places. Make a refactoring to remove this duplication and that supports low coupling/high cohesion. The code that is duplicated i similar to this:
+- [x] The code for getting a card from the deck, show the card and give it to a player is duplicated in a number of places. Make a refactoring to remove this duplication and that supports low coupling/high cohesion. The code that is duplicated i similar to this:
 	- Card c = deck.GetCard();
 	- c.Show(true/false)
 	- player.DealCard(c);

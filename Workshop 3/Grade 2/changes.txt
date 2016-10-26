@@ -1,0 +1,2 @@
+1. followed the squence diagram for stand function. Implemented Stand method to Dealer with all the necesary parts that followed in the sqence diagram
+2. Made an abstract class called CardHandle in 'rules', that does the getCard, show and deal. This reduce the dublicate code in american and international strategy (they both extends to the CardHandle class).
