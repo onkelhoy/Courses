@@ -17,10 +17,7 @@ public class Game {
     return m_dealer.IsGameOver();
   }
   
-  public boolean IsDealerWinner()
-  {
-    return m_dealer.IsDealerWinner(m_player);
-  }
+  public boolean IsDealerWinner() { return m_dealer.IsDealerWinner(m_player); }
   
   public boolean NewGame()
   {
