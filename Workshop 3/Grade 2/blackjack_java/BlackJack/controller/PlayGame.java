@@ -1,13 +1,25 @@
 package BlackJack.controller;
 
+import BlackJack.model.Observer;
+import BlackJack.model.Subject;
 import BlackJack.view.IView;
 import BlackJack.model.Game;
 
-public class PlayGame {
+public class PlayGame extends Observer {
+  private IView a_view;
+  private Game a_game;
 
-  public boolean Play(Game a_game, IView a_view) {
+  public PlayGame(Subject subject, IView a_view, Game a_game){
+    this.subject = subject;
+    this.a_view = a_view;
+    this.a_game = a_game;
+
+    this.subject.addObserver(this);
+  }
+  //implement observer and wait for furture updates
+  public boolean Play() {
     a_view.DisplayWelcomeMessage();
-    
+
     a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
     a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
 
@@ -34,5 +46,23 @@ public class PlayGame {
     return input != 'q';
   }
 
-  //newCard..
+
+  @Override
+  public void Notify(){
+    if(subject.getState() == 0){
+      try {
+        Thread.sleep(1800); //wait
+
+        //print cards?
+        a_view.DisplayDealerStatus();
+        a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
+        a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+
+
+        subject.setState(1);
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+  }
 }

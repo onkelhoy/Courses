@@ -3,17 +3,21 @@ package BlackJack.model;
 import BlackJack.model.rules.*;
 
 public class Dealer extends Player {
-
+  //implement observer and update when getting a new card
   private Deck m_deck;
   private INewGameStrategy m_newGameRule;
   private IHitStrategy m_hitRule;
   private IWinStrategy m_winRule;
 
-  public Dealer(RulesFactory a_rulesFactory) {
+  public Dealer(Subject subject, RulesFactory a_rulesFactory) {
   
     m_newGameRule = a_rulesFactory.GetNewGameRule();
     m_hitRule = a_rulesFactory.GetHitRule();
     m_winRule = a_rulesFactory.GetWinRule();
+    this.subject = subject;
+
+
+    this.subject.addObserver(this);
     
     /*for(Card c : m_deck.GetCards()) {
       c.Show(true);
@@ -67,14 +71,25 @@ public class Dealer extends Player {
       for(Card c : GetHand()){
         c.Show(true);
       }
+      subject.setState(0); //it will call the playGame notify
+    }
+    return true;
+  }
 
-      while(m_hitRule.DoHit(this)){
-        //tell subject a new card was delt..
+  @Override
+  public void Notify(){
+    if(subject.getState() == 1){
+      if(m_hitRule.DoHit(this)){
+        //getting a new card
+        // notify(); // from observer
+
+
         Card c = m_deck.GetCard();
         c.Show(true);
         DealCard(c);
+
+        subject.setState(0);
       }
     }
-    return true;
   }
 }

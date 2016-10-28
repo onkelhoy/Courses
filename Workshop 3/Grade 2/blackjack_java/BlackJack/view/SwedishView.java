@@ -11,7 +11,13 @@ public class SwedishView implements IView
             System.out.println("----------------------");
             System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
         }
-        
+
+        @Override
+        public void DisplayDealerStatus() {
+            for(int i = 0; i < 50; i++) {System.out.print("\n");};
+            System.out.println("Dealer tar ett kort..\n");
+        }
+
         public int GetInput()
         {
           try {

@@ -10,7 +10,13 @@ public class SimpleView implements IView
           System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
         }
 
-        public int GetInput()
+    @Override
+    public void DisplayDealerStatus() {
+        for(int i = 0; i < 50; i++) {System.out.print("\n");};
+        System.out.println("Dealer is getting a card..\n");
+    }
+
+    public int GetInput()
         {
           try {
             int c = System.in.read();

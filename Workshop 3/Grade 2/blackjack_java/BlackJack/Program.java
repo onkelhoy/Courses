@@ -1,6 +1,7 @@
 package BlackJack;
 
 import BlackJack.model.Game;
+import BlackJack.model.Subject;
 import BlackJack.view.*;
 import BlackJack.controller.*;
 
@@ -9,11 +10,12 @@ public class Program
 
   public static void main(String[] a_args)
   {
-  
-    Game g = new Game();
+    //create subject object
+    Subject subject = new Subject();
+    Game g = new Game(subject); //pass subject as param
     IView v = new SimpleView(); //new SwedishView();
-    PlayGame ctrl = new PlayGame();
+    PlayGame ctrl = new PlayGame(subject, v, g); //pass subject as param
     
-    while (ctrl.Play(g, v));
+    while (ctrl.Play());
   }
 }

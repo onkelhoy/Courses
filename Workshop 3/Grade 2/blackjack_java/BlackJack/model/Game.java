@@ -5,9 +5,9 @@ public class Game {
   private Dealer m_dealer;
   private Player m_player;
 
-  public Game()
+  public Game(Subject subject)
   {
-    m_dealer = new Dealer(new BlackJack.model.rules.RulesFactory());
+    m_dealer = new Dealer(subject, new BlackJack.model.rules.RulesFactory());
     m_player = new Player();
   }
     

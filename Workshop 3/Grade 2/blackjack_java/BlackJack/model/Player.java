@@ -3,7 +3,7 @@ package BlackJack.model;
 import java.util.List;
 import java.util.LinkedList;
 
-public class Player {
+public class Player extends Observer {
 
   private List<Card> m_hand;
   protected final int g_maxScore = 21;

@@ -2,3 +2,5 @@
 2. Made an abstract class called CardHandle in 'rules', that does the getCard, show and deal. This reduce the dublicate code in american and international strategy (they both extends to the CardHandle class).
 3. Implemented soft 17 mode.. that checks if dealer has score of 17 and has an ace, if thats the case, dealer will draw a new card.
 4. Implemented interface IWinStrategy that has a method called DealerWin, two classes that implements this interface that considers who should win if equal score. This is then implemented in RulesFactory that the dealer checks for.
+5. Implemented Observer and Subject class to Model, made the player and PlayGame class to extend to observer, and now can see the other ones changes.
+6. Removed the dependency for PlayGame.Play().. although it is now accosiated with view and game.... (dont get the bad dependency part with 'new game, hit, stand')
