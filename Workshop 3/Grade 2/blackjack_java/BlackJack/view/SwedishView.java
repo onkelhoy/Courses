@@ -25,7 +25,18 @@ public class SwedishView implements IView
             while (c == '\r' || c =='\n') {
               c = System.in.read();
             }
-            return c;
+              switch (c){
+                  case 'p':
+                      return 1;
+                  case 'h':
+                      return 2;
+                  case 's':
+                      return 3;
+                  case 'q':
+                      return 4;
+                  default:
+                      return 0;
+              }
           } catch (java.io.IOException e) {
             System.out.println("" + e);
             return 0;

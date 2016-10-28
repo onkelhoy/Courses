@@ -30,20 +30,20 @@ public class PlayGame extends Observer {
 
     int input = a_view.GetInput();
     
-    if (input == 'p')
+    if (input == 1)
     {
         a_game.NewGame();
     }
-    else if (input == 'h')
+    else if (input == 2)
     {
         a_game.Hit();
     }
-    else if (input == 's')
+    else if (input == 3)
     {
         a_game.Stand(); //subject as parameter
     }
 
-    return input != 'q';
+    return input != 4;
   }
 
 
