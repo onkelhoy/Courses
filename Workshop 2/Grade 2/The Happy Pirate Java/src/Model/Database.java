@@ -24,10 +24,6 @@ public class Database {
     private XPath xpath = null;
     private String path = "";
 
-    public Document getDoc(){
-        return xmlDoc;
-    }
-
     public Database(String fileName) {
         path = "content/"+fileName+"DB.xml";
 
@@ -90,6 +86,10 @@ public class Database {
             e.printStackTrace();
             System.out.println("database could not be saved: " + path);
         }
+    }
+
+    public Document getDoc(){
+        return xmlDoc;
     }
 
 }
