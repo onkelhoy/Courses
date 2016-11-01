@@ -12,7 +12,7 @@ public class Soft17HitStrategy implements IHitStrategy {
             Iterable<Card> list = a_dealer.GetHand();
 
             for(Card c : list){
-                if(c.GetValue() == Card.Value.Ace) return true;
+                if(c.GetValue() == Card.Value.Ace) return true; //ace means 11 score that leaves 6 left..
             }
             return false;
         }
