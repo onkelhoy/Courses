@@ -219,11 +219,7 @@ public class Menu {
         PreMenu();
         if (listValue) {
             // show boats
-            Iterator<Boat> i = yatchclub.getMember().getBoats();
-            while(i.hasNext()){
-                Boat b = i.next();
-                System.out.print(b.toString());
-            }
+            printBoats(yatchclub.getMember());
         }
         // \n4). register might be edited in the future.
         System.out.print("--- Boat Menu ---\n1). List boats.\n2). Remove boats\n3). Add new boat\n4). Change\n0). Exit\n # ");
@@ -315,6 +311,14 @@ public class Menu {
 
     //************** Help methods ***************************************************************************************//
 
+    private void printBoats(Member m){
+
+        Iterator<Boat> i = m.getBoats();
+        while(i.hasNext()){
+            Boat b = i.next();
+            System.out.print(String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Fee: %s\n", b.getId(), b.getName(), b.getTypeValue(), b.getLength(), b.getFee()));
+        }
+    }
     private void showMessage(String error) {
         System.out.println(error);
         System.out.print("Press enter to continue.. ");
@@ -330,7 +334,14 @@ public class Menu {
         else {
             for (int i = 0; i < nl.getLength(); i++) {
                 Member m = new Member((Element) nl.item(i));
-                System.out.print("\n" + (verbose ? m.verboseInfo() : m.compactInfo()));
+
+                System.out.print(String.format("USERNAME: %s\tEMAIL: %s\tNAME: %s\nID: %s\tIDENTITY: %s\n", m.getUsername(), m.getEmail(), m.getName(), m.getId(), m.getIdentity()));
+                if(verbose) {
+                    printBoats(m);
+                }
+                else {
+                    System.out.print("\tBoats: " + m.getBoatSize() +"\n");
+                }
             }
         }
     }

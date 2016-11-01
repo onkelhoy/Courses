@@ -31,33 +31,6 @@ public class Member {
         }
     }
 
-    // printing out info
-    public String compactInfo(){
-        return info() + "\tBoats: " + boats.size()+"\n";
-    }
-
-    public String verboseInfo(){
-        StringBuilder boatlist = new StringBuilder();
-        boatlist.append("\tBoats:\n");
-
-        for(Boat b : boats){
-            boatlist.append("\t\t" + b.toString());
-        }
-
-        return info() + boatlist.toString()+"\n";
-    }
-
-    private String info(){
-        String idn = "";
-        try {
-            idn = identity.substring(0, 9);
-        }
-        catch (Exception e){
-            idn = identity;
-        }
-        return String.format("USERNAME: %s\tEMAIL: %s\tNAME: %s\nID: %s\tIDENTITY: %s\n", username, email, name, id, idn);
-    }
-
     public void addBoat(Boat boat){
         boats.add(boat);
     }
@@ -152,4 +125,5 @@ public class Member {
     public String getId(){
         return id;
     }
+    public int getBoatSize() {return boats.size();}
 }

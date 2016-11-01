@@ -23,9 +23,9 @@ You should be able to run the .jar in command prompt or in intellij, ecplise etc
 Hi,
 There are a few minor changes I would like you to make before I can mark your group as passed for workshop 2 grade 2. 
 ####Comments below:
- - [ ] The model should not build formatted strings to be displayed by the view (e.g. in your use of the toString methods and verboseInfo())
+ - [x] The model should not build formatted strings to be displayed by the view (e.g. in your use of the toString methods and verboseInfo())
 	this ties the model to a certain type of view (console based). 
- - [ ] The controller should also not build formatted strings. Differentiation between compact and verbose lists should happen in the view - the same list of objects should be used each time but the view should choose to print them differently. Please fix these issues and send me a link to the revised version.
+ - [x] The controller should also not build formatted strings. Differentiation between compact and verbose lists should happen in the view - the same list of objects should be used each time but the view should choose to print them differently. Please fix these issues and send me a link to the revised version.
 
 Best,
 -Ioseff

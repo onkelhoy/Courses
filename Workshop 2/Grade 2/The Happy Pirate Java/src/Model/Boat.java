@@ -67,11 +67,6 @@ public class Boat {
         elm.getParentNode().removeChild(elm);
     }
 
-    // print out boat info
-    public String toString(){
-        return String.format("Boat - Id: %s, Name: %s, Type: %s, Length: %s, Fee: %s\n", id, name, type, length, berth.getBerthFee());
-    }
-
     public String getId() {
         return id;
     }
@@ -84,4 +79,7 @@ public class Boat {
     public int getLength() {
         return length;
     }
+    public String getType() {return type;}
+    public String getName() {return name;}
+    public int getFee(){return berth.getBerthFee();}
 }
