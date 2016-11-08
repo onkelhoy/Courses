@@ -34,16 +34,19 @@ public class FCFS{
 		int totalTime = 0;
 		//do the actual calculations
 		for(Process o : processes){
-			int wait = totalTime - o.getArrivalTime(), //assuming arrival time >= 0
-				complete = wait + o.getBurstTime() + o.getArrivalTime(),
+			int cwait = totalTime - o.getArrivalTime(); //assuming arrival time >= 0
+			int wait = cwait;
+			if(wait < 0) wait = 0;
+			int complete = wait + o.getBurstTime() + o.getArrivalTime(),
 				tut = complete - o.getArrivalTime();
 
 			o.setWaitingTime(wait);
 			o.setCompletedTime(complete);
 			o.setTurnaroundTime(tut);
+			o.setCpuwaitTime(cwait);
 
 			totalTime += o.getBurstTime();
-			if(wait < 0) totalTime += Math.abs(wait); //if cpu has to wait for process the totalTime should increase as well
+			if(cwait < 0) totalTime += Math.abs(cwait); //if cpu has to wait for process the totalTime should increase as well
 		}
 
 		//should we call the printTable now?
@@ -98,9 +101,10 @@ public class FCFS{
 		int dont = 0;
 		for(Process o : processes){
 			int wait = o.getWaitingTime();
-			if(wait < 0){
-				wait = Math.abs(wait);
-				for(int i = 0; i < wait; i++){
+			int cpuWait = o.getCpuwaitTime();
+			if(cpuWait < 0){
+				cpuWait = Math.abs(cpuWait);
+				for(int i = 0; i < cpuWait; i++){
 					top.append("#");//CPU wait
 					bottom.append(" ");
 				}

@@ -13,6 +13,7 @@ public class Process {
 	int completedTime;
 	int turnaroundTime;
 	int waitingTime;
+	int cpuwaitTime;
 
 	public Process(int processId, int arrivalTime, int burstTime) {
 		this.processId = processId;
@@ -31,7 +32,11 @@ public class Process {
 	public void setWaitingTime(int waitingTime) {
 		this.waitingTime = waitingTime;
 	}
-	
+
+	public void setCpuwaitTime(int cpuwaitTime) { this.cpuwaitTime = cpuwaitTime; }
+
+	public int getCpuwaitTime() { return cpuwaitTime; }
+
 	public int getArrivalTime(){
 		return arrivalTime;
 	}
