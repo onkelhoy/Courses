@@ -7,5 +7,5 @@ Dont really know why you are looking into this, but if you are curious the cours
 Year 1:
 
 Year 2:
-- 1dv512 [Operativesystem](onkelhoy/Courses/tree/1dv512)
-- 1dv607 [Object Oriented Anaysis and Design](/onkelhoy/Courses/tree/1dv607)
+- 1dv512 [Operativesystem](https://github.com/onkelhoy/Courses/tree/1dv512)
+- 1dv607 [Object Oriented Anaysis and Design](https://github.com/onkelhoy/Courses/tree/1dv607)
