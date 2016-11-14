@@ -2,12 +2,13 @@ package BlackJack.model;
 
 import BlackJack.model.rules.*;
 
-public class Dealer extends Player {
+public class Dealer extends Player implements Observer {
   //implement observer and update when getting a new card
   private Deck m_deck;
   private INewGameStrategy m_newGameRule;
   private IHitStrategy m_hitRule;
   private IWinStrategy m_winRule;
+  private Subject subject;
 
   public Dealer(Subject subject, RulesFactory a_rulesFactory) {
   
@@ -16,9 +17,7 @@ public class Dealer extends Player {
     m_winRule = a_rulesFactory.GetWinRule();
     this.subject = subject;
 
-
-    this.subject.addObserver(this);
-    
+    subject.subscribe(this);
     /*for(Card c : m_deck.GetCards()) {
       c.Show(true);
       System.out.println("" + c.GetValue() + " of " + c.GetColor());
@@ -38,10 +37,8 @@ public class Dealer extends Player {
 
   public boolean Hit(Player a_player) {
     if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-      Card c;
-      c = m_deck.GetCard();
-      c.Show(true);
-      a_player.DealCard(c);
+
+      a_player.GetShowDeal(m_deck, true);
       
       return true;
     }
@@ -71,22 +68,20 @@ public class Dealer extends Player {
       for(Card c : GetHand()){
         c.Show(true);
       }
-      subject.setState(0); //it will call the playGame notify
+      subject.setState(0);
+      subject.Notify(); //it will call the playGame notify
     }
     return true;
   }
 
   @Override
-  public void Notify(){
+  public void Update() {
     if(subject.getState() == 1){
       if(m_hitRule.DoHit(this)){
         //getting a new card
         // notify(); // from observer
 
-
-        Card c = m_deck.GetCard();
-        c.Show(true);
-        DealCard(c);
+        GetShowDeal(m_deck, true);
 
         subject.setState(0);
       }

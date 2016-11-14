@@ -5,16 +5,17 @@ import BlackJack.model.Subject;
 import BlackJack.view.IView;
 import BlackJack.model.Game;
 
-public class PlayGame extends Observer {
+public class PlayGame implements Observer {
   private IView a_view;
   private Game a_game;
+  private Subject subject;
 
   public PlayGame(Subject subject, IView a_view, Game a_game){
     this.subject = subject;
     this.a_view = a_view;
     this.a_game = a_game;
 
-    this.subject.addObserver(this);
+    subject.subscribe(this);
   }
   //implement observer and wait for furture updates
   public boolean Play() {
@@ -46,9 +47,8 @@ public class PlayGame extends Observer {
     return input != 4;
   }
 
-
   @Override
-  public void Notify(){
+  public void Update() {
     if(subject.getState() == 0){
       try {
         Thread.sleep(1800); //wait
@@ -60,6 +60,7 @@ public class PlayGame extends Observer {
 
 
         subject.setState(1);
+        subject.Notify();
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

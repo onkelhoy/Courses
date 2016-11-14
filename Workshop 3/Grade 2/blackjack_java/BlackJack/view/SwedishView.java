@@ -9,7 +9,7 @@ public class SwedishView implements IView
 
             System.out.println("Hej Black Jack Världen");
             System.out.println("----------------------");
-            System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
+            System.out.println("Skriv 's' för att Spela, 'n' för nytt kort, 'p' för att pausa 'a' för att avsluta\n");
         }
 
         @Override
@@ -26,13 +26,13 @@ public class SwedishView implements IView
               c = System.in.read();
             }
               switch (c){
-                  case 'p':
-                      return 1;
-                  case 'h':
-                      return 2;
                   case 's':
+                      return 1;
+                  case 'n':
+                      return 2;
+                  case 'p':
                       return 3;
-                  case 'q':
+                  case 'a':
                       return 4;
                   default:
                       return 0;

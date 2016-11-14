@@ -3,16 +3,15 @@ package BlackJack.model.rules;
 import BlackJack.model.Deck;
 import BlackJack.model.Dealer;
 import BlackJack.model.Player;
-import BlackJack.model.Card;  
 
-class AmericanNewGameStrategy extends CardHandle implements INewGameStrategy {
+class AmericanNewGameStrategy implements INewGameStrategy {
 
   public boolean NewGame(Deck a_deck, Dealer a_dealer, Player a_player) {
 
-    GetShowDeal(a_deck, a_player, true);
-    GetShowDeal(a_deck, a_dealer, true);
-    GetShowDeal(a_deck, a_player, true);
-    GetShowDeal(a_deck, a_dealer, false);
+    a_player.GetShowDeal(a_deck, true);
+    a_dealer.GetShowDeal(a_deck, true);
+    a_player.GetShowDeal(a_deck, true);
+    a_dealer.GetShowDeal(a_deck, false);
 
     /*
     Card c;
