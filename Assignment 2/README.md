@@ -6,3 +6,7 @@
 - [ ] Write manual test cases for the application
 - [ ] Execute the test-plan (test the software)
 - [ ] Report the result of testing in a test report.
+
+
+##Help
+[Test plan Template](http://upedu.org/templates/cs/TEST/upedu_ex_tstpl.pdf)
