@@ -1,5 +1,3 @@
-| Tables   |      Are      |  Cool |
-|----------|:-------------:|------:|
-| col 1 is |  left-aligned | $1600 |
-| col 2 is |    centered   |   $12 |
-| col 3 is | right-aligned |    $1 |
+| Use Case | Primary Actor | Precondition | Postcondition | Technical note | Main scenario | Alternate Scenarios |
+|----------|:-------------:|:------------:|:-------------:|:--------------:|:-------------:|:-------------------:|
+|    1     |     Admin     |              |               |                |               |                     |
