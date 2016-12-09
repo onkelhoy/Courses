@@ -1,0 +1,59 @@
+<?php
+
+use TDD\Assert;
+use TDD\TestSuite;
+use TDD\TestClass;
+
+class NewsPaperTest extends TestClass {
+	public function getSystemUnderTestInstance() {
+		return new NewsPaper();
+	}
+
+	//test with no articles
+	public function Test1(NewsPaper $news){
+		$this->Test($news, 0);
+	}
+	
+	//test with 1 article
+	public function Test2(NewsPaper $news){
+		$this->Test($news, 1);
+	}
+	
+	//test with 1000 article
+	public function Test3(NewsPaper $news){
+		$this->Test($news, 1000);
+	}
+	
+	public function Test1withStub2(NewsPaper $news){
+		for($i = 0; $i < 10; $i++){
+			$news->add(new ArticleStub2());	
+		}
+		
+		Assert::AssertEquals($news->countWords(), 10*20);
+	}
+	
+	
+	private function Test(NewsPaper $news, int $articleCount){
+		for($i = 0; $i < $articleCount; $i++){
+			$news->add(new ArticleStub());	
+		}
+		
+		Assert::AssertEquals($news->countWords(), 10*$articleCount);
+	}
+}
+
+class ArticleStub extends Article {
+	public function countWords() : int {
+		return 10;
+	}
+}
+class ArticleStub2 extends Article {
+	public function countWords() : int {
+		return 20;
+	}
+}
+
+
+
+
+

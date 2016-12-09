@@ -1,0 +1,60 @@
+<?php
+
+use TDD\Assert;
+use TDD\TestSuite;
+use TDD\TestClass;
+
+class ArticleTest extends TestClass{
+	public function getSystemUnderTestInstance() {
+		return new Article();
+	}
+
+	//test empty content
+	//public function Test1(Article $a){
+	//	$this->Test($a, "", 0);	
+	//}
+	
+	//test with 3 words and alot of spaces
+	public function Test2(Article $a){
+		$this->Test($a, "aaa bb cccc", 3);
+	}
+	
+	//test with only spaces
+	//public function Test3(Article $a){
+	//	$this->Test($a, "               ", 0);
+	//}
+	
+	//test special charactures (which i think should not count as words)
+	public function Test4(Article $a){
+		$this->Test($a, ". ! ? @  # Hello World    ", 2);
+	}
+	
+	//test normal
+	public function Test5(Article $a){
+		$this->Test($a, "hello world", 2);
+	}
+	
+	//check content equality
+	//public function Test6(Article $a){
+	//	$content = "Hello Daniel. How are you this fine day?";
+		
+	//	$a->setContent($content);
+	//	Assert::AssertEquals($a->getContent(), $content);
+	//}
+	
+	//test with only word
+	//public function Test7(Article $a){
+	//	$this->Test($a, "hello", 1);
+	//}
+	
+	//test with only word with space infornt
+	//public function Test8(Article $a){
+	//	$this->Test($a, " hello", 1);
+	//}
+	
+	private function Test(Article $a, string $content, int $wordcount){
+		$a->setContent($content);
+		Assert::AssertEquals($a->countWords(), $wordcount);
+	}
+}
+
