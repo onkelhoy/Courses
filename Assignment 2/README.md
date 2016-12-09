@@ -4,9 +4,11 @@
 ####SDC
 - easy deploy
 - wide range: many deplayable devices
+
 ####Deployer
 - minimal configuration
 - easy integration: clear API
+
 ####Customer
 - easy access
 - absolute security
