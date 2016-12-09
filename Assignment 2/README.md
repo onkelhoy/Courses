@@ -11,8 +11,7 @@
  - easy access
  - absolute security
 
-###Requirements
-*Supplementary Specification*
+###Requirements - *Supplementary Specification*
 1. The web server should be responsive under high load.
 2. The web server must follow minimum requirements for HTTP 1.1
 3. The web server must work on Linux, Mac, Windows*.
