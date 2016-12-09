@@ -1,17 +1,15 @@
 #Task 2 - planning etc..
 
 ###Goals
-####SDC
-- easy deploy
-- wide range: many deplayable devices
-
-####Deployer
-- minimal configuration
-- easy integration: clear API
-
-####Customer
-- easy access
-- absolute security
+- SDC
+ - easy deploy
+ - wide range: many deplayable devices
+- Deployer
+ - minimal configuration
+ - easy integration: clear API
+- Customer
+ - easy access
+ - absolute security
 
 ###Requirements
 - [ ] Write a test-strategy for the application.
