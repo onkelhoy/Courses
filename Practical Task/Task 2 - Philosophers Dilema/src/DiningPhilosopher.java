@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ExecutorService;
@@ -19,23 +20,23 @@ public class DiningPhilosopher {
         miliseconds = milis;
     }
 
-    public void initialize(Log log){
+    public void initialize() throws IOException {
         chopsticks = new ArrayList<>();
         philosophers = new ArrayList<>();
-        this.log = log;
+        log = new Log();
 
         chopsticks.add(new Chopstick(0, log));
         for(int i = 0; i < 5; i++){
             if(i < 4) {
                 chopsticks.add(new Chopstick(i+1, log));
-                philosophers.add(new Philosopher(i, chopsticks.get(i), chopsticks.get(i+1), log));
+                philosophers.add(new Philosopher(i, chopsticks.get(i), chopsticks.get(i+1), log, miliseconds));
             }
-            else philosophers.add(new Philosopher(i, chopsticks.get(i), chopsticks.get(0), log));
+            else philosophers.add(new Philosopher(i, chopsticks.get(i), chopsticks.get(0), log, miliseconds));
         }
     }
     public void start(){
         ExecutorService exec = Executors.newFixedThreadPool(philosophers.size()+1);
-        exec.submit(new Runnable() {
+        exec.execute(new Runnable() {
             @Override
             public void run() {
                 try {
@@ -52,10 +53,10 @@ public class DiningPhilosopher {
         });
 
         for(Philosopher p : philosophers){
-            exec.submit(p);
+            exec.execute(p);
         }
 
-        exec.shutdown(); // no more threads
+        //exec.shutdown(); // no more threads
 
         while(canRun){
             int check = 0;
@@ -78,5 +79,6 @@ public class DiningPhilosopher {
         canRun = false;
         //abort all philosopher threads..
         exec.shutdownNow();
+        log.close();
     }
 }

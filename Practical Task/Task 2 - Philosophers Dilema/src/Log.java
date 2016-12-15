@@ -13,6 +13,8 @@ public class Log {
     }
 
     public synchronized void msg(String message){
+        //if(message.equals("Application reached its end")) System.out.println("eeeend");
+
         writer.println(message);
     }
 

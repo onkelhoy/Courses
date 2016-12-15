@@ -1,100 +1,86 @@
-Philosopher2 is THINKING
-Philosopher3 is THINKING
 Philosopher1 is THINKING
-Philosopher0 is THINKING
-Philosopher4 is THINKING
 Philosopher1 is HUNGRY
 chopstick1 picked up
 chopstick2 picked up
 Philosopher1 is EATING
-Philosopher0 is HUNGRY
-chopstick0 picked up
-Philosopher4 is HUNGRY
-chopstick4 picked up
-Philosopher2 is HUNGRY
 chopstick1 realesed
 chopstick2 realesed
 Philosopher1 is THINKING
-chopstick2 picked up
+Philosopher0 is THINKING
+Philosopher2 is THINKING
+Philosopher3 is THINKING
+Philosopher4 is THINKING
+Philosopher4 is HUNGRY
+chopstick4 picked up
+chopstick0 picked up
+Philosopher4 is EATING
+Philosopher1 is HUNGRY
 chopstick1 picked up
+chopstick2 picked up
+Philosopher1 is EATING
 Philosopher3 is HUNGRY
-Philosopher0 is EATING
 chopstick3 picked up
+Philosopher2 is HUNGRY
+chopstick4 realesed
+chopstick0 realesed
+Philosopher4 is THINKING
+chopstick4 picked up
+chopstick1 realesed
+chopstick2 realesed
+Philosopher3 is EATING
+Philosopher1 is THINKING
+chopstick2 picked up
+Philosopher0 is HUNGRY
+chopstick0 picked up
+chopstick1 picked up
+Philosopher0 is EATING
+Philosopher4 is HUNGRY
+chopstick3 realesed
+chopstick4 realesed
+chopstick3 picked up
+chopstick4 picked up
+Philosopher2 is EATING
+Philosopher1 is HUNGRY
+Philosopher3 is THINKING
+Philosopher3 is HUNGRY
+chopstick2 realesed
+chopstick3 realesed
+Philosopher2 is THINKING
+Philosopher2 is HUNGRY
+chopstick2 picked up
+chopstick3 picked up
+Philosopher2 is EATING
+chopstick0 realesed
+chopstick1 realesed
+Philosopher0 is THINKING
+chopstick2 realesed
+chopstick3 realesed
+Philosopher2 is THINKING
+Philosopher2 is HUNGRY
+chopstick2 picked up
 chopstick3 picked up
 Philosopher2 is EATING
 chopstick2 realesed
-chopstick0 realesed
 chopstick3 realesed
-chopstick1 realesed
-chopstick0 picked up
-Philosopher0 is THINKING
-Philosopher4 is EATING
 Philosopher2 is THINKING
+chopstick3 picked up
+Philosopher2 is HUNGRY
+chopstick2 picked up
+chopstick0 picked up
+Philosopher4 is EATING
+chopstick1 picked up
 Philosopher0 is HUNGRY
 chopstick4 realesed
 chopstick0 realesed
-chopstick0 picked up
 Philosopher4 is THINKING
 chopstick4 picked up
 Philosopher3 is EATING
-chopstick1 picked up
-Philosopher0 is EATING
-Philosopher2 is HUNGRY
-chopstick2 picked up
-chopstick3 picked up
-Philosopher2 is EATING
+chopstick0 picked up
 chopstick3 realesed
-Philosopher1 is HUNGRY
 chopstick4 realesed
 Philosopher3 is THINKING
 Philosopher4 is HUNGRY
-chopstick0 realesed
 chopstick4 picked up
-chopstick1 realesed
-chopstick0 picked up
-chopstick1 picked up
-Philosopher0 is THINKING
-Philosopher4 is EATING
 Philosopher3 is HUNGRY
 chopstick3 picked up
-chopstick2 realesed
-chopstick3 realesed
-chopstick2 picked up
-Philosopher2 is THINKING
-Philosopher1 is EATING
-Philosopher0 is HUNGRY
-chopstick4 realesed
-chopstick0 realesed
-chopstick4 picked up
-chopstick0 picked up
-Philosopher4 is THINKING
-Philosopher3 is EATING
-Philosopher2 is HUNGRY
-chopstick1 realesed
-chopstick2 realesed
-chopstick2 picked up
-Philosopher1 is THINKING
-chopstick3 picked up
-Philosopher2 is EATING
-chopstick3 realesed
-Philosopher4 is HUNGRY
-chopstick4 realesed
-chopstick4 picked up
-Philosopher3 is THINKING
-chopstick2 realesed
-chopstick3 realesed
-Philosopher2 is THINKING
-Philosopher1 is HUNGRY
-chopstick1 picked up
-chopstick2 picked up
-Philosopher1 is EATING
-Philosopher3 is HUNGRY
-chopstick3 picked up
-Philosopher2 is HUNGRY
-chopstick1 realesed
-chopstick2 realesed
-chopstick2 picked up
-Philosopher1 is THINKING
-Philosopher1 is HUNGRY
-chopstick1 picked up
 Deadlock detected

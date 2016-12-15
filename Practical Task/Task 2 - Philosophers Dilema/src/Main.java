@@ -1,31 +1,30 @@
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
+import java.io.IOException;
 
-/**
- * Created by henry on 2016-11-22.
- */
 public class Main {
-    public static void main(String args[]){
-        try {
-            Log log = new Log();
-            DiningPhilosopher dp = new DiningPhilosopher();
-            dp.setSimulationTime(10000);
-            dp.initialize(log);
-            dp.start();
-            ArrayList<Philosopher> philosophers = dp.getPhilosophers();
-            for (Philosopher p : philosophers) {
-                System.out.println(p.getId() + " eating   - " + p.getAverageEatingTime());
-                System.out.println(p.getId() + " thinking - " + p.getAverageThinkingTime());
-                System.out.println(p.getId() + " waiting  - " + p.getAverageHungryTime());
-            }
 
-            log.close();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void main(String args[]) throws IOException, InterruptedException{
+        DiningPhilosopher dp = new DiningPhilosopher(); // create an instance to DiningPhilosopher class
+        int simTime = 1000;
+        if(args.length > 0) // check if parameters are passed as argument
+            simTime = Integer.parseInt(args[0]); // the first parameter is the simulation time
+        dp.setSimulationTime(simTime); //set the simulation time.
+        dp.initialize(); // initialize the required objects
+        dp.start(); // start the simulation process
 
-        System.exit(1);
+        ArrayList<Philosopher> philosophers = dp.getPhilosophers(); // get the philosophers
+        /*
+        * the following code prints a table where each row corresponds to one of the Philosophers, and columns correspond to the Philosopher ID (PID), average think time (ATT), average eating time (AET), average hungry time (AHT), and number of eating turns(#ET).
+        */
+        System.out.println("\n------------------------------------------");
+        System.out.println("PID \tATT \tAET \tAHT \t#ET");
+        for (Philosopher p : philosophers) {
+            System.out.println(p.getId() + "\t\t"
+                    + p.getAverageThinkingTime() + "\t\t"
+                    + p.getAverageEatingTime() + "\t\t"
+                    + p.getAverageHungryTime() + "\t"
+                    + p.getNumberOfEatingTurns());
+        }
+        System.out.println("------------------------------------------\n");
     }
 }

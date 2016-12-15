@@ -8,6 +8,7 @@ public class Philosopher implements Runnable {
     private int totalThinkingTime = 0,
                 totalEatingTime = 0,
                 numberOfEatingTurns = 0,
+                totalTime = 0,
                 id = -1;
     private State currentState;
     private volatile Chopstick left, right;
@@ -22,37 +23,44 @@ public class Philosopher implements Runnable {
 
 
     public void Think(){
-        try {
-            log.msg("Philosopher"+id+ " is THINKING");
-            int time = setTimeout();
-            totalThinkingTime += time;
-            Thread.sleep(time);
-            currentState = State.HUNGRY;
-            log.msg("Philosopher"+id+ " is HUNGRY");
+        if(!Thread.currentThread().isInterrupted()) {//avoid outprints..
+            try {
+                log.msg("Philosopher" + id + " is THINKING");
+                int time = setTimeout();
+                totalThinkingTime += time;
+                Thread.currentThread().sleep(time);
+                currentState = State.HUNGRY;
+                log.msg("Philosopher" + id + " is HUNGRY");
 
-            HunryWait();
-        } catch (InterruptedException e){}
+                HunryWait();
+            } catch (InterruptedException e) {}
+        }
     }
     public void Eat(){
-        try {
-            log.msg("Philosopher"+id+ " is EATING");
-            numberOfEatingTurns++;
-            int time = setTimeout();
-            totalEatingTime += time;
-            Thread.sleep(time);
+        if(!Thread.currentThread().isInterrupted()) {
+            try {
+                log.msg("Philosopher" + id + " is EATING");
+                numberOfEatingTurns++;
+                int time = setTimeout();
+                totalEatingTime += time;
+                Thread.currentThread().sleep(time);
 
-            currentState = State.THINKING;
-            //put down chopsticks..
-            leftPicked = false;
-            rightPicked = false;
-            left.release(id);
-            right.release(id);
+                currentState = State.THINKING;
+                //put down chopsticks..
+                leftPicked = false;
+                rightPicked = false;
+                left.release(id);
+                right.release(id);
 
-            Think();
-        } catch (InterruptedException e){}
+                Think();
+            } catch (InterruptedException e) {}
+        }
     }
     public void HunryWait(){
         while(!rightPicked){
+            if(Thread.currentThread().isInterrupted()){
+                return;
+            }
             if(!leftPicked && !left.isUsed()) {
                 left.take(id);
                 leftPicked = true;
@@ -72,13 +80,15 @@ public class Philosopher implements Runnable {
             EATING, HUNGRY, THINKING
     }
 
-    public Philosopher(int id, Chopstick left, Chopstick right, Log log){
+    public Philosopher(int id, Chopstick left, Chopstick right, Log log, int time){
         this.id = id;
         currentState = State.THINKING;
         random = new Random();
         this.left = left;
         this.right = right;
         this.log = log;
+
+        totalTime = time;
     }
 
 
@@ -90,8 +100,9 @@ public class Philosopher implements Runnable {
         return totalEatingTime / numberOfEatingTurns;
     }
     public int getAverageHungryTime(){
-        return (10000-totalEatingTime-totalThinkingTime) / numberOfEatingTurns;
+        return (totalTime-totalEatingTime-totalThinkingTime) / numberOfEatingTurns;
     }
+    public int getNumberOfEatingTurns() { return numberOfEatingTurns; }
     public int getId(){ return id; }
 
     private int setTimeout() throws InterruptedException{
